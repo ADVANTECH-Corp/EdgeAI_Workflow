@@ -1,23 +1,25 @@
 # Create an Object Detection on ROM-2860 ( Qualcomm/QCS6490 )
-This example will demonstrate how to develop an vision ai object detection on ROM-2860 ( Qualcomm QCS6490 ) platform.
+This example will demonstrate how to develop an vision AI Object Detection on ROM-2860 ( Qualcomm QCS6490 ) platform.
+Developers can easily complete the Visual AI development by following these steps.
 
-<div align="center">
-<img src="assets/ai_workflow_rom-2860.png" width="640px" height="480">
-</div>
+![eas_ai_workflow](assets/eas_startkit_rom-2860.png)
+
+
 
 
 ## Prerequisites
 
-### Hardware Requirements
+### Hardware requirements
 
 ### System requirements
 
-## 2. Install and Setup Development Tools
+## 1. Download & Install the AI Dev SDK & Tools
 
-## 3. Download Model
+## 2. Download Model
 
-## 4. Convert and Quantization 
+## 3. Convert and Optimize 
 
-## 5. AI Application
+## 4. Demo App
 
-## 6. Deployment & Run
+## 5. Deploy & Run
+
