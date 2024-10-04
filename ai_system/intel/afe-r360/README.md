@@ -233,7 +233,9 @@ Result:
 ## Pose Estimation (human_pose_estimation_demo)
 - Follow the steps in the link
 https://github.com/openvinotoolkit/open_model_zoo/tree/releases/2024/3/demos/human_pose_estimation_demo/cpp
+
 ![EAS_Startkit_run_app_3](assets/EAS_Startkit_run_app_3.png)
+
 - Example
 ```
 cd /$HOME/omz_demos_build/intel64/Release
