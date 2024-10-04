@@ -5,7 +5,7 @@ Developers can easily complete the Visual AI development by following these step
 ![eas_ai_workflow](assets/eas_startkit_afe-r360.png)
 
 
-# Environment
+# 1. Environment
 ## Target
 | Item | Content | Note |
 | -------- | -------- | -------- |
@@ -21,10 +21,14 @@ Developers can easily complete the Visual AI development by following these step
 https://docs.openvino.ai/2024/get-started/install-openvino/install-openvino-archive-linux.html
 
 - How to install, setup 
+
 Complete the installation according to the steps in the link.
+
 ![EAS_Startkit_OpenVINO_1](assets/EAS_Startkit_OpenVINO_1.png)
+
 Choose the X86_64 Ubuntu 24.04 option.
-![EAS_Startkit_OpenVINO_2](assets/EAS_Startkit_OpenVINO_2.png)
+
+![EAS_Startkit_OpenVINO_1](assets/EAS_Startkit_OpenVINO_1.png)
 
 ## OpenCV 4.7.0
 - OpenCV source
@@ -105,7 +109,7 @@ https://github.com/intel/compute-runtime/releases/tag/24.31.30508.7
 Complete the installation according to the steps in the link. 
 ![EAS_Startkit_iGPU](assets/EAS_Startkit_iGPU.png)
 
-# Model
+# 2. Model
 - tool : omz_downloader
 https://github.com/openvinotoolkit/open_model_zoo/blob/releases/2024/3/tools/model_tools/README.md
 
@@ -141,7 +145,7 @@ Clone open model zoo to your device, then download the model following the steps
 
 
 
-# Run benchmark
+# 3. Run benchmark
 - Benchmark tools
 https://docs.openvino.ai/2024/learn-openvino/openvino-samples/benchmark-tool.html
 - build the benchmark binary.
@@ -174,7 +178,7 @@ cd /$HOME/openvino_cpp_samples_build/intel64/Release
 ./benchmark_app -m <model_path>/mobilenet-ssd.xml -d NPU -t 8
 ```
 
-# Run Application
+# 4. Run Application
 ## Objection Detection (object_detection_demo)
 - Follow the steps in the link
 https://github.com/openvinotoolkit/open_model_zoo/tree/releases/2024/3/demos/object_detection_demo/cpp
