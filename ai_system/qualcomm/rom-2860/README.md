@@ -4,65 +4,94 @@ Developers can easily complete the Visual AI development by following these step
 
 ![eas_ai_workflow](assets/eas_startkit_rom-2860.png)
 
-
-
-
- ## Information
-
-
-| Version | Date | Hardware | Packages & Functions | 
-| -------- | -------- | ----------- |  ---------- |
-| 3.1.0-beta-1|2024-09-24 | * QCS6490  <br>  ** Ubuntu 20.04  <br>(kernel: 5.4.233)  | * SNPE (runtime)<br> * Gstreamer <br> * Vision AI Models:  <br>  yolov5 <br>  face-detection   
  
 
+# Environment
+## Target
+| Item | Content | Note |
+| -------- | -------- | -------- |
+| Platform / RAM / Disk |  Arm64 Cortex-A55    |      |
+| SOC | Qualcomm QCS6490 | |
+| Accelerator | DSP | |
+| OS/Kernel | ubuntu 20.04 / 5.4.233 | |
 
+###  Image
+| Item | Version |  
+| -------- | -------- | -------- |
+| QCS6490.UBUN.1.0	   |  QCS6490.UBUN.1.0-00011-STD.PROD-1    |       
+
+### AI Development SDK 
+| Item | Introduction |  Install |
+| -------- | -------- | -------- |
+|   SNPE   |  Qualcomm Snapdragon software accelerated runtime for the execution of deep neural networks (for inference) with SNPE, users can:Convert Caffe, Caffe2, TensorFlow, PyTorch and TFLite models to a SNPE deep learning container (DLC) fileQuantize DLC files to 8bit/16bit fixed point for execution on the Qualcomm® Hexagon™ DSP/HVX HTA Integrate a network into applications and other code via C++ or Java Execute the network on the Snapdragon CPU, the Qualcomm® AdrenoTM GPU, or the Hexagon DSP with HVX* and HMX* support, Execute an arbitrarily deep neural network Debug the network model execution on x86 Ubuntu Linux Debug and analyze the performance of the network model with SNPE tools Benchmark a network model for different targets  |     
+
+#### SNPE Install ( x64 )
+1. Ubuntu 20.04 with Python 3.8
+2. Sign Up Qualcomm Account My Account (qualcomm.com): https://myaccount.qualcomm.com/signup
+
+3. Install Qualcomm Package Manager 3: https://qpm.qualcomm.com/#/main/tools/details/QPM3
+
+4. Install Qualcomm® AI Engine Direct SDK: https://qpm.qualcomm.com/#/main/tools/details/qualcomm_ai_engine_direct
+
+5. Install Qualcomm® Neural Processing SDK: https://qpm.qualcomm.com/#/main/tools/details/qualcomm_neural_processing_sdk
+
+6. Install ML frameworks:
+    pip install onnx==1.11.0
+    pip install tensorflow==2.10.1
+    pip install torch==1.13.1"
+
+
+### AI Inference Framework
 | AI Frameworks | Version | Description | 
 | -------- | -------- | -------- | ---- |
 | SNPE     | v2.20.0.240223    | The Qualcomm® Neural Processing SDK is a Qualcomm Snapdragon software accelerated runtime for the execution of deep neural networks. With Qualcomm® Neural Processing SDK : <br> * Execute an arbitrarily deep neural network <br> * Execute the network on the Snapdragon CPU, the Adreno GPU or the Hexagon DSP. <br> * Debug the network execution on x86 Ubuntu Linux  <br> * Convert PyTorch, TFLite, ONNX, and TensorFlow models to a Qualcomm® Neural Processing SDK Deep Learning Container (DLC) file  <br> * Quantize DLC files to 8 or 16 bit fixed point for running on the Hexagon DSP  <br> * Debug and analyze the performance of the network with Qualcomm® Neural Processing SDK tools  <br> * Integrate a network into applications and other code via C++ or Java |
 | Gstreamer     |  1.16.3   | GStreamer is a library for constructing graphs of media-handling components. The applications it supports range from simple Ogg/Vorbis playback, audio/video streaming to complex audio (mixing) and video (non-linear editing) processing. |
+
+
+
+
+## Device Information 
+
+| Hardware | Packages  | 
+| ----------- |  ---------- |
+| * QCS6490  <br>  ** Ubuntu 20.04  <br>(kernel: 5.4.233)  | * SNPE (runtime)<br> * Gstreamer <br> 
  
 
 
-# How To
-## Download
+# Develop Flow
+Application: Objection Detection
+Model:Yolov5
+Input: Video / USB Camera
 
-
+## Download  Pre-trained Model / Convert (Object detection)
+- 1. Download Model (pt) 
+     [yolov5n.pt](/xdept/public/autoinsert/yolov5n_1727345998107.pt)
+     refer to https://github.com/ultralytics/yolov5 
  
-* Edge AI SDK 3.1.0-beta-1
-    * `\\eossfs\ESS-Release\EdgeSense\Release\EdgeAISDK\v3.1.0\Edge_AI_SDK_Installer-QCS6490-3.1.0_beta-1.tar.gz`
-    
-## Install
-
-* tar -zxvf Edge_AI_SDK_Installer-QCS6490-3.1.0_beta-1.tar.gz
-* ./Edge_AI_SDK-installer.run
-   
-   
-## Start EdgeAISDK
-
- * 1 open terminal
- * 2 execute script : /opt/Advantech/EdgeAISuite/MainAPP/QCS6490/app.sh
+- 2. Convert (pt -> onnx) 
+     refer to `export.py` within https://github.com/ultralytics/yolov5 
  
- ![未命名_1727321765616.png](/xdept/public/autoinsert/未命名_1727321765616.png)
+- 3. Convert (onnx -> dlc), Refer to document below:
+ [kba-240222225148_rev_1_quick_start_demo_of_snpe_yolov5_in_6490_1727340915309.pdf](/xdept/public/autoinsert/kba-240222225148_rev_1_quick_start_demo_of_snpe_yolov5_in_6490_1727340915309.pdf)
+ 
+
+
+## Application
+| Device   | Command  | Introduction  |
+| -------- | -------- | ------------- |
+| ROM-2860 |   gst-launch-1.0 -e qtivcomposer name=mixer sink_1::dimensions="<1920,1080>" ! queue ! waylandsink sync=true fullscreen=false x=10 y=10 width=1280 height=720 v4l2src device="/dev/video0"  ! tee name=t ! queue ! mixer. t. ! queue ! qtimlvconverter mean="<0.0, 0.0, 0.0>" sigma="<0.003921, 0.003921, 0.003921>" ! queue ! qtimlsnpe delegate=dsp model="yolov5n-quant.dlc" layers="< Conv_266, Conv_232, Conv_198 >" ! queue ! qtimlvdetection threshold=51.0 results=10 module=yolov5 labels="yolov5.labels" ! video/x-raw,width=480,height=270 ! queue ! mixer. | Run on dsp (usb camera) |
+| ROM-2860 | gst-launch-1.0 -e qtivcomposer name=mixer sink_1::dimensions="<1920,1080>" ! queue ! waylandsink sync=true fullscreen=false x=10 y=10 width=1280 height=720 filesrc  location="$inputfile" ! qtdemux ! queue ! h264parse ! qtivdec ! queue ! tee name=t ! queue ! mixer.  t. ! queue ! qtimlvconverter mean="<0.0, 0.0, 0.0>" sigma="<0.003921, 0.003921, 0.003921>" ! queue ! qtimlsnpe delegate=dsp model="yolov5n-quant.dlc" layers="< Conv_266, Conv_232, Conv_198 >" ! queue !  qtimlvdetection threshold=51.0 results=10 module=yolov5 labels="yolov5.labels" ! video/x-raw,width=480,height=270 ! queue ! mixer. | Run on dsp (video file) |
+## Result
+
+![dddddd_1722848081951.png](/xdept/public/autoinsert/dddddd_1722848081951.png)
+
+
+# Benchmark
+| Device   | Command  | Introduction  |
+| -------- | -------- | ------------- |
+| ROM-2860 | snpe-throughput-net-run --duration 5 --perf_profile burst --use_dsp --userbuffer_auto --container mobilenet_v1_ssd_2017_quantized.dlc |Run on dsp |
+ 
+ 
+
+
   
- 
-## Vision AI Inference Application
-* Step 1 : Go to the " Quick start VisionAI" page as show below
-* Step 2 : Choose one application you want to 
-
- ![4_1727331586152.png](/xdept/public/autoinsert/4_1727331586152.png)
-![1_1727331612385.png](/xdept/public/autoinsert/1_1727331612385.png)
-## Close AI Inference Application
-
- * 1 EdgeAISDk (GUI) show in the top .
- * 2 Press Key "Esc"  
- ![wayland-screenshot-2024-09-26_02-17-25_1727321544457.png](/xdept/public/autoinsert/wayland-screenshot-2024-09-26_02-17-25_1727321544457.png)
-
- 
-## System Monitoring 
-![3_1727331871209.png](/xdept/public/autoinsert/3_1727331871209.png)
- 
-## AI Inference Benchmark
-It can quickly evaluate computing performance for the DSP, and provides runtime results inferenced with ML.
-![2_1727331888480.png](/xdept/public/autoinsert/2_1727331888480.png)
-
-
