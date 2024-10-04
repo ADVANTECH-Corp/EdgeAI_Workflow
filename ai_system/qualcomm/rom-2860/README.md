@@ -7,19 +7,5 @@ Developers can easily complete the Visual AI development by following these step
 
 
 
-## Prerequisites
-
-### Hardware requirements
-
-### System requirements
-
-## 1. Download & Install the AI Dev SDK & Tools
-
-## 2. Download Model
-
-## 3. Convert and Optimize 
-
-## 4. Demo App
-
-## 5. Deploy & Run
+ 
 
