@@ -28,14 +28,16 @@ Complete the installation according to the steps in the link.
 
 Choose the X86_64 Ubuntu 24.04 option.
 
-![EAS_Startkit_OpenVINO_1](assets/EAS_Startkit_OpenVINO_1.png)
+![EAS_Startkit_OpenVINO_1](assets/EAS_Startkit_OpenVINO_2.png)
 
 ## OpenCV 4.7.0
 - OpenCV source
  https://github.com/opencv/opencv.git
 - How to install, setup
 1. Clone on your device and check out to tag 4.7.0 .
+
 ![EAS_Startkit_OpenCV](assets/EAS_Startkit_OpenCV.png)
+
 2. Following the steps below.
 
 - Install the dependency for OpenCV :
@@ -69,7 +71,9 @@ make -j8
 https://github.com/openvinotoolkit/open_model_zoo/tree/releases/2024/3
 - How to install, setup
 Clone on your device and check out to tag "releases/2024/3" .
+
 ![EAS_Startkit_model-zoo](assets/EAS_Startkit_model-zoo.png)
+
 - NOTE: You must also clone https://github.com/gflags/gflags.git and place it in the following folder.
 *`open_model_zoo/demos/thirdparty/gflags/`
 
@@ -107,6 +111,7 @@ https://github.com/intel/compute-runtime/releases/tag/24.31.30508.7
 
 - How to install
 Complete the installation according to the steps in the link. 
+
 ![EAS_Startkit_iGPU](assets/EAS_Startkit_iGPU.png)
 
 # 2. Model
@@ -114,76 +119,37 @@ Complete the installation according to the steps in the link.
 https://github.com/openvinotoolkit/open_model_zoo/blob/releases/2024/3/tools/model_tools/README.md
 
 ## Objection Detection (YOLOX)
+- How to obtain:
+
+Install OpenVINO deployment : https://github.com/openvinotoolkit/openvino/tree/master/tools/mo
+
+Following the step.
+
+![EAS_Startkit_openvino_dev](assets/EAS_Startkit_openvino_dev.png)
+
 - YOLOX-OpenVINO in C++
 https://github.com/Megvii-BaseDetection/YOLOX/tree/main/demo/OpenVINO/cpp
-- How to obtain:
-Go to the link, select YOLOX-M, and click github to download the tar file.
+
+Go to the link, following "Convert model" part to convert YoloX model.
+
+![EAS_Startkit_convert_model](assets/EAS_Startkit_convert_model.png)
+
+Or, select YOLOX-M, and click github to download the tar file.
+
 ![EAS_Startkit_YOLOX](assets/EAS_Startkit_YOLOX.png)
+
 Open the folder, and you will see a model named "***yolox_m.xml***".
 
-## Face Recognition (faceboxes-pytorch)
-- open model zoo
-https://github.com/openvinotoolkit/open_model_zoo/tree/releases/2024/3/models/public/faceboxes-pytorch
-- How to obtain:
-Clone open model zoo to your device, then download the model following the steps in the link.
-![EAS_Startkit_faceboxes-pytorch](assets/EAS_Startkit_faceboxes-pytorch.png)
-## Person Detection (person-detection-retail-0013)
-- open model zoo
-https://github.com/openvinotoolkit/open_model_zoo/tree/releases/2024/3/models/intel/person-detection-retail-0013
-- How to obtain:
-Clone open model zoo to your device, then download the model following the steps in the link.
-![EAS_Startkit_faceboxes-pytorch](assets/EAS_Startkit_faceboxes-pytorch.png)
-## Pose Estimation (human-pose-estimation-0001)
-- open model zoo
-https://github.com/openvinotoolkit/open_model_zoo/blob/releases/2024/3/demos/human_pose_estimation_demo/cpp/README.md
-- How to obtain:
-Clone open model zoo to your device, then download the model following the steps in the link.
-![EAS_Startkit_human-pose](assets/EAS_Startkit_human-pose.png)
 
 
-
-
-
-
-# 3. Run benchmark
-- Benchmark tools
-https://docs.openvino.ai/2024/learn-openvino/openvino-samples/benchmark-tool.html
-- build the benchmark binary.
-```
-cd /opt/intel/openvino_2024/samples/cpp
-./build_samples.sh
-```
-- Follow the steps in the link to execute the benchmark.
-![EAS_Startkit_benchmark](assets/EAS_Startkit_benchmark.png)
-
-- Example for (CPU/iGPU/NPU) :
-
-```
-source "/opt/intel/openvino_2024/setupvars.sh"
-```
-
-CPU
-```
-cd /$HOME/openvino_cpp_samples_build/intel64/Release
-./benchmark_app -m <model_path>/mobilenet-ssd.xml -d CPU -t 8
-```
-iGPU
-```
-cd /$HOME/openvino_cpp_samples_build/intel64/Release
-./benchmark_app -m <model_path>/mobilenet-ssd.xml -d GPU -t 8
-```
-NPU
-```
-cd /$HOME/openvino_cpp_samples_build/intel64/Release
-./benchmark_app -m <model_path>/mobilenet-ssd.xml -d NPU -t 8
-```
-
-# 4. Run Application
+# 3. Run Application
 ## Objection Detection (object_detection_demo)
 - Follow the steps in the link
 https://github.com/openvinotoolkit/open_model_zoo/tree/releases/2024/3/demos/object_detection_demo/cpp
+
 ![EAS_Startkit_run_app_1](assets/EAS_Startkit_run_app_1.png)
 ![EAS_Startkit_run_app_2](assets/EAS_Startkit_run_app_2.png)
+
 - Example
 ```
 cd /$HOME/omz_demos_build/intel64/Release
@@ -194,58 +160,5 @@ source "/opt/intel/openvino_2024/setupvars.sh"
 ```
 
 Result:
+
 ![EAS_Startkit_object-detection](assets/EAS_Startkit_object-detection.png)
-
-## Face Recognition (object_detection_demo)
-- Follow the steps in the link
-https://github.com/openvinotoolkit/open_model_zoo/tree/releases/2024/3/demos/object_detection_demo/cpp
-![EAS_Startkit_run_app_1](assets/EAS_Startkit_run_app_1.png)
-![EAS_Startkit_run_app_2](assets/EAS_Startkit_run_app_2.png)
-- Example
-```
-cd /$HOME/omz_demos_build/intel64/Release
-```
-```
-source "/opt/intel/openvino_2024/setupvars.sh"
-./object_detection_demo -m <path_to_model>/faceboxes-pytorch.xml -d CPU -i <path_to_video>/TestVideo.mp4 -at faceboxes -loop
-```
-
-Result:
-![EAS_Startkit_face-detection](assets/EAS_Startkit_face-detection.png)
-
-## Person Detection (object_detection_demo)
-- Follow the steps in the link
-https://github.com/openvinotoolkit/open_model_zoo/tree/releases/2024/3/demos/object_detection_demo/cpp
-![EAS_Startkit_run_app_1](assets/EAS_Startkit_run_app_1.png)
-![EAS_Startkit_run_app_2](assets/EAS_Startkit_run_app_2.png)
-- Example
-```
-cd /$HOME/omz_demos_build/intel64/Release
-```
-```
-source "/opt/intel/openvino_2024/setupvars.sh"
-./object_detection_demo -m <path_to_model>/person-detection-retail-0013.xml -d GPU -i <path_to_video>/TestVideo.mp4 -at ssd -loop
-```
-
-Result:
-![EAS_Startkit_person-detection](assets/EAS_Startkit_person-detection.png)
-
-## Pose Estimation (human_pose_estimation_demo)
-- Follow the steps in the link
-https://github.com/openvinotoolkit/open_model_zoo/tree/releases/2024/3/demos/human_pose_estimation_demo/cpp
-
-![EAS_Startkit_run_app_3](assets/EAS_Startkit_run_app_3.png)
-
-- Example
-```
-cd /$HOME/omz_demos_build/intel64/Release
-```
-```
-source "/opt/intel/openvino_2024/setupvars.sh"
-./human_pose_estimation_demo -i <path_to_video>/input_video.mp4 -m <path_to_model>/human-pose-estimation-0001.xml -d NPU -at openpose
-
-```
-
-Result:
-![EAS_Startkit_pose-estimation](assets/EAS_Startkit_pose-estimation.png)
-
