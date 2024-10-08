@@ -4,7 +4,7 @@ Developers can easily complete the Visual AI development by following these step
 
 ![eas_ai_workflow](assets/eas_startkit_rom-2860.png)
 
-# 目錄  
+# Table of Contents
 - [Environment](#Environment)
   - [Target](#Target)
     - [AI Inference Framework](#AIInferenceFramework)
