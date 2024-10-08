@@ -4,42 +4,30 @@ Developers can easily complete the Visual AI development by following these step
 
 ![eas_ai_workflow](assets/eas_startkit_rom-2860.png)
 
- 
+# 目錄  
+- [Environment](#Environment)
+  - [Target](#Target)
+    - [AI Inference Framework](#AIInferenceFramework)
+  - [Develop](#Develop)
+    - [AI Development SDK](#AIDevelopmentSDK)   
+- [Develop Flow](#DevelopFlow)
+
+<a name="Environment"/>
 
 # Environment
+
+<a name="Target"/>
+
 ## Target
 | Item | Content | Note |
 | -------- | -------- | -------- |
-| Platform / RAM / Disk |  Arm64 Cortex-A55    |      |
-| SOC | Qualcomm QCS6490 | |
+| Platform | ROM-2860 | Qualcomm QCS6490|
+| CPU / RAM / Disk | Arm64 Cortex-A55 / ? GB / ? GB | |
 | Accelerator | DSP | |
-| OS/Kernel | ubuntu 20.04 / 5.4.233 | |
+| OS/Kernel | ubuntu 20.04 / 5.4.233 | * SNPE (runtime)<br> * Gstreamer <br> |
+| Image | QCS6490.UBUN.1.0 | QCS6490.UBUN.1.0-00011-STD.PROD-1 |
 
-###  Image
-| Item | Version |  
-| -------- | -------- | 
-| QCS6490.UBUN.1.0	   |  QCS6490.UBUN.1.0-00011-STD.PROD-1    |       
-
-### AI Development SDK 
-| Item | Introduction |  Install |
-| -------- | -------- | -------- |
-|   SNPE   |  Qualcomm Snapdragon software accelerated runtime for the execution of deep neural networks (for inference) with SNPE, users can:Convert Caffe, Caffe2, TensorFlow, PyTorch and TFLite models to a SNPE deep learning container (DLC) fileQuantize DLC files to 8bit/16bit fixed point for execution on the Qualcomm® Hexagon™ DSP/HVX HTA Integrate a network into applications and other code via C++ or Java Execute the network on the Snapdragon CPU, the Qualcomm® AdrenoTM GPU, or the Hexagon DSP with HVX* and HMX* support, Execute an arbitrarily deep neural network Debug the network model execution on x86 Ubuntu Linux Debug and analyze the performance of the network model with SNPE tools Benchmark a network model for different targets  |     
-
-#### SNPE Install ( x64 )
-1. Ubuntu 20.04 with Python 3.8
-2. Sign Up Qualcomm Account My Account (qualcomm.com): https://myaccount.qualcomm.com/signup
-
-3. Install Qualcomm Package Manager 3: https://qpm.qualcomm.com/#/main/tools/details/QPM3
-
-4. Install Qualcomm® AI Engine Direct SDK: https://qpm.qualcomm.com/#/main/tools/details/qualcomm_ai_engine_direct
-
-5. Install Qualcomm® Neural Processing SDK: https://qpm.qualcomm.com/#/main/tools/details/qualcomm_neural_processing_sdk
-
-6. Install ML frameworks:
-    pip install onnx==1.11.0
-    pip install tensorflow==2.10.1
-    pip install torch==1.13.1"
-
+<a name="AIInferenceFramework"/>
 
 ### AI Inference Framework
 | AI Frameworks | Version | Description | 
@@ -47,16 +35,37 @@ Developers can easily complete the Visual AI development by following these step
 | SNPE     | v2.20.0.240223    | The Qualcomm® Neural Processing SDK is a Qualcomm Snapdragon software accelerated runtime for the execution of deep neural networks. With Qualcomm® Neural Processing SDK : <br> * Execute an arbitrarily deep neural network <br> * Execute the network on the Snapdragon CPU, the Adreno GPU or the Hexagon DSP. <br> * Debug the network execution on x86 Ubuntu Linux  <br> * Convert PyTorch, TFLite, ONNX, and TensorFlow models to a Qualcomm® Neural Processing SDK Deep Learning Container (DLC) file  <br> * Quantize DLC files to 8 or 16 bit fixed point for running on the Hexagon DSP  <br> * Debug and analyze the performance of the network with Qualcomm® Neural Processing SDK tools  <br> * Integrate a network into applications and other code via C++ or Java |
 | Gstreamer     |  1.16.3   | GStreamer is a library for constructing graphs of media-handling components. The applications it supports range from simple Ogg/Vorbis playback, audio/video streaming to complex audio (mixing) and video (non-linear editing) processing. |
 
+<a name="Develop"/>
+
+## Develop 
+| Item | Content | Note |
+| -------- | -------- | -------- |
+| Platform | Intel 12 or 13th CPU   |      |
+| OS/Kernel | Ubuntu 20.04 | * Python 3.8 |
+
+<a name="AIDevelopmentSDK"/>
+
+### AI Development SDK 
+| Item | Introduction |  Install |
+| -------- | -------- | -------- |
+|   SNPE   |  Qualcomm Snapdragon software accelerated runtime for the execution of deep neural networks (for inference) with SNPE, users can:Convert Caffe, Caffe2, TensorFlow, PyTorch and TFLite models to a SNPE deep learning container (DLC) fileQuantize DLC files to 8bit/16bit fixed point for execution on the Qualcomm® Hexagon™ DSP/HVX HTA Integrate a network into applications and other code via C++ or Java Execute the network on the Snapdragon CPU, the Qualcomm® AdrenoTM GPU, or the Hexagon DSP with HVX* and HMX* support, Execute an arbitrarily deep neural network Debug the network model execution on x86 Ubuntu Linux Debug and analyze the performance of the network model with SNPE tools Benchmark a network model for different targets  |     
 
 
+### How to SNPE Install ( x86_x64 )
+1. Sign Up Qualcomm Account My Account (qualcomm.com): https://myaccount.qualcomm.com/signup
 
-## Device Information 
+2. Install Qualcomm Package Manager 3: https://qpm.qualcomm.com/#/main/tools/details/QPM3
 
-| Hardware | Packages  | 
-| ----------- |  ---------- |
-| * QCS6490  <br>  ** Ubuntu 20.04  <br>(kernel: 5.4.233)  | * SNPE (runtime)<br> * Gstreamer <br> 
- 
+3. Install Qualcomm® AI Engine Direct SDK: https://qpm.qualcomm.com/#/main/tools/details/qualcomm_ai_engine_direct
 
+4. Install Qualcomm® Neural Processing SDK: https://qpm.qualcomm.com/#/main/tools/details/qualcomm_neural_processing_sdk
+
+5. Install ML frameworks:
+    pip install onnx==1.11.0
+    pip install tensorflow==2.10.1
+    pip install torch==1.13.1"
+
+<a name="DevelopFlow"/>
 
 # Develop Flow
 Application: Objection Detection
