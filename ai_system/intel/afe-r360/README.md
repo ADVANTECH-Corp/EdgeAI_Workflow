@@ -115,8 +115,6 @@ Complete the installation according to the steps in the link.
 ![EAS_Startkit_iGPU](assets/EAS_Startkit_iGPU.png)
 
 # 2. Model
-- tool : omz_downloader
-https://github.com/openvinotoolkit/open_model_zoo/blob/releases/2024/3/tools/model_tools/README.md
 
 ## Objection Detection (YOLOX)
 - How to obtain:
@@ -134,6 +132,7 @@ Go to the link, following "Convert model" part to convert YoloX model.
 
 ![EAS_Startkit_convert_model](assets/EAS_Startkit_convert_model.png)
 
+## Directly obtain the model (YOLOX)
 Or, select YOLOX-M, and click github to download the tar file.
 
 ![EAS_Startkit_YOLOX](assets/EAS_Startkit_YOLOX.png)
