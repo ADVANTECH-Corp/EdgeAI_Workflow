@@ -21,7 +21,7 @@ Developers can easily complete the Visual AI development by following these step
 <a name="Target"/>
 
 ## Target
-Device / System
+System requirements
 | Item | Content | Note |
 | -------- | -------- | -------- |
 | Platform | ROM-2860 | Qualcomm QCS6490|
@@ -40,7 +40,7 @@ AI Inference Framework
 <a name="Develop"/>
 
 ## Develop
-Device / System
+System requirements
 | Item | Content | Note |
 | -------- | -------- | -------- |
 | Platform | Intel 12 or 13th CPU   |      |
