@@ -4,8 +4,21 @@ Developers can easily complete the Visual AI development by following these step
 
 ![eas_ai_workflow](assets/eas_startkit_afe-r360.png)
 
+- [Environment](#Environment)
+  - [Target](#Target)
+  - [Develop](#Develop) 
+- [Develop Flow](#DevelopFlow)
+  - [Download & Convert](#DownloadModel) 
+- [Deploy](#Deploy)
+  - [Application](#Application)
 
-# 1. Environment
+<a name="Environment"/>
+
+# Environment
+Refer to the following requirements to prepare the target and develop environment.
+
+<a name="Target"/>
+
 ## Target
 | Item | Content | Note |
 | -------- | -------- | -------- |
@@ -15,26 +28,21 @@ Developers can easily complete the Visual AI development by following these step
 | OS/Kernel | * Ubuntu 24.04 (LTS) / 6.8.0 |  |
 | OpenVINO | 2024.3.0 (LTS) | |
 
+Base on EdgeAI SDK 3.1.0
 
-## OpenVINO 2024.3.0
-- Install OpenVINO™ Runtime on Linux
-https://docs.openvino.ai/2024/get-started/install-openvino/install-openvino-archive-linux.html
+<a name="Develop"/>
 
-- How to install, setup 
-
-Complete the installation according to the steps in the link.
-
-![EAS_Startkit_OpenVINO_1](assets/EAS_Startkit_OpenVINO_1.png)
-
-Choose the X86_64 Ubuntu 24.04 option.
-
-![EAS_Startkit_OpenVINO_1](assets/EAS_Startkit_OpenVINO_2.png)
-
-## OpenCV 4.7.0
+## Develop
+### OpenCV 4.7.0
 - OpenCV source
  https://github.com/opencv/opencv.git
 - How to install, setup
 1. Clone on your device and check out to tag 4.7.0 .
+
+```
+git clone https://github.com/opencv/opencv.git
+git checkout 725e440
+```
 
 ![EAS_Startkit_OpenCV](assets/EAS_Startkit_OpenCV.png)
 
@@ -55,6 +63,7 @@ sudo apt install ffmpeg libavformat-dev libavcodec-dev libswscale-dev
 ```
 - make a file in where you clone
 ```
+cd opencv
 mkdir build_470
 cd build_470
 ```
@@ -66,16 +75,21 @@ make -j8
 
 ```
 
-## Application Binary
+### Application Binary
 - open model zoo
 https://github.com/openvinotoolkit/open_model_zoo/tree/releases/2024/3
 - How to install, setup
+
 Clone on your device and check out to tag "releases/2024/3" .
+```
+git clone https://github.com/openvinotoolkit/open_model_zoo.git
+git checkout 9c6d95a
+cd open_model_zoo
+git submodule init
+git submodule update
+```
 
 ![EAS_Startkit_model-zoo](assets/EAS_Startkit_model-zoo.png)
-
-- NOTE: You must also clone https://github.com/gflags/gflags.git and place it in the following folder.
-*`open_model_zoo/demos/thirdparty/gflags/`
 
 - Following the steps below.
 
@@ -90,59 +104,43 @@ export OpenCV_DIR=<path>/build_470
 cd open_model_zoo/demos
 ./build_demos.sh
 ```
+### model tool
+
+omz_downloader
+https://github.com/openvinotoolkit/open_model_zoo/blob/releases/2024/3/tools/model_tools/README.md
+
+<a name="DevelopFlow"/>
+
+# Develop Flow
+Follow these steps to get and optimize the VisionAI model for target AI device. <br>
+
+<a name="DownloadModel"/>
+
+## Download & Covert Model
+
+### Objection Detection (YOLO v3)
+
+- open model zoo: https://github.com/openvinotoolkit/open_model_zoo/tree/releases/2024/3/models/public/yolo-v3-tf
+
+- Download & Covert
+Clone open model zoo to your device, then download and covert the model following the steps in the link.
+```
+omz_downloader --name yolo-v3-tf
+```
+```
+omz_converter --name yolo-v3-tf
+```
 
 
+<a name="Deploy"/>
 
+# Deploy
+Copy the optimized AI model to target device and  launch an AI application with gstream pipeline.
 
-## NPU Driver (1.5.1)
-- NPU Driver
- https://github.com/intel/linux-npu-driver/releases
-- How to install
-Complete the installation according to the steps in the link.
+<a name="Application"/>
 
-![EAS_Startkit_NPU](assets/EAS_Startkit_NPU.png)
-
-
-
-
-## iGPU Driver 
-- iGPU Driver 
-https://github.com/intel/compute-runtime/releases/tag/24.31.30508.7
-
-- How to install
-Complete the installation according to the steps in the link. 
-
-![EAS_Startkit_iGPU](assets/EAS_Startkit_iGPU.png)
-
-# 2. Model
-
-## Objection Detection (YOLOX)
-- How to obtain:
-
-Install OpenVINO deployment : https://github.com/openvinotoolkit/openvino/tree/master/tools/mo
-
-Following the step.
-
-![EAS_Startkit_openvino_dev](assets/EAS_Startkit_openvino_dev.png)
-
-- YOLOX-OpenVINO in C++
-https://github.com/Megvii-BaseDetection/YOLOX/tree/main/demo/OpenVINO/cpp
-
-Go to the link, following "Convert model" part to convert YoloX model.
-
-![EAS_Startkit_convert_model](assets/EAS_Startkit_convert_model.png)
-
-## Directly obtain the model (YOLOX)
-Or, select YOLOX-M, and click github to download the tar file.
-
-![EAS_Startkit_YOLOX](assets/EAS_Startkit_YOLOX.png)
-
-Open the folder, and you will see a model named "***yolox_m.xml***".
-
-
-
-# 3. Run Application
-## Objection Detection (object_detection_demo)
+## Run Application
+### Objection Detection (object_detection_demo)
 - Follow the steps in the link
 https://github.com/openvinotoolkit/open_model_zoo/tree/releases/2024/3/demos/object_detection_demo/cpp
 
