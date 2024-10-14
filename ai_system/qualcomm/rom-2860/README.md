@@ -114,7 +114,7 @@ Device: Target platform
 
 
 # Benchmark
-* Device: Target platform
+Device: Target platform
 | App   | Command  | Remark  |
 | -------- | -------- | ------------- |
 | Run on dsp | snpe-throughput-net-run --duration 5 --perf_profile burst --use_dsp --userbuffer_auto --container mobilenet_v1_ssd_2017_quantized.dlc | |
