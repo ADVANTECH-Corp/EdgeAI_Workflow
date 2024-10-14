@@ -103,7 +103,8 @@ Copy the optimized AI model to target device and  launch an AI application with 
 <a name="Application"/>
 
 ## Application
-* Device: Target platform
+Device: Target platform
+  
 | App  | Command  | Remark  |
 | -------- | -------- | ------------- |
 | Run on dsp (usb camera) |   gst-launch-1.0 -e qtivcomposer name=mixer sink_1::dimensions="<1920,1080>" ! queue ! waylandsink sync=true fullscreen=false x=10 y=10 width=1280 height=720 v4l2src device="/dev/video0"  ! tee name=t ! queue ! mixer. t. ! queue ! qtimlvconverter mean="<0.0, 0.0, 0.0>" sigma="<0.003921, 0.003921, 0.003921>" ! queue ! qtimlsnpe delegate=dsp model="yolov5n-quant.dlc" layers="< Conv_266, Conv_232, Conv_198 >" ! queue ! qtimlvdetection threshold=51.0 results=10 module=yolov5 labels="yolov5.labels" ! video/x-raw,width=480,height=270 ! queue ! mixer. |  |
