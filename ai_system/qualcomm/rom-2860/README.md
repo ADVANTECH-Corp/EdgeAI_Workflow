@@ -57,7 +57,7 @@ AI Development SDK
 |   SNPE   |  Qualcomm Snapdragon software accelerated runtime for the execution of deep neural networks (for inference) with SNPE, users can:Convert Caffe, Caffe2, TensorFlow, PyTorch and TFLite models to a SNPE deep learning container (DLC) fileQuantize DLC files to 8bit/16bit fixed point for execution on the Qualcomm® Hexagon™ DSP/HVX HTA Integrate a network into applications and other code via C++ or Java Execute the network on the Snapdragon CPU, the Qualcomm® AdrenoTM GPU, or the Hexagon DSP with HVX* and HMX* support, Execute an arbitrarily deep neural network Debug the network model execution on x86 Ubuntu Linux Debug and analyze the performance of the network model with SNPE tools Benchmark a network model for different targets  |     
 
 
-How to intsll the SNPE ( x86_x64 )
+How to intsll the SNPE ( on x86_x64 host machine )
 1. Sign Up Qualcomm Account My Account (qualcomm.com): https://myaccount.qualcomm.com/signup
 
 2. Install Qualcomm Package Manager 3: https://qpm.qualcomm.com/#/main/tools/details/QPM3
