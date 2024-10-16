@@ -153,7 +153,7 @@ cd /$HOME/omz_demos_build/intel64/Release
 ```
 ```
 source "/opt/intel/openvino_2024/setupvars.sh"
-./object_detection_demo -m <path_to_model>/yolox.xml -d CPU -i <path_to_video>/TestVideo.mp4 -at yolox -loop
+./object_detection_demo -m <path_to_model>/yolo-v3-tf.xml -d CPU -i <path_to_video>/TestVideo.mp4 -at yolo -loop
 ```
 
 Result:
