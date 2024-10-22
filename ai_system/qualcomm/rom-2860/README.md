@@ -30,7 +30,7 @@ System requirements
 | Item | Content | Note |
 | -------- | -------- | -------- |
 | Platform | ROM-2860 | Qualcomm QCS6490|
-| CPU / RAM / Disk | Arm64 Cortex-A55 / ? GB / ? GB | |
+| CPU      | Arm64 Cortex-A55 |
 | Accelerator | DSP | |
 | OS/Kernel | ubuntu 20.04 / 5.4.233 | * SNPE (runtime)<br> * Gstreamer <br> |
 | Image | QCS6490.UBUN.1.0 | QCS6490.UBUN.1.0-00011-STD.PROD-1 |
