@@ -103,6 +103,7 @@ Copy the optimized AI model to target device and  launch an AI application with 
 
 ## Application
 Device: Target platform
+[Reference Document](https://docs.qualcomm.com/bundle/publicresource/80-88500-50_REV_AA_QRB5165_LU_2_0_QUALCOMM_INTELLIGENT_MULTIMEDIA_SDK__IM_SDK__Reference.pdf)
   
 | App  | Command  | Remark  |
 | -------- | -------- | ------------- |
