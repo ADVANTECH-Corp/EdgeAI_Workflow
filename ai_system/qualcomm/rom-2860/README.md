@@ -75,6 +75,9 @@ How to intsll the SNPE ( on x86_x64 host machine )
 
 # Develop Flow
 Follow these steps to get and optimize the VisionAI model for target AI device. <br>
+According to the document Reference [Reference Document](https://docs.qualcomm.com/bundle/publicresource/80-88500-50_REV_AA_QRB5165_LU_2_0_QUALCOMM_INTELLIGENT_MULTIMEDIA_SDK__IM_SDK__Reference.pdf) , IM SDK Plug-ins : qtimlvdetection ( module: yolov5)
+  
+
 
 <a name="DownloadModel"/>
 
@@ -92,7 +95,7 @@ Device: Develop platform
      refer to `export.py` within https://github.com/ultralytics/yolov5 
 
 - 3. Convert & Optimize (onnx -> dlc), Refer to document below:<br>
-     https://docs.qualcomm.com/bundle/publicresource/KBA-240222225148_REV_1_Quick_Start_Demo_of_SNPE_Yolov5_in_6490.pdf
+      [Reference Document Link](https://docs.qualcomm.com/bundle/publicresource/KBA-240222225148_REV_1_Quick_Start_Demo_of_SNPE_Yolov5_in_6490.pdf)
  
 <a name="Deploy"/>
 
