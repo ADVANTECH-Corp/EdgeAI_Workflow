@@ -81,7 +81,7 @@ Follow these steps to get and optimize the VisionAI model for target AI device. 
 ## Download Model
 Device: Develop platform
 - 1. Download Model (pt) 
-     [yolov5n.pt](/xdept/public/autoinsert/yolov5n_1727345998107.pt)
+     [yolov5n.pt](https://github.com/ultralytics/yolov5/releases/download/v7.0/yolov5n.pt)
      refer to https://github.com/ultralytics/yolov5
      
 <a name="Convert_Optimize"/>
@@ -92,9 +92,8 @@ Device: Develop platform
      refer to `export.py` within https://github.com/ultralytics/yolov5 
 
 - 3. Convert & Optimize (onnx -> dlc), Refer to document below:<br>
-     [kba-240222225148_rev_1_quick_start_demo_of_snpe_yolov5_in_6490_1727340915309.pdf](/xdept/public/autoinsert/kba-240222225148_rev_1_quick_start_demo_of_snpe_yolov5_in_6490_1727340915309.pdf)
+     https://docs.qualcomm.com/bundle/publicresource/KBA-240222225148_REV_1_Quick_Start_Demo_of_SNPE_Yolov5_in_6490.pdf
  
-
 <a name="Deploy"/>
 
 # Deploy
