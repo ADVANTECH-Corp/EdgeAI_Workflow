@@ -57,14 +57,14 @@ AI Development SDK
 |   SNPE   |  Qualcomm Snapdragon software accelerated runtime for the execution of deep neural networks (for inference) with SNPE, users can:Convert Caffe, Caffe2, TensorFlow, PyTorch and TFLite models to a SNPE deep learning container (DLC) fileQuantize DLC files to 8bit/16bit fixed point for execution on the Qualcomm® Hexagon™ DSP/HVX HTA Integrate a network into applications and other code via C++ or Java Execute the network on the Snapdragon CPU, the Qualcomm® AdrenoTM GPU, or the Hexagon DSP with HVX* and HMX* support, Execute an arbitrarily deep neural network Debug the network model execution on x86 Ubuntu Linux Debug and analyze the performance of the network model with SNPE tools Benchmark a network model for different targets  |     
 
 
-How to intsll the SNPE ( on x86_x64 host machine )
+How to intsll the SNPE on x86_x64 host machine
 1. Sign Up Qualcomm Account My Account (qualcomm.com): https://myaccount.qualcomm.com/signup
 
-2. Install Qualcomm Package Manager 3: https://qpm.qualcomm.com/#/main/tools/details/QPM3
+2. Download and Install Qualcomm Package Manager 3: https://qpm.qualcomm.com/#/main/tools/details/QPM3
 
-3. Install Qualcomm® AI Engine Direct SDK: https://qpm.qualcomm.com/#/main/tools/details/qualcomm_ai_engine_direct
+3. Download and Install Qualcomm® AI Engine Direct SDK: https://qpm.qualcomm.com/#/main/tools/details/qualcomm_ai_engine_direct
 
-4. Install Qualcomm® Neural Processing SDK: https://qpm.qualcomm.com/#/main/tools/details/qualcomm_neural_processing_sdk
+4. Download and Install Qualcomm® Neural Processing SDK: https://qpm.qualcomm.com/#/main/tools/details/qualcomm_neural_processing_sdk
 
 5. Install ML frameworks:
     pip install onnx==1.11.0
@@ -74,8 +74,11 @@ How to intsll the SNPE ( on x86_x64 host machine )
 <a name="DevelopFlow"/>
 
 # Develop Flow
+
 Follow these steps to get and optimize the VisionAI model for target AI device. <br>
-'Table 3-45 Element properties for qtimlvdetection' Refer to the document [Document](https://docs.qualcomm.com/bundle/publicresource/80-88500-50_REV_AA_QRB5165_LU_2_0_QUALCOMM_INTELLIGENT_MULTIMEDIA_SDK__IM_SDK__Reference.pdf)
+
+Refer to **"Table 3-45 Element properties for qtimlvdetection"** section of the [Document](https://docs.qualcomm.com/bundle/publicresource/80-88500-50_REV_AA_QRB5165_LU_2_0_QUALCOMM_INTELLIGENT_MULTIMEDIA_SDK__IM_SDK__Reference.pdf) to check which AI models are supported by ROM-2860 Ubuntu 20.04.
+
 ![qtimlvdetection-module](assets/qtimlvdetection-module.png)
 
 
@@ -85,7 +88,7 @@ Follow these steps to get and optimize the VisionAI model for target AI device. 
 Device: Develop platform
 - 1. Download Model (pt) 
      [yolov5n.pt](https://github.com/ultralytics/yolov5/releases/download/v7.0/yolov5n.pt)
-     refer to https://github.com/ultralytics/yolov5
+     on https://github.com/ultralytics/yolov5
      
 <a name="Convert_Optimize"/>
 
@@ -107,8 +110,8 @@ Copy the optimized AI model to target device and  launch an AI application with 
 ## Application
 Device: Target platform </b>
 
-Refer to '3.23 qtimlvdetection -> Example :  High- and low-resolution Camera streams with Object Detection using
-Video Overlay and displayed on screen' in [Reference Document](https://docs.qualcomm.com/bundle/publicresource/80-88500-50_REV_AA_QRB5165_LU_2_0_QUALCOMM_INTELLIGENT_MULTIMEDIA_SDK__IM_SDK__Reference.pdf)
+Refer to **"3.23 qtimlvdetection -> Example :  High- and low-resolution Camera streams with Object Detection using
+Video Overlay and displayed on screen"** in the [Document](https://docs.qualcomm.com/bundle/publicresource/80-88500-50_REV_AA_QRB5165_LU_2_0_QUALCOMM_INTELLIGENT_MULTIMEDIA_SDK__IM_SDK__Reference.pdf)
   
 | App  | Command  | Remark  |
 | -------- | -------- | ------------- |
