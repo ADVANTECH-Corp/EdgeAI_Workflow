@@ -75,7 +75,7 @@ How to intsll the SNPE ( on x86_x64 host machine )
 
 # Develop Flow
 Follow these steps to get and optimize the VisionAI model for target AI device. <br>
-IM SDK Plug-ins : qtimlvdetection ( module: yolov5) : According to the document [Document](https://docs.qualcomm.com/bundle/publicresource/80-88500-50_REV_AA_QRB5165_LU_2_0_QUALCOMM_INTELLIGENT_MULTIMEDIA_SDK__IM_SDK__Reference.pdf)
+'Table 3-45 Element properties for qtimlvdetection' Refer to the document [Document](https://docs.qualcomm.com/bundle/publicresource/80-88500-50_REV_AA_QRB5165_LU_2_0_QUALCOMM_INTELLIGENT_MULTIMEDIA_SDK__IM_SDK__Reference.pdf)
   
 
 
@@ -106,7 +106,8 @@ Copy the optimized AI model to target device and  launch an AI application with 
 
 ## Application
 Device: Target platform
-[Reference Document](https://docs.qualcomm.com/bundle/publicresource/80-88500-50_REV_AA_QRB5165_LU_2_0_QUALCOMM_INTELLIGENT_MULTIMEDIA_SDK__IM_SDK__Reference.pdf)
+Refer to '3.23 qtimlvdetection -> Example :  High- and low-resolution Camera streams with Object Detection using
+Video Overlay and displayed on screen' in [Reference Document](https://docs.qualcomm.com/bundle/publicresource/80-88500-50_REV_AA_QRB5165_LU_2_0_QUALCOMM_INTELLIGENT_MULTIMEDIA_SDK__IM_SDK__Reference.pdf)
   
 | App  | Command  | Remark  |
 | -------- | -------- | ------------- |
