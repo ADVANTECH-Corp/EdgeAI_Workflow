@@ -77,7 +77,7 @@ How to intsll the SNPE on x86_x64 host machine
 
 Follow these steps to get and optimize the VisionAI model for target AI device. <br>
 
-Refer to **"Table 3-45 Element properties for qtimlvdetection"** section of the [Document](https://docs.qualcomm.com/bundle/publicresource/80-88500-50_REV_AA_QRB5165_LU_2_0_QUALCOMM_INTELLIGENT_MULTIMEDIA_SDK__IM_SDK__Reference.pdf) to check which AI models are supported by ROM-2860 Ubuntu 20.04.
+Refer the [Document](https://docs.qualcomm.com/bundle/publicresource/80-88500-50_REV_AA_QRB5165_LU_2_0_QUALCOMM_INTELLIGENT_MULTIMEDIA_SDK__IM_SDK__Reference.pdf) to check which AI applications and models are supported by ROM-2860 Ubuntu 20.04. Objection detection in **"Table 3-45 Element properties for qtimlvdetection"** section.
 
 ![qtimlvdetection-module](assets/qtimlvdetection-module.png)
 
