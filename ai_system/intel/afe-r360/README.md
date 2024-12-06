@@ -22,9 +22,10 @@ Refer to the following requirements to prepare the target and develop environmen
 ## Target
 | Item | Content | Note |
 | -------- | -------- | -------- |
-| Platform / RAM / Disk |   Intel(R) CoreTM Ultra 7 165U / 32G / 256G  |      |
-| SOC | CPU、iGPU、NPU | |
-| Accelerator | Intel(R) AI Boost (NPU) | NPU Driver 1.5.1 |
+| Platform |   AFE-R360  |   RAM : 32G / Disk : 256G   |
+| CPU  |   Intel(R) CoreTM Ultra 7 165U |  |
+| iGPU | Meteor Lake-P | |
+| NPU | Intel(R) AI Boost (NPU) | NPU Driver 1.5.1 |
 | OS/Kernel | * Ubuntu 24.04 (LTS) / 6.8.0 |  |
 | OpenVINO | 2024.3.0 (LTS) | |
 
@@ -33,7 +34,15 @@ Base on EdgeAI SDK 3.1.0
 <a name="Develop"/>
 
 ## Develop
-### OpenCV 4.7.0
+
+Base on Target Environment
+
+| Item | Introduction | Install |
+| -------- | -------- | -------- |
+| OpenCV |     |     |
+| open model zoo  |    |    |
+
+### Install OpenCV (4.7.0)
 - OpenCV source
  https://github.com/opencv/opencv.git
 - How to install, setup
@@ -41,10 +50,8 @@ Base on EdgeAI SDK 3.1.0
 
 ```
 git clone https://github.com/opencv/opencv.git
-git checkout 725e440
+git checkout 4.7.0
 ```
-
-![EAS_Startkit_OpenCV](assets/EAS_Startkit_OpenCV.png)
 
 2. Following the steps below.
 
@@ -75,7 +82,7 @@ make -j8
 
 ```
 
-### Application Binary
+### Install open model zoo
 - open model zoo
 https://github.com/openvinotoolkit/open_model_zoo/tree/releases/2024/3
 - How to install, setup
@@ -83,13 +90,11 @@ https://github.com/openvinotoolkit/open_model_zoo/tree/releases/2024/3
 Clone on your device and check out to tag "releases/2024/3" .
 ```
 git clone https://github.com/openvinotoolkit/open_model_zoo.git
-git checkout 9c6d95a
+git checkout 2024.3.0
 cd open_model_zoo
 git submodule init
 git submodule update
 ```
-
-![EAS_Startkit_model-zoo](assets/EAS_Startkit_model-zoo.png)
 
 - Following the steps below.
 
@@ -112,44 +117,39 @@ https://github.com/openvinotoolkit/open_model_zoo/blob/releases/2024/3/tools/mod
 <a name="DevelopFlow"/>
 
 # Develop Flow
-Follow these steps to get and optimize the VisionAI model for target AI device. <br>
+Follow these steps to get and optimize the VisionAI model. <br>
 
 <a name="DownloadModel"/>
 
-## Download & Covert Model
-
-### Objection Detection (YOLO v3)
-
-- open model zoo: https://github.com/openvinotoolkit/open_model_zoo/tree/releases/2024/3/models/public/yolo-v3-tf
-
-- Download & Covert
-Clone open model zoo to your device, then download and covert the model following the steps in the link.
+## Download Model
 ```
 omz_downloader --name yolo-v3-tf
 ```
+
+## Covert & Optimize Model
 ```
 omz_converter --name yolo-v3-tf
 ```
 
 
+
 <a name="Deploy"/>
 
 # Deploy
-Copy the optimized AI model to target device and  launch an AI application with gstream pipeline.
+Launch an AI application.
 
 <a name="Application"/>
 
 ## Run Application
 ### Objection Detection (object_detection_demo)
-- Follow the steps in the link
-https://github.com/openvinotoolkit/open_model_zoo/tree/releases/2024/3/demos/object_detection_demo/cpp
 
-![EAS_Startkit_run_app_1](assets/EAS_Startkit_run_app_1.png)
-![EAS_Startkit_run_app_2](assets/EAS_Startkit_run_app_2.png)
-
-- Example
 ```
 cd /$HOME/omz_demos_build/intel64/Release
+```
+```
+PATH
+- model : 
+- video : EdgeAI_Workflow/data/video
 ```
 ```
 source "/opt/intel/openvino_2024/setupvars.sh"
@@ -159,3 +159,6 @@ source "/opt/intel/openvino_2024/setupvars.sh"
 Result:
 
 ![EAS_Startkit_object-detection](assets/EAS_Startkit_object-detection.png)
+
+- See more on
+https://github.com/openvinotoolkit/open_model_zoo/tree/releases/2024/3/demos/object_detection_demo/cpp
