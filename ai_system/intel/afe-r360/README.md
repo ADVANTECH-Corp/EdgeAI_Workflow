@@ -177,7 +177,7 @@ Launch an AI application.
 <a name="Application"/>
 
 ## Run Application
-### Objection Detection (object_detection_demo)
+### Objection Detection
 
 ```
 cd /$HOME/omz_demos_build/intel64/Release
