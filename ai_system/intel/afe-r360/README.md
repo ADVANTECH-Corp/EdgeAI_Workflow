@@ -41,14 +41,15 @@ Base on Target Environment
 | -------- | -------- | -------- |
 | OpenCV |     |     |
 | open model zoo  |    |    |
+| openvino-dev  |    |    |
+| tensorflow  |    |    |
 
 ### Install OpenCV (4.7.0)
-- OpenCV source
- https://github.com/opencv/opencv.git
 - How to install, setup
 1. Clone on your device and check out to tag 4.7.0 .
 
 ```
+cd home/$USER/Downloads
 git clone https://github.com/opencv/opencv.git
 git checkout 4.7.0
 ```
@@ -82,13 +83,14 @@ make -j8
 
 ```
 
+See more for OpenCV : https://github.com/opencv/opencv.git
+
 ### Install open model zoo
-- open model zoo
-https://github.com/openvinotoolkit/open_model_zoo/tree/releases/2024/3
 - How to install, setup
 
 Clone on your device and check out to tag "releases/2024/3" .
 ```
+cd home/$USER/Downloads
 git clone https://github.com/openvinotoolkit/open_model_zoo.git
 git checkout 2024.3.0
 cd open_model_zoo
@@ -103,16 +105,31 @@ git submodule update
 source "/opt/intel/openvino_2024/setupvars.sh"
 ```
 ```
-export OpenCV_DIR=<path>/build_470
+export OpenCV_DIR=home/$USER/Downloads/opencv/build_470
 ```
 ```
 cd open_model_zoo/demos
 ./build_demos.sh
 ```
-### model tool
+- Check
+```
+ls /$HOME/omz_demos_build/intel64/Release
+```
+If the installation fails, it will display ”No such file or directory”.
 
-omz_downloader
-https://github.com/openvinotoolkit/open_model_zoo/blob/releases/2024/3/tools/model_tools/README.md
+See more for open_model_zoo : https://github.com/openvinotoolkit/open_model_zoo/tree/releases/2024/3
+
+### Install openvino-dev & tensorflow
+Build the python virtual environment
+```
+sudo apt install python3.12-venv
+python3 -m venv <env-name>
+```
+```
+source /home/$USER/<env-name>/bin/activate
+pip install openvino-dev
+pip install tensorflow
+```
 
 <a name="DevelopFlow"/>
 
@@ -121,17 +138,24 @@ Follow these steps to get and optimize the VisionAI model. <br>
 
 <a name="DownloadModel"/>
 
-## Download Model
+### Download Model
 ```
+source /home/$USER/<env-name>/bin/activate
+cd Download/open_model_zoo/models/public
 omz_downloader --name yolo-v3-tf
 ```
 
-## Covert & Optimize Model
+### Covert & Optimize Model
 ```
+source /home/$USER/<env-name>/bin/activate
+cd Download/open_model_zoo/models/public
 omz_converter --name yolo-v3-tf
 ```
+### Check
+The converted model will be placed in /home/$USER/Downloads/open_model_zoo/models/pulic/pulic/yolo-v3-tf/FP16/yolo-v3-tf.xml
 
-
+See more for the omz_downloader & omz_converter
+https://github.com/openvinotoolkit/open_model_zoo/blob/releases/2024/3/tools/model_tools/README.md
 
 <a name="Deploy"/>
 
@@ -146,14 +170,14 @@ Launch an AI application.
 ```
 cd /$HOME/omz_demos_build/intel64/Release
 ```
-```
+
 PATH
-- model : 
-- video : EdgeAI_Workflow/data/video
-```
+- model : /home/$USER/Downloads/open_model_zoo/models/pulic/pulic/yolo-v3-tf/FP16/yolo-v3-tf.xml
+- video : /home/$USER/Downloads/EdgeAI_Workflow/data/video/ObjectDetection.mp4
+
 ```
 source "/opt/intel/openvino_2024/setupvars.sh"
-./object_detection_demo -m <path_to_model>/yolo-v3-tf.xml -d CPU -i <path_to_video>/TestVideo.mp4 -at yolo -loop
+./object_detection_demo -m /home/$USER/Downloads/open_model_zoo/models/pulic/pulic/yolo-v3-tf/FP16/yolo-v3-tf.xml -d CPU -i /home/$USER/Downloads/EdgeAI_Workflow/data/video/ObjectDetection.mp4 -at yolo -loop
 ```
 
 Result:
