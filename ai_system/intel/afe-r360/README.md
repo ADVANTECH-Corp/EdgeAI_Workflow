@@ -144,6 +144,7 @@ Follow these steps to get and optimize the VisionAI model. <br>
 ```
 source /home/$USER/<env-name>/bin/activate
 cd Download/open_model_zoo/models/public
+
 omz_downloader --name yolo-v3-tf
 ```
 
@@ -153,6 +154,7 @@ omz_downloader --name yolo-v3-tf
 ```
 source /home/$USER/<env-name>/bin/activate
 cd Download/open_model_zoo/models/public
+
 omz_converter --name yolo-v3-tf
 ```
 ### Check
