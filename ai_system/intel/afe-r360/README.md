@@ -49,7 +49,8 @@ Base on **Target Environment**
 
 ### Install OpenCV (4.7.0)
 - How to install, setup
-1. Clone on your device and check out to tag 4.7.0 .
+
+Clone on your device and check out to tag 4.7.0 .
 
 ```
 cd /home/$USER/Downloads
@@ -57,9 +58,9 @@ git clone https://github.com/opencv/opencv.git
 git checkout 4.7.0
 ```
 
-2. Following the steps below.
+- Following the steps below.
 
-- Install the dependency for OpenCV :
+Install the dependency for OpenCV :
 ```
 sudo apt update
 
@@ -72,13 +73,13 @@ sudo apt install build-essential cmake git pkg-config libgtk-3-dev \
 
 sudo apt install ffmpeg libavformat-dev libavcodec-dev libswscale-dev
 ```
-- make a file in where you clone
+make a file in where you clone
 ```
 cd opencv
 mkdir build_470
 cd build_470
 ```
-- Install
+Install
 ```
 cmake -D CMAKE_BUILD_TYPE=RELEASE -D WITH_FFMPEG=ON -D CMAKE_INSTALL_PREFIX=/usr/local -D OPENCV_GENERATE_PKGCONFIG=ON ..
 
@@ -101,13 +102,14 @@ git submodule update
 
 - Following the steps below.
 
-**Before you run build_demos, you must export to the *build_470* folder you previously created.**
+Before you run build_demos, you must export to the *build_470* folder you previously created.
 ```
 source "/opt/intel/openvino_2024/setupvars.sh"
 ```
 ```
 export OpenCV_DIR=/home/$USER/Downloads/opencv/build_470
 ```
+Install
 ```
 cd open_model_zoo/demos
 ./build_demos.sh
@@ -121,11 +123,16 @@ If the installation fails, it will display ”No such file or directory”.
 <br/>
 
 ### Install openvino-dev & tensorflow
+- How to install, setup
+  
 Build the python virtual environment
 ```
 sudo apt install python3.12-venv
 python3 -m venv <env-name>
 ```
+
+- Following the steps below.
+  
 Install
 ```
 source /home/$USER/<env-name>/bin/activate
