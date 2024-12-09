@@ -92,7 +92,7 @@ make -j8
 
 Clone on your device and check out to tag "releases/2024/3" .
 ```
-cd home/$USER/Downloads
+cd /home/$USER/Downloads
 git clone https://github.com/openvinotoolkit/open_model_zoo.git
 git checkout 2024.3.0
 cd open_model_zoo
@@ -151,7 +151,7 @@ Follow these steps to get and optimize the VisionAI model. <br>
 ### Download Model
 ```
 source /home/$USER/<env-name>/bin/activate
-cd Download/open_model_zoo/models/public
+cd /home/$USER/Downloads/open_model_zoo/models/public
 
 omz_downloader --name yolo-v3-tf
 ```
@@ -161,7 +161,7 @@ omz_downloader --name yolo-v3-tf
 ### Covert & Optimize Model
 ```
 source /home/$USER/<env-name>/bin/activate
-cd Download/open_model_zoo/models/public
+cd /home/$USER/Downloads/open_model_zoo/models/public
 
 omz_converter --name yolo-v3-tf
 ```
