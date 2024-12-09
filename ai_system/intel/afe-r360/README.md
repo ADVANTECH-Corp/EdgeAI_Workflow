@@ -8,7 +8,8 @@ Developers can easily complete the Visual AI development by following these step
   - [Target](#Target)
   - [Develop](#Develop) 
 - [Develop Flow](#DevelopFlow)
-  - [Download & Convert](#DownloadModel) 
+  - [Download model](#DownloadModel)
+  - [Convert & Optimize](#Covert_Optimize) 
 - [Deploy](#Deploy)
   - [Application](#Application)
 
@@ -145,6 +146,8 @@ source /home/$USER/<env-name>/bin/activate
 cd Download/open_model_zoo/models/public
 omz_downloader --name yolo-v3-tf
 ```
+
+<a name="Covert_Optimize"/>
 
 ### Covert & Optimize Model
 ```
