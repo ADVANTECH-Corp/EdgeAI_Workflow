@@ -29,27 +29,29 @@ Refer to the following requirements to prepare the target and develop environmen
 | OS/Kernel | * Ubuntu 24.04 (LTS) / 6.8.0 |  |
 | OpenVINO | 2024.3.0 (LTS) | |
 
-Base on EdgeAI SDK 3.1.0
+Base on **EdgeAI SDK 3.1.0**
 
 <a name="Develop"/>
 
 ## Develop
 
-Base on Target Environment
+Base on **Target Environment**
 
-| Item | Introduction | Install |
+| Item | Introduction | Version |
 | -------- | -------- | -------- |
-| OpenCV |     |     |
-| open model zoo  |    |    |
-| openvino-dev  |    |    |
-| tensorflow  |    |    |
+| OpenCV | https://github.com/opencv/opencv.git    | 4.7.0 |
+| open model zoo  | https://github.com/openvinotoolkit/open_model_zoo/tree/releases/2024/3   | 2024.3.0  |
+| openvino-dev  | Contains omz_downloader & omz_converter tools<br>https://github.com/openvinotoolkit/open_model_zoo/blob/releases/2024/3/tools/model_tools/README.md  | |
+| tensorflow  | https://www.tensorflow.org/   | |
+
+<br/>
 
 ### Install OpenCV (4.7.0)
 - How to install, setup
 1. Clone on your device and check out to tag 4.7.0 .
 
 ```
-cd home/$USER/Downloads
+cd /home/$USER/Downloads
 git clone https://github.com/opencv/opencv.git
 git checkout 4.7.0
 ```
@@ -80,10 +82,8 @@ cd build_470
 cmake -D CMAKE_BUILD_TYPE=RELEASE -D WITH_FFMPEG=ON -D CMAKE_INSTALL_PREFIX=/usr/local -D OPENCV_GENERATE_PKGCONFIG=ON ..
 
 make -j8
-
 ```
-
-See more for OpenCV : https://github.com/opencv/opencv.git
+<br/>
 
 ### Install open model zoo
 - How to install, setup
@@ -105,7 +105,7 @@ git submodule update
 source "/opt/intel/openvino_2024/setupvars.sh"
 ```
 ```
-export OpenCV_DIR=home/$USER/Downloads/opencv/build_470
+export OpenCV_DIR=/home/$USER/Downloads/opencv/build_470
 ```
 ```
 cd open_model_zoo/demos
@@ -117,7 +117,7 @@ ls /$HOME/omz_demos_build/intel64/Release
 ```
 If the installation fails, it will display ”No such file or directory”.
 
-See more for open_model_zoo : https://github.com/openvinotoolkit/open_model_zoo/tree/releases/2024/3
+<br/>
 
 ### Install openvino-dev & tensorflow
 Build the python virtual environment
@@ -125,6 +125,7 @@ Build the python virtual environment
 sudo apt install python3.12-venv
 python3 -m venv <env-name>
 ```
+Install
 ```
 source /home/$USER/<env-name>/bin/activate
 pip install openvino-dev
@@ -154,8 +155,6 @@ omz_converter --name yolo-v3-tf
 ### Check
 The converted model will be placed in /home/$USER/Downloads/open_model_zoo/models/pulic/pulic/yolo-v3-tf/FP16/yolo-v3-tf.xml
 
-See more for the omz_downloader & omz_converter
-https://github.com/openvinotoolkit/open_model_zoo/blob/releases/2024/3/tools/model_tools/README.md
 
 <a name="Deploy"/>
 
