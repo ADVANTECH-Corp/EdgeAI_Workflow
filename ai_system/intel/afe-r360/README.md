@@ -129,6 +129,7 @@ python3 -m venv <env-name>
 Install
 ```
 source /home/$USER/<env-name>/bin/activate
+
 pip install openvino-dev
 pip install tensorflow
 ```
@@ -181,6 +182,7 @@ PATH
 
 ```
 source "/opt/intel/openvino_2024/setupvars.sh"
+
 ./object_detection_demo -m /home/$USER/Downloads/open_model_zoo/models/pulic/pulic/yolo-v3-tf/FP16/yolo-v3-tf.xml -d CPU -i /home/$USER/Downloads/EdgeAI_Workflow/data/video/ObjectDetection.mp4 -at yolo -loop
 ```
 
