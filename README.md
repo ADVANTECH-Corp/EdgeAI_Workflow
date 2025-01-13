@@ -4,8 +4,9 @@ The Edge AI Start Kit is designed to help developers kickstart AI application de
 ![eas_ai_workflow](assets/EAS_Startkit_flow.png)
 
 # AI System
-| Model |  Vendor |AI Workflow | How-To |
+| Model |  Vendor | OS | AI Workflow | How-To |
 | -------- | -------- | -------- | ---- |
-| ROM-2860     | Qualcomm QCS6490 | Object Detection     | ai_system/qualcomm/rom-2860/README.md  |
+| ROM-2860     | Qualcomm QCS6490 | Ubuntu 20.04 | Object Detection     | ai_system/qualcomm/rom-2860/README.md  |
+| AOM-2721     | Qualcomm QCS640 | LE/QIRP 1.1 Yocto-4.0 | Object Detection | ai_system/qualcomm/aom-2721_le-yocot/README.md |
 | AFE-R360     | Intel 14th Meteor Lake | Object Detection     | ai_system/intel/afe-r360/README.md  |
 
