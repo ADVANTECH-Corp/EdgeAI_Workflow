@@ -2,8 +2,6 @@
 This example will demonstrate how to develop an vision AI Object Detection on AOM-2721 ( Qualcomm QCS6490 ) platform.
 Developers can easily complete the Visual AI development by following these steps.
 
-![eas_ai_workflow](assets/eas_startkit_rom-2860.png)
-
  
 
 # Environment
@@ -14,11 +12,8 @@ Developers can easily complete the Visual AI development by following these step
 | SOC | Qualcomm QCS6490 | |
 | Accelerator | DSP | |
 | OS/Kernel | LE/QIRP1.1 Yocto-4.0 / 6.6.28 | |
-
-###  Image
-| Item | Version |  
-| -------- | -------- | 
-| 2721A1AIM38LIV11033  |  2721A1AIM38LIV11033    |       
+| BSP | 2721A1AIM38LIV11033 | |
+ 
 
 ### AI Development SDK 
 | Item | Introduction |  Install |
@@ -64,7 +59,7 @@ Model:Yolov5
 Input: Video / USB Camera
 
 ## AI Model
-### Download the pre-trained AI Model from Qualcomm AI Hub
+### Download pre-trained AI Model from Qualcomm AI Hub
 - 1. Download Model from AI Hub
 
 ### Download AI Model and Convert (Object detection)
