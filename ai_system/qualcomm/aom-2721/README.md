@@ -84,11 +84,6 @@ Input: Video / USB Camera
 
 ![eas_ai_workflow](assets/rom-2860_objectdetection_result.png)
 
-
-# Benchmark
-| Device   | Command  | Introduction  |
-| -------- | -------- | ------------- |
-| AOM-2721 | snpe-throughput-net-run --duration 5 --perf_profile burst --use_dsp --userbuffer_auto --container mobilenet_v1_ssd_2017_quantized.dlc |Run on dsp |
  
  
 
