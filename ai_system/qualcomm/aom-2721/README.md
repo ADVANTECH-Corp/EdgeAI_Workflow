@@ -59,10 +59,10 @@ Model:Yolov5
 Input: Video / USB Camera
 
 ## AI Model
-### Download pre-trained AI Model from Qualcomm AI Hub
+### Download the pre-trained AI Model from Qualcomm AI Hub
 - 1. Download Model from AI Hub
 
-### Download AI Model and Convert (Object detection)
+### Download a Open Yolo Model and Convert to DLC (Object detection)
 - 1. Download Model (pt) 
      [yolov5n.pt](/xdept/public/autoinsert/yolov5n_1727345998107.pt)
      refer to https://github.com/ultralytics/yolov5 
