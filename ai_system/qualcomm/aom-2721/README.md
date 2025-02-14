@@ -87,11 +87,16 @@ Follow these steps to get pre-trained AI Model from Qualcomm AI Hub or get a Ope
      [yolov5n.pt](https://github.com/ultralytics/yolov5/releases/download/v7.0/yolov5n.pt)
      on https://github.com/ultralytics/yolov5
      
-- 2. Convert (pt -> onnx) 
-     refer to `export.py` within https://github.com/ultralytics/yolov5 
+- 2. Convert (pt -> onnx)  
+     step-1: git clone https://github.com/ultralytics/yolov5
+     step-2: cd yolov5
+     step-3: pip install -r requirements.txt   
+     step-4: python export.py --weights yolov5n.pt --include onnx
 
 - 3. Convert & Optimize (onnx -> dlc), Refer to document below:<br>
-      [Reference Document Link](https://docs.qualcomm.com/bundle/publicresource/KBA-240222225148_REV_1_Quick_Start_Demo_of_SNPE_Yolov5_in_6490.pdf)
+      step-1: To download file: [Reference Document Link](https://docs.qualcomm.com/bundle/publicresource/KBA-240222225148_REV_1_Quick_Start_Demo_of_SNPE_Yolov5_in_6490.pdf)
+      step-2: To execute the step1 to step6 of the download file. 
+     
  
 <a name="Deploy"/>
 
