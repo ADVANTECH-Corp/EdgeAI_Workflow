@@ -84,16 +84,15 @@ Follow these steps to get pre-trained AI Model from Qualcomm AI Hub or get a Ope
 
 ## Open AI Model 
 - 1. Download Model (pt) 
-     [yolov5n.pt](/xdept/public/autoinsert/yolov5n_1727345998107.pt)
-     refer to https://github.com/ultralytics/yolov5
+     [yolov5n.pt](https://github.com/ultralytics/yolov5/releases/download/v7.0/yolov5n.pt)
+     on https://github.com/ultralytics/yolov5
      
 - 2. Convert (pt -> onnx) 
      refer to `export.py` within https://github.com/ultralytics/yolov5 
 
-- 3. Convert (onnx -> dlc), Refer to document below:
- [kba-240222225148_rev_1_quick_start_demo_of_snpe_yolov5_in_6490_1727340915309.pdf](/xdept/public/autoinsert/kba-240222225148_rev_1_quick_start_demo_of_snpe_yolov5_in_6490_1727340915309.pdf)
+- 3. Convert & Optimize (onnx -> dlc), Refer to document below:<br>
+      [Reference Document Link](https://docs.qualcomm.com/bundle/publicresource/KBA-240222225148_REV_1_Quick_Start_Demo_of_SNPE_Yolov5_in_6490.pdf)
  
-
 <a name="Deploy"/>
 
 # Deploy
