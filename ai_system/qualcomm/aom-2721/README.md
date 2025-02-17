@@ -45,7 +45,7 @@ AI Inference Framework
 System requirements
 | Item | Content | Note |
 | -------- | -------- | -------- |
-| Platform | Intel 12 or 13th CPU   |      |
+| Platform | Intel 10 ~ 13th CPU   |  x86_64    |
 | OS/Kernel | Ubuntu 20.04 | * Python 3.8 |
 
 AI Development SDK 
@@ -64,16 +64,17 @@ How to intsll the SNPE on x86_x64 host machine
 4. Download and Install Qualcomm® Neural Processing SDK: https://qpm.qualcomm.com/#/main/tools/details/qualcomm_neural_processing_sdk
 
 5. Install ML frameworks:
-    pip install onnx==1.11.0
-    pip install tensorflow==2.10.1
-    pip install torch==1.13.1"
+    - pip install onnx==1.11.0
+    - pip install tensorflow==2.10.1
+    - pip install torch==1.13.1"
 
 
 
 <a name="DevelopFlow"/>
 
 # Develop Flow
-Follow these steps to get pre-trained AI Model from Qualcomm AI Hub or get a Open AI Model then optimize and convert for AOM-2721 (QCS6490) device. <br>
+Follow these steps on develop platform (x86_64) to get pre-trained AI Model from Qualcomm AI Hub or get a Open AI Model then optimize and convert for AOM-2721 (QCS6490) device. <br>
+
 
 <a name="QC_AI_Hub"/>
 
@@ -88,14 +89,14 @@ Follow these steps to get pre-trained AI Model from Qualcomm AI Hub or get a Ope
      on https://github.com/ultralytics/yolov5
      
 - 2. Convert (pt -> onnx)  
-     step-1: git clone https://github.com/ultralytics/yolov5
-     step-2: cd yolov5
-     step-3: pip install -r requirements.txt   
-     step-4: python export.py --weights yolov5n.pt --include onnx
+     - step-1: git clone https://github.com/ultralytics/yolov5
+     - step-2: cd yolov5
+     - step-3: pip install -r requirements.txt   
+     - step-4: python export.py --weights yolov5n.pt --include onnx
 
 - 3. Convert & Optimize (onnx -> dlc), Refer to document below:<br>
-      step-1: To download file: [Reference Document Link](https://docs.qualcomm.com/bundle/publicresource/KBA-240222225148_REV_1_Quick_Start_Demo_of_SNPE_Yolov5_in_6490.pdf)
-      step-2: To execute the step1 to step6 of the download file. 
+      - step-1: To download file: [Reference Document Link](https://docs.qualcomm.com/bundle/publicresource/KBA-240222225148_REV_1_Quick_Start_Demo_of_SNPE_Yolov5_in_6490.pdf)
+      - step-2: To execute the step1 to step6 of the download file. 
      
  
 <a name="Deploy"/>
