@@ -6,7 +6,7 @@ Developers can easily complete the Visual AI development by following these step
 
 - [Environment](#Environment)
   - [Target](#Target)
-  - [Develop](#Develop) 
+  - [Development](#Development) 
 - [Develop Flow](#DevelopFlow)
   - [Download model](#DownloadModel)
   - [Convert & Optimize](#Covert_Optimize) 
@@ -32,9 +32,9 @@ Refer to the following requirements to prepare the target and develop environmen
 
 Base on **EdgeAI SDK 3.1.0**
 
-<a name="Develop"/>
+<a name="Development"/>
 
-## Develop
+## Development
 
 Base on **Target Environment**
 
