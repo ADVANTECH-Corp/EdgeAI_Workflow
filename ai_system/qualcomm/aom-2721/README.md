@@ -9,7 +9,7 @@ Developers can easily complete the Visual AI development by following these step
 # Table of Contents
 - [Environment](#Environment)
   - [Target](#Target)
-  - [Develop](#Develop) 
+  - [Development](#Development) 
 - [Develop Flow](#DevelopFlow)
   - [Qualcomm AI Hub](#QC_AI_Hub)
   - [Open AI Model](#Open_AI_Model)
@@ -41,7 +41,7 @@ AI Inference Framework
 
 <a name="Develop"/>
 
-## Develop
+## Development
 System requirements
 | Item | Content | Note |
 | -------- | -------- | -------- |
@@ -73,7 +73,7 @@ How to intsll the SNPE on x86_x64 host machine
 <a name="DevelopFlow"/>
 
 # Develop Flow
-Follow these steps on develop platform (x86_64) to get pre-trained AI Model from Qualcomm AI Hub or get a Open AI Model then optimize and convert for AOM-2721 (QCS6490) device. <br>
+Follow these steps on the development platform (x86_64) to obtain a pre-trained AI model from the Qualcomm AI Hub or an open AI model, then optimize and convert it for the AOM-2721 (QCS6490) device. <br>
 
 
 <a name="QC_AI_Hub"/>
