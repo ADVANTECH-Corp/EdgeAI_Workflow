@@ -11,7 +11,7 @@ Developers can easily complete the Visual AI development by following these step
 # Table of Contents
 - [Environment](#Environment)
   - [Target](#Target)
-  - [Develop](#Develop) 
+  - [Development](#Development) 
 - [Develop Flow](#DevelopFlow)
   - [Download Model](#DownloadModel)
   - [Convert & Optimize](#Convert_Optimize)  
@@ -42,13 +42,13 @@ AI Inference Framework
 | SNPE     | v2.20.0.240223    | The Qualcomm® Neural Processing SDK is a Qualcomm Snapdragon software accelerated runtime for the execution of deep neural networks. With Qualcomm® Neural Processing SDK : <br> * Execute an arbitrarily deep neural network <br> * Execute the network on the Snapdragon CPU, the Adreno GPU or the Hexagon DSP. <br> * Debug the network execution on x86 Ubuntu Linux  <br> * Convert PyTorch, TFLite, ONNX, and TensorFlow models to a Qualcomm® Neural Processing SDK Deep Learning Container (DLC) file  <br> * Quantize DLC files to 8 or 16 bit fixed point for running on the Hexagon DSP  <br> * Debug and analyze the performance of the network with Qualcomm® Neural Processing SDK tools  <br> * Integrate a network into applications and other code via C++ or Java |
 | Gstreamer     |  1.16.3   | GStreamer is a library for constructing graphs of media-handling components. The applications it supports range from simple Ogg/Vorbis playback, audio/video streaming to complex audio (mixing) and video (non-linear editing) processing. |
 
-<a name="Develop"/>
+<a name="Development"/>
 
-## Develop
+## Development
 System requirements
 | Item | Content | Note |
 | -------- | -------- | -------- |
-| Platform | Intel 12 or 13th CPU   |      |
+| Platform | Intel 10 ~ 13th CPU   |  x86_64 |
 | OS/Kernel | Ubuntu 20.04 | * Python 3.8 |
 
 AI Development SDK 
@@ -67,9 +67,9 @@ How to intsll the SNPE on x86_x64 host machine
 4. Download and Install Qualcomm® Neural Processing SDK: https://qpm.qualcomm.com/#/main/tools/details/qualcomm_neural_processing_sdk
 
 5. Install ML frameworks:
-    pip install onnx==1.11.0
-    pip install tensorflow==2.10.1
-    pip install torch==1.13.1"
+    - pip install onnx==1.11.0
+    - pip install tensorflow==2.10.1
+    - pip install torch==1.13.1"
 
 <a name="DevelopFlow"/>
 
@@ -95,10 +95,14 @@ Device: Develop platform
 ## Convert & Optimize
 Device: Develop platform
 - 2. Convert (pt -> onnx) 
-     refer to `export.py` within https://github.com/ultralytics/yolov5 
+     - step-1: git clone https://github.com/ultralytics/yolov5
+     - step-2: cd yolov5
+     - step-3: pip install -r requirements.txt   
+     - step-4: python export.py --weights yolov5n.pt --include onnx
 
 - 3. Convert & Optimize (onnx -> dlc), Refer to document below:<br>
-      [Reference Document Link](https://docs.qualcomm.com/bundle/publicresource/KBA-240222225148_REV_1_Quick_Start_Demo_of_SNPE_Yolov5_in_6490.pdf)
+      - step-1: To download file: [Reference Document Link](https://docs.qualcomm.com/bundle/publicresource/KBA-240222225148_REV_1_Quick_Start_Demo_of_SNPE_Yolov5_in_6490.pdf)
+      - step-2: To execute the step1 to step6 of the download file. 
  
 <a name="Deploy"/>
 
