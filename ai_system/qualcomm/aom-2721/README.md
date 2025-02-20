@@ -74,13 +74,7 @@ How to intsll the SNPE on x86_x64 host machine
 
 # Develop Flow
 Follow these steps on the development platform (x86_64) to obtain a pre-trained AI model from the Qualcomm AI Hub or an open AI model, then optimize and convert it for the AOM-2721 (QCS6490) device. <br>
-
-
-<a name="QC_AI_Hub"/>
-
-## Qualcomm AI Hub
-- 1. Download Model from AI Hub
-
+ 
 <a name="Open_AI_Model"/>
 
 ## Open AI Model 
@@ -128,21 +122,21 @@ Developers can easily complete the Visual AI development by following these step
 
 
 # Table of Contents
-- [Environment](#Environment)
-  - [Target](#Target)
-  - [Development](#Development) 
-- [Develop Flow](#DevelopFlow)
-  - [Qualcomm AI Hub](#QC_AI_Hub)
-  - [Open AI Model](#Open_AI_Model)
-- [Deploy](#Deploy)
-  - [Application](#Application)
+- [Environment](#Environment-AI-Hub)
+  - [Target](#Target-AI-Hub)
+  - [Development](#Development-AI-Hub) 
+- [Develop Flow](#DevelopFlow-AI-Hub)
+  - [Qualcomm AI Hub](#QC_AI_Hub-AI-Hub)
+  - [Open AI Model](#Open_AI_Model-AI-Hub)
+- [Deploy](#Deploy-AI-Hub)
+  - [Application](#Application-AI-Hub)
 
-<a name="Environment"/>
+<a name="Environment-AI-Hub"/>
 
 # Environment
 Refer to the following requirements to prepare the target and develop environment.
 
-<a name="Target"/>
+<a name="Target-AI-Hub"/>
 
 ## Target
 | Item | Content | Note |
@@ -160,7 +154,7 @@ AI Inference Framework
 | SNPE     |    v2.20.0.240223  | The Qualcomm® Neural Processing SDK is a Qualcomm Snapdragon software accelerated runtime for the execution of deep neural networks. With Qualcomm® Neural Processing SDK : <br> * Execute an arbitrarily deep neural network <br> * Execute the network on the Snapdragon CPU, the Adreno GPU or the Hexagon DSP. <br> * Debug the network execution on x86 Ubuntu Linux  <br> * Convert PyTorch, TFLite, ONNX, and TensorFlow models to a Qualcomm® Neural Processing SDK Deep Learning Container (DLC) file  <br> * Quantize DLC files to 8 or 16 bit fixed point for running on the Hexagon DSP  <br> * Debug and analyze the performance of the network with Qualcomm® Neural Processing SDK tools  <br> * Integrate a network into applications and other code via C++ or Java |
 | Gstreamer     |  1.20.7   | GStreamer is a library for constructing graphs of media-handling components. The applications it supports range from simple Ogg/Vorbis playback, audio/video streaming to complex audio (mixing) and video (non-linear editing) processing. |
 
-<a name="Development"/>
+<a name="Development-AI-Hub"/>
 
 ## Development
 System requirements
@@ -277,12 +271,12 @@ System requirements
  
  
  
-<a name="Deploy"/>
+<a name="Deploy-AI-Hub"/>
 
 # Deploy
 Copy the optimized AI model (yolov8_det_quantized.tflite is created based on previous step) to target device and  launch an AI application with gstream pipeline.
 
-<a name="Application"/>
+<a name="Application-AI-Hub"/>
 
 ## Application
 | Device   | Command  | Introduction  |
