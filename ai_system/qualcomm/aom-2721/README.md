@@ -111,7 +111,7 @@ Copy the optimized AI model to target device and  launch an AI application with 
 
  
  
-# Qualcomm AI Hub Models Run on AOM-2721 ( Qualcomm/QCS6490 )
+# Qualcomm AI Hub Models Run on AOM-2721(Qualcomm/QCS6490)
 
 This example will demonstrate how to develop an vision AI model from Qualcomm AI Hub on AOM-2721 ( Qualcomm QCS6490 ) platform.
 Developers can easily complete the Visual AI development by following these steps.
@@ -125,9 +125,7 @@ Developers can easily complete the Visual AI development by following these step
 - [Environment](#Environment-AI-Hub)
   - [Target](#Target-AI-Hub)
   - [Development](#Development-AI-Hub) 
-- [Develop Flow](#DevelopFlow-AI-Hub)
-  - [Qualcomm AI Hub](#QC_AI_Hub-AI-Hub)
-  - [Open AI Model](#Open_AI_Model-AI-Hub)
+  - [AI Hub On Host](#How-To-Use-AI-Hub)
 - [Deploy](#Deploy-AI-Hub)
   - [Application](#Application-AI-Hub)
 
@@ -164,6 +162,7 @@ System requirements
 | OS/Kernel | Ubuntu 22.04 | * Python 3.10 |
 
 
+<a name="How-To-Use-AI-Hub"/>
 
 ### How to use the AI-Hub on x86_x64 host machine
 1. * Sign Up / Login  (Qualcomm AI Hub) 
