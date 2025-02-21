@@ -91,7 +91,9 @@ Follow these steps on the development platform (x86_64) to obtain a pre-trained 
 - 3. Convert & Optimize (onnx -> dlc), Refer to document below:<br>
       - step-1: To download file: [Reference Document Link](https://docs.qualcomm.com/bundle/publicresource/KBA-240222225148_REV_1_Quick_Start_Demo_of_SNPE_Yolov5_in_6490.pdf)
       - step-2: To execute the step1 to step6 of the download file. 
-     
+- 4.  To get label file:<br>
+      - git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git
+      - EdgeAI_Workflow\ai_system\qualcomm\aom-2721\labels\yolov5.labels
  
 <a name="Deploy"/>
 
@@ -165,110 +167,28 @@ System requirements
 <a name="How-To-Use-AI-Hub"/>
 
 ### How to use the AI-Hub on x86_x64 host machine
-1. * Sign Up / Login  (Qualcomm AI Hub) 
+1. * Sign Up / Login  (Qualcomm AI Hub)<br> 
     https://app.aihub.qualcomm.com/
 
-2. * To get token (**red color / it's sample and not for real**) 
+2. * To get token (**red color / it's sample and not for real**)<br> 
      ![ai-hub-setting-token.png](assets/ai-hub-setting.png)
 
-3. * Install AI-Hub Tool:
+3. * Install AI-Hub Tool:<br>
      sudo apt install git
      sudo apt install python3-pip -y
      sudo pip install qai-hub
   
-4. * Install AI-Hub Model: 
+4. * Install AI-Hub Model:<br>
      qai-hub configure --api_token  **token-value**     # refer to step 2
      pip install "qai-hub-models[yolov8-det-quantized]"
      python3 -m qai_hub_models.models.yolov8_det_quantized.export
 
-5. * Get Model (.tflite)
+5. * Get Model (.tflite)<br>
    -> build/yolov8_det_quantized/yolov8_det_quantized.tflite
 
-6. * Create label file 
-     ****** save contents below to **coco_labels.txt** ******
-      person
-      bicycle
-      car
-      motorcycle
-      airplane
-      bus
-      train
-      truck
-      boat
-      traffic light
-      fire hydrant
-      stop sign
-      parking meter
-      bench
-      bird
-      cat
-      dog
-      horse
-      sheep
-      cow
-      elephant
-      bear
-      zebra
-      giraffe
-      backpack
-      umbrella
-      handbag
-      tie
-      suitcase
-      frisbee
-      skis
-      snowboard
-      sports ball
-      kite
-      baseball bat
-      baseball glove
-      skateboard
-      surfboard
-      tennis racket
-      bottle
-      wine glass
-      cup
-      fork
-      knife
-      spoon
-      bowl
-      banana
-      apple
-      sandwich
-      orange
-      broccoli
-      carrot
-      hot dog
-      pizza
-      donut
-      cake
-      chair
-      couch
-      potted plant
-      bed
-      dining table
-      toilet
-      tv
-      laptop
-      mouse
-      remote
-      keyboard
-      cell phone
-      microwave
-      oven
-      toaster
-      sink
-      refrigerator
-      book
-      clock
-      vase
-      scissors
-      teddy bear
-      hair drier
-      toothbrush
-
- 
- 
+6. * To get label file:<br>
+    - git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git
+    - EdgeAI_Workflow\ai_system\qualcomm\aom-2721\labels\coco_labels.txt 
  
 <a name="Deploy-AI-Hub"/>
 
