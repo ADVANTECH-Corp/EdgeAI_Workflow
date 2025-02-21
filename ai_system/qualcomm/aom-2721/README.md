@@ -167,26 +167,26 @@ System requirements
 <a name="How-To-Use-AI-Hub"/>
 
 ### How to use the AI-Hub on x86_x64 host machine
-Step 1. * Sign Up / Login  (Qualcomm AI Hub) <br>
+Step 1. Sign Up / Login  (Qualcomm AI Hub) <br>
      https://app.aihub.qualcomm.com/
 
-Step 2. * To get token (**red color / it's sample and not for real**) <br> 
+Step 2. To get token (**red color / it's sample and not for real**) <br> 
      ![ai-hub-setting-token.png](assets/ai-hub-setting.png)
 
-Step 3. * Install AI-Hub Tool:<br>
+Step 3. Install AI-Hub Tool:<br>
      sudo apt install git <br>
      sudo apt install python3-pip -y <br>
      sudo pip install qai-hub <br>
   
-Step 4. * Install AI-Hub Model:<br>
+Step 4. Install AI-Hub Model:<br>
      qai-hub configure --api_token  **token-value(refer to Step 2)** <br>
      pip install "qai-hub-models[yolov8-det-quantized]" <br>
      python3 -m qai_hub_models.models.yolov8_det_quantized.export <br>
 
-Step 5. * Get Model (.tflite)<br>
+Step 5. Get Model (.tflite)<br>
      build/yolov8_det_quantized/yolov8_det_quantized.tflite <br>
 
-Step 6. * To get label file:<br>
+Step 6. To get label file:<br>
      git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git <br>
      EdgeAI_Workflow\ai_system\qualcomm\aom-2721\labels\coco_labels.txt <br>
  
