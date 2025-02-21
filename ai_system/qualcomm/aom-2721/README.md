@@ -37,7 +37,7 @@ AI Inference Framework
 | AI Frameworks | Version | Description | 
 | -------- | -------- | -------- | 
 | SNPE     | v2.20.0.240223    | The Qualcomm® Neural Processing SDK is a Qualcomm Snapdragon software accelerated runtime for the execution of deep neural networks. With Qualcomm® Neural Processing SDK : <br> * Execute an arbitrarily deep neural network <br> * Execute the network on the Snapdragon CPU, the Adreno GPU or the Hexagon DSP. <br> * Debug the network execution on x86 Ubuntu Linux  <br> * Convert PyTorch, TFLite, ONNX, and TensorFlow models to a Qualcomm® Neural Processing SDK Deep Learning Container (DLC) file  <br> * Quantize DLC files to 8 or 16 bit fixed point for running on the Hexagon DSP  <br> * Debug and analyze the performance of the network with Qualcomm® Neural Processing SDK tools  <br> * Integrate a network into applications and other code via C++ or Java |
-| Gstreamer     |  1.16.3   | GStreamer is a library for constructing graphs of media-handling components. The applications it supports range from simple Ogg/Vorbis playback, audio/video streaming to complex audio (mixing) and video (non-linear editing) processing. |
+| Gstreamer     |  1.20.7   | GStreamer is a library for constructing graphs of media-handling components. The applications it supports range from simple Ogg/Vorbis playback, audio/video streaming to complex audio (mixing) and video (non-linear editing) processing. |
 
 <a name="Development"/>
 
@@ -163,32 +163,32 @@ System requirements
 | Platform | Intel 10 ~ 13th CPU   |  x86_64    |
 | OS/Kernel | Ubuntu 22.04 | * Python 3.10 |
 
-
+ 
 <a name="How-To-Use-AI-Hub"/>
 
 ### How to use the AI-Hub on x86_x64 host machine
-Step 1. * Sign Up / Login  (Qualcomm AI Hub)<br> 
+Step 1. * Sign Up / Login  (Qualcomm AI Hub) <br>
      https://app.aihub.qualcomm.com/
 
-Step 2. * To get token (**red color / it's sample and not for real**)<br> 
+Step 2. * To get token (**red color / it's sample and not for real**) <br> 
      ![ai-hub-setting-token.png](assets/ai-hub-setting.png)
 
 Step 3. * Install AI-Hub Tool:<br>
-     sudo apt install git
-     sudo apt install python3-pip -y
-     sudo pip install qai-hub
+     sudo apt install git <br>
+     sudo apt install python3-pip -y <br>
+     sudo pip install qai-hub <br>
   
 Step 4. * Install AI-Hub Model:<br>
-     qai-hub configure --api_token  **token-value(refer to Step 2)**
-     pip install "qai-hub-models[yolov8-det-quantized]"
-     python3 -m qai_hub_models.models.yolov8_det_quantized.export
+     qai-hub configure --api_token  **token-value(refer to Step 2)** <br>
+     pip install "qai-hub-models[yolov8-det-quantized]" <br>
+     python3 -m qai_hub_models.models.yolov8_det_quantized.export <br>
 
 Step 5. * Get Model (.tflite)<br>
-     build/yolov8_det_quantized/yolov8_det_quantized.tflite
+     build/yolov8_det_quantized/yolov8_det_quantized.tflite <br>
 
 Step 6. * To get label file:<br>
-     git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git
-     EdgeAI_Workflow\ai_system\qualcomm\aom-2721\labels\coco_labels.txt
+     git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git <br>
+     EdgeAI_Workflow\ai_system\qualcomm\aom-2721\labels\coco_labels.txt <br>
  
 <a name="Deploy-AI-Hub"/>
 
