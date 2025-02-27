@@ -1,4 +1,4 @@
-# Create an Object Detection Demo using Qualcomm AI Hub on AOM-2721(Qualcomm/QCS6490)
+# Create an Object Detection Demo on AOM-2721(Qualcomm/QCS6490) using Qualcomm AI Hub
 
 This example will demonstrate how to develop an vision AI model from Qualcomm AI Hub on AOM-2721 ( Qualcomm QCS6490 ) platform.
 Developers can easily complete the Visual AI development by following these steps.
