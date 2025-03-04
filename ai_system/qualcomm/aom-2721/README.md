@@ -1,5 +1,5 @@
 # Overview
-This folder contains the process and instructions for AI development on the AOM-2721 (Qualcomm QCS6490) edge device.
+This folder contains the process and instructions for AI development on the AOM-2721 (Qualcomm QCS6490).
 
 # Computer Vision
 
