@@ -190,7 +190,16 @@ PATH
 ```
 source "/opt/intel/openvino_2024/setupvars.sh"
 
+
+# run CPU
 ./object_detection_demo -m /home/$USER/Downloads/open_model_zoo/models/pulic/pulic/yolo-v3-tf/FP16/yolo-v3-tf.xml -d CPU -i /home/$USER/Downloads/EdgeAI_Workflow/data/video/ObjectDetection.mp4 -at yolo -loop
+
+# run iGPU
+./object_detection_demo -m /home/$USER/Downloads/open_model_zoo/models/pulic/pulic/yolo-v3-tf/FP16/yolo-v3-tf.xml -d GPU -i /home/$USER/Downloads/EdgeAI_Workflow/data/video/ObjectDetection.mp4 -at yolo -loop
+
+# run NPU
+./object_detection_demo -m /home/$USER/Downloads/open_model_zoo/models/pulic/pulic/yolo-v3-tf/FP16/yolo-v3-tf.xml -d NPU -i /home/$USER/Downloads/EdgeAI_Workflow/data/video/ObjectDetection.mp4 -at yolo -loop
+
 ```
 
 Result:
