@@ -92,6 +92,10 @@ Copy the optimized AI model (yolov8_det_quantized.tflite is created based on pre
    To get applications for script files.<br> 
    
    $ git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git <br>
+
+   ### prerequisite 
+   1. yolov8_det_quantized.tflite : in the working directory
+   2. coco_labels.txt : in the working directory
       
    To run with usb-camera <br>
    => EdgeAI_Workflow/ai_system/qualcomm/aom-2721/script/yolov8_cam_ai_hub.sh <br>
