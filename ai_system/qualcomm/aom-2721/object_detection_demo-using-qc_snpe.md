@@ -86,7 +86,7 @@ Follow these steps on the development platform (x86_64) to obtain a pre-trained 
      - step-1: git clone https://github.com/ultralytics/yolov5
      - step-2: cd yolov5
      - step-3: pip install -r requirements.txt   
-     - step-4: python export.py --weights yolov5n.pt --include onnx
+     - step-4: python export.py --weights yolov5n.pt --include onnx --imgsz 320
 
 - 3. Convert & Optimize (onnx -> dlc), Refer to document below:<br>
       - step-1: To download file: [Reference Document Link](https://docs.qualcomm.com/bundle/publicresource/KBA-240222225148_REV_1_Quick_Start_Demo_of_SNPE_Yolov5_in_6490.pdf)
