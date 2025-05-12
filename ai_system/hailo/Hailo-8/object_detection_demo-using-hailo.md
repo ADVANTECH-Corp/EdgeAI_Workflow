@@ -79,7 +79,7 @@ docker run --rm --privileged --network host --name adv_hailo --ipc=host --device
 
 Result:
 
-![EAS_Startkit_object-detection](assets/EAS_Startkit_object-detection.png)
+![EAS_Startkit_object-detection](assets/hailo_object_detection_video.png)
 
 - See more on
 https://github.com/hailo-ai/tappas/tree/master/apps/h8/gstreamer/general/detection
