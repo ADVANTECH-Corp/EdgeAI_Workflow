@@ -2,8 +2,11 @@
 This example will demonstrate how to develop an vision AI Object Detection on Hailo-8 ( EAI-1200 / EAI-3300 ) platform.
 Developers can easily complete the Visual AI development by following these steps.
 
-![eas_ai_workflow](assets/eas_startkit_afe-r360.png)
-
+* Application: Objection Detection
+* Model: Yolov8
+* Input: Video / USB Camera
+  
+# Table of Contents
 - [Environment](#Environment)
   - [Target](#Target)
   - [Development](#Development) 
@@ -33,6 +36,12 @@ Base on **EdgeAI SDK 3.3.0**
 
 Base on **Target Environment**
 
+System requirements
+| Item | Content | Note |
+| -------- | -------- | -------- |
+| Platform | Intel 10 ~ 13th CPU   |  x86_64    |
+| OS/Kernel | Ubuntu 22.04 | * Python 3.10 |
+
 | AI Frameeorks | Version | Description |
 | -------- | -------- | -------- |
 | HailoRT - include HailoRT、PCIe driver、Python package(3.10) | https://hailo.ai/products/hailo-software/hailo-ai-software-suite/#sw-hailort    | 4.20.0 |
@@ -44,9 +53,7 @@ Base on **Target Environment**
 <br/>
 
 ### Install docker image
-- How to pull
-
-
+- Docker pull
 ```
  sudo docker pull advigw/eas-x86-hailo8:ubuntu22.04-1.0.0
 ```
@@ -66,7 +73,7 @@ Launch an AI application.
 xhost +local:
 ```
 ```
-docker run --rm --privileged --network host --name adv_hailo --ipc=host --device /dev/dri:/dev/dri -v /tmp/hailo_docker.xauth:/home/hailo/.Xauthority -v /tmp/.X11-unix/:/tmp/.X11-unix/ -v /dev:/dev -v /lib/firmware:/lib/firmware --group-add 44 -e DISPLAY=$DISPLAY -e XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR -e hailort_enable_service=yes -v /opt/Advantech/EdgeAISuite/Accelerator/Hailo_8/tool/docker/shared_with_docker:/local/shared_with_docker:rw -it hailo_tappas:v3.31.0 /local/workspace/tappas/apps/h8/gstreamer/general/detection/detection_new.sh
+docker run --rm --privileged --network host --name adv_hailo --ipc=host --device /dev/dri:/dev/dri -v /tmp/hailo_docker.xauth:/home/hailo/.Xauthority -v /tmp/.X11-unix/:/tmp/.X11-unix/ -v /dev:/dev -v /lib/firmware:/lib/firmware --group-add 44 -e DISPLAY=$DISPLAY -e XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR -e hailort_enable_service=yes -it hailo_tappas:v3.31.0 /local/workspace/tappas/apps/h8/gstreamer/general/detection/detection_new.sh
 ```
 
 
