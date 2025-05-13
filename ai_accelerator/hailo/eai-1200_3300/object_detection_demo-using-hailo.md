@@ -42,7 +42,7 @@ System requirements
 | Platform | Intel 10 ~ 13th CPU   |  x86_64    |
 | OS/Kernel | Ubuntu 22.04 | * Python 3.10 |
 
-| AI Frameeorks | Version | Description |
+| AI Frameeorks | Description | Version |
 | -------- | -------- | -------- |
 | HailoRT - include HailoRT、PCIe driver、Python package(3.10) | https://hailo.ai/products/hailo-software/hailo-ai-software-suite/#sw-hailort    | 4.20.0 |
 | TAPPAS  | https://hailo.ai/products/hailo-software/hailo-ai-software-suite/#sw-tappas   | 3.31.0 |
