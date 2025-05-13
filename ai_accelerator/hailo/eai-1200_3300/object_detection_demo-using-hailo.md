@@ -73,7 +73,7 @@ Launch an AI application.
 xhost +local:
 ```
 ```
-docker run --rm --privileged --network host --name adv_hailo --ipc=host --device /dev/dri:/dev/dri -v /tmp/hailo_docker.xauth:/home/hailo/.Xauthority -v /tmp/.X11-unix/:/tmp/.X11-unix/ -v /dev:/dev -v /lib/firmware:/lib/firmware --group-add 44 -e DISPLAY=$DISPLAY -e XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR -e hailort_enable_service=yes -it hailo_tappas:v3.31.0 /local/workspace/tappas/apps/h8/gstreamer/general/detection/detection_new.sh
+docker run --rm --privileged --network host --name adv_hailo --ipc=host --device /dev/dri:/dev/dri -v /tmp/hailo_docker.xauth:/home/hailo/.Xauthority -v /tmp/.X11-unix/:/tmp/.X11-unix/ -v /dev:/dev -v /lib/firmware:/lib/firmware --group-add 44 -e DISPLAY=$DISPLAY -e XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR -e hailort_enable_service=yes -it advigw/eas-x86-hailo8:ubuntu22.04-1.0.0 /local/workspace/tappas/apps/h8/gstreamer/general/detection/detection_new.sh
 ```
 
 
