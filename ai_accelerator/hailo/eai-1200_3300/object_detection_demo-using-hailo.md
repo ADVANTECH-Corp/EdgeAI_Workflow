@@ -13,6 +13,8 @@ Developers can easily complete the Visual AI development by following these step
 - [Deploy](#Deploy)
   - [Application](#Application)
 
+---
+
 <a name="Environment"/>
 
 # Environment
@@ -53,6 +55,8 @@ System requirements
 
 <br/>
 
+---
+
 <a name="Deploy"/>
 
 # Deploy
@@ -67,16 +71,14 @@ Launch an AI application.
 Single-Command Execution
 ```
 $ xhost +local:
-```
-```
+
 $ docker exec -i adv_hailo bash -c "/local/workspace/tappas/apps/h8/gstreamer/general/detection/detection_new.sh"
 ```
 
 Interactive Mode Execution
 ```
 $ xhost +local:
-```
-```
+
 $ docker exec -it adv_hailo /bin/bash
 $ cd /local/workspace/tappas/apps/h8/gstreamer/general/detection
 $ ./detection_new.sh
@@ -85,6 +87,8 @@ $ ./detection_new.sh
 Result:
 
 ![EAS_Startkit_object-detection](assets/hailo_object_detection_video.png)
+
+---
 
 ### Change Input Video or Model
 
@@ -95,13 +99,13 @@ You can directly change the input source or select a model using command-line ar
 - **Use MP4 file as input:**
 
   ```bash
-  ./detection_new.sh -i <video_path>/sample.mp4
+  $ ./detection_new.sh --input <video_path>/sample.mp4
   ```
 
 - **Use USB Camera as input:**
 
   ```bash
-  ./detection_new.sh -i /dev/video0
+  $ ./detection_new.sh --input /dev/video0
   ```
 
 #### Change Model
@@ -115,7 +119,7 @@ To switch the model, use the `--network` parameter. Only the following models ar
 **Example:**
 
 ```bash
-./detection_new.sh -i /dev/video0 --network yolov8m
+$ ./detection_new.sh -i /dev/video0 --network yolov8m
 ```
 
 > See more supported parameters and usage in [this link](https://github.com/hailo-ai/tappas/tree/master/apps/h8/gstreamer/general/detection)
