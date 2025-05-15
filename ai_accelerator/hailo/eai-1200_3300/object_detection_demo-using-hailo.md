@@ -86,4 +86,37 @@ Result:
 
 ![EAS_Startkit_object-detection](assets/hailo_object_detection_video.png)
 
-- See more on how to change the input video or model at [this link](https://github.com/hailo-ai/tappas/tree/master/apps/h8/gstreamer/general/detection).
+### Change Input Video or Model
+
+You can directly change the input source or select a model using command-line arguments when running `detection_new.sh`.
+
+#### Change Input Source
+
+- **Use MP4 file as input:**
+
+  ```bash
+  ./detection_new.sh -i <video_path>/sample.mp4
+  ```
+
+- **Use USB Camera as input:**
+
+  ```bash
+  ./detection_new.sh -i /dev/video0
+  ```
+
+#### Change Model
+
+To switch the model, use the `--network` parameter. Only the following models are supported:
+
+- `yolov5s`
+- `yolov8m`
+- `mobilenet_ssd`
+
+**Example:**
+
+```bash
+./detection_new.sh -i /dev/video0 --network yolov8m
+```
+
+> See more supported parameters and usage in [this link](https://github.com/hailo-ai/tappas/tree/master/apps/h8/gstreamer/general/detection)
+
