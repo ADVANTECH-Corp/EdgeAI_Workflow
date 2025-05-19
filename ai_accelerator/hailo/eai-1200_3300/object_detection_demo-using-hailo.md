@@ -28,9 +28,7 @@ Refer to the following requirements to prepare the target and develop environmen
 | Platform |   EAI-1200 / EAI-3300  |  EAI-1200 tested on **AIR-150** (1x Hailo-8)<br>EAI-3300 tested on **AIMB-278** (2x Hailo-8)  |
 | SOC  |   Hailo-8 |  |
 | OS/Kernel |  Ubuntu 22.04 iotg |  |
-| BSP | tappas | |
 
-Base on **EdgeAI SDK 3.3.0**
 
 <a name="Development"/>
 
@@ -53,6 +51,26 @@ System requirements
 | **Docker Image** | -         | `advigw/eas-x86-hailo8:ubuntu22.04-1.0.0`   | 1.0.0   |
 
 
+### Install HailoRT & PCIe Driver
+```
+$ sudo apt install -y build-essential gcc-12
+$ sudo apt install -y dkms build-essential linux-headers-$(uname -r)
+```
+```
+$ git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git
+$ cd EdgeAI_Workflow/ai_accelerator/eai-1200_3300/tool
+
+$ echo "dkms dkms/autoinstall boolean true" | sudo debconf-set-selections
+$ echo "Y" | sudo DEBIAN_FRONTEND=noninteractive dpkg -i hailort-pcie-driver_4.20.0_all.deb
+$ echo "Y" | sudo DEBIAN_FRONTEND=noninteractive dpkg -i hailort_4.20.0_amd64.deb
+```
+### Install Docker & Hailo Docker
+1. Install Docker Step on [Docker Install](https://docs.docker.com/desktop/setup/install/linux/ubuntu/)
+2. docker pull
+```
+$ docker pull advigw/eas-x86-hailo8:ubuntu22.04-1.0.0
+```
+
 <br/>
 
 ---
@@ -72,15 +90,38 @@ Single-Command Execution
 ```
 $ xhost +local:
 
-$ docker exec -i adv_hailo bash -c "/local/workspace/tappas/apps/h8/gstreamer/general/detection/detection_new.sh"
+$ docker run --rm --privileged --network host --name adv_hailo --ipc=host \
+  --device /dev/dri:/dev/dri \
+  -v /tmp/hailo_docker.xauth:/home/hailo/.Xauthority \
+  -v /tmp/.X11-unix/:/tmp/.X11-unix/ \
+  -v /dev:/dev \
+  -v /lib/firmware:/lib/firmware \
+  --group-add 44 \
+  -e DISPLAY=$DISPLAY \
+  -e XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR \
+  -e hailort_enable_service=yes \
+  -it advigw/eas-x86-hailo8:ubuntu22.04-1.0.0 \
+  bash -c "/local/workspace/tappas/apps/h8/gstreamer/general/detection/detection_new.sh"
 ```
 
 Interactive Mode Execution
 ```
 $ xhost +local:
 
-$ docker exec -it adv_hailo /bin/bash
-$ cd /local/workspace/tappas/apps/h8/gstreamer/general/detection
+$ docker run --rm --privileged --network host --name adv_hailo --ipc=host \
+  --device /dev/dri:/dev/dri \
+  -v /tmp/hailo_docker.xauth:/home/hailo/.Xauthority \
+  -v /tmp/.X11-unix/:/tmp/.X11-unix/ \
+  -v /dev:/dev \
+  -v /lib/firmware:/lib/firmware \
+  --group-add 44 \
+  -e DISPLAY=$DISPLAY \
+  -e XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR \
+  -e hailort_enable_service=yes \
+  -it advigw/eas-x86-hailo8:ubuntu22.04-1.0.0 \
+  /bin/bash
+
+$ cd /local/workspace/tappas/apps/h8/gstreamer/general/detection/
 $ ./detection_new.sh
 ```
 
