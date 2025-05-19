@@ -42,6 +42,7 @@ System requirements
 | Platform | Intel 10 ~ 13th CPU   |  x86_64    |
 | OS/Kernel | Ubuntu 22.04 | * Python 3.10 |
 
+
 ### AI Frameworks & Environment
 
 | Environment    | Frameworks  | Description/Source  | Version |
@@ -64,8 +65,10 @@ $ echo "dkms dkms/autoinstall boolean true" | sudo debconf-set-selections
 $ echo "Y" | sudo DEBIAN_FRONTEND=noninteractive dpkg -i hailort-pcie-driver_4.20.0_all.deb
 $ echo "Y" | sudo DEBIAN_FRONTEND=noninteractive dpkg -i hailort_4.20.0_amd64.deb
 ```
+
+
 ### Install Docker & Hailo Docker
-1. Install Docker Step on [Docker Install](https://docs.docker.com/desktop/setup/install/linux/ubuntu/)
+1. Install Docker Step on [Docker Install](https://docs.docker.com/engine/install/ubuntu/)
 2. docker pull
 ```
 $ docker pull advigw/eas-x86-hailo8:ubuntu22.04-1.0.0
