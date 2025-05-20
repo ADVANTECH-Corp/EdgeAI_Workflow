@@ -54,6 +54,7 @@ System requirements
 
 ### Install HailoRT & PCIe Driver
 ```
+$ sudo apt-get update -y
 $ sudo apt install -y build-essential gcc-12
 $ sudo apt install -y dkms build-essential linux-headers-$(uname -r)
 ```
