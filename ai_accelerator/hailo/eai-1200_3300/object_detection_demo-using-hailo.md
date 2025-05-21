@@ -45,10 +45,10 @@ System requirements
 
 ### AI Frameworks & Environment
 
-| Environment    | Frameworks  | Description/Source  | Version |
+| Environment    | Frameworks  | Description  | Version |
 |----------------|-------------|---------------------|---------|
-| **Host**       | HailoRT     | [HailoRT (PCIe driver,Python 3.10 package)](https://hailo.ai/products/hailo-software/hailo-ai-software-suite/#sw-hailort)    | 4.20.0  |
-| **Docker**     | TAPPAS<br>OpenCV<br>GStreamer<br>PyGObject    | TAPPAS: [link](https://hailo.ai/products/hailo-software/hailo-ai-software-suite/#sw-tappas)<br>OpenCV: [link](https://github.com/opencv/opencv.git)<br>GStreamer: [link](https://gstreamer.freedesktop.org/index.html)<br>PyGObject: [link](https://pygobject.gnome.org/getting_started.html#ubuntu-logo-ubuntu-debian-logo-debian) | TAPPAS: 3.31.0<br>OpenCV: 4.5.4<br>GStreamer: 1.20.3<br>PyGObject: 3.42.0 |
+| **Host**       | HailoRT     | HailoRT is a production-grade, light, scalable runtime software, providing a robust library with intuitive APIs for optimized performance. Our AI SDK enables developers to build easy and fast pipelines for AI applications in production and is also suitable for evaluation and prototyping. It runs on Hailo AI Vision Processor or when utilizing Hailo AI Accelerator, it runs on the host processor and enables high throughput inferencing with one or more Hailo devices.    | 4.20.0  |
+| **Docker**     | TAPPAS<br>OpenCV<br>GStreamer<br>PyGObject    | This Docker environment is built on Ubuntu 22.04 and includes TAPPAS, OpenCV, GStreamer, and PyGObject. It provides a ready-to-use platform for developing and deploying AI vision applications with the Hailo-8 accelerator. The image contains preconfigured tools and example pipelines for fast prototyping and evaluation. | TAPPAS: 3.31.0<br>OpenCV: 4.5.4<br>GStreamer: 1.20.3<br>PyGObject: 3.42.0 |
 | **Docker Image** | -         | `advigw/eas-x86-hailo8:ubuntu22.04-1.0.0`   | 1.0.0   |
 
 
@@ -87,31 +87,14 @@ Launch an AI application.
 <a name="Application"/>
 
 ## Run Application
-### Objection Detection
+### Objection Detection (Yolov8m)
 
-
-Single-Command Execution
+1. Grant Docker Display Permission
 ```
 $ xhost +local:
-
-$ docker run --rm --privileged --network host --name adv_hailo --ipc=host \
-  --device /dev/dri:/dev/dri \
-  -v /tmp/hailo_docker.xauth:/home/hailo/.Xauthority \
-  -v /tmp/.X11-unix/:/tmp/.X11-unix/ \
-  -v /dev:/dev \
-  -v /lib/firmware:/lib/firmware \
-  --group-add 44 \
-  -e DISPLAY=$DISPLAY \
-  -e XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR \
-  -e hailort_enable_service=yes \
-  -it advigw/eas-x86-hailo8:ubuntu22.04-1.0.0 \
-  bash -c "/local/workspace/tappas/apps/h8/gstreamer/general/detection/detection_new.sh"
 ```
-
-Interactive Mode Execution
+2. Launch Docker Container for Hailo-8
 ```
-$ xhost +local:
-
 $ docker run --rm --privileged --network host --name adv_hailo --ipc=host \
   --device /dev/dri:/dev/dri \
   -v /tmp/hailo_docker.xauth:/home/hailo/.Xauthority \
@@ -124,48 +107,62 @@ $ docker run --rm --privileged --network host --name adv_hailo --ipc=host \
   -e hailort_enable_service=yes \
   -it advigw/eas-x86-hailo8:ubuntu22.04-1.0.0 \
   /bin/bash
+```
+3. Select Input Source (Camera or Video)
 
-$ cd /local/workspace/tappas/apps/h8/gstreamer/general/detection/
-$ ./detection_new.sh
+| Source | Command |
+| -------- | -------- |
+| USB Camera | $ input_source="/dev/video0"<br>$ source_element="v4l2src device=$input_source name=src_0 ! videoflip video-direction=horiz"   |
+| Video File | $ input_source="/local/workspace/tappas/apps/h8/gstreamer/general/detection/resources/detection.mp4"<br>$ source_element="filesrc location=$input_source name=src_0 ! decodebin"   |
+
+4. Configure Pipeline Parameters
+```
+$ postprocess_so="/local/workspace/tappas/apps/h8/gstreamer/libs/post_processes/libyolo_hailortpp_post.so"
+$ network_name="yolov8m"
+$ batch_size="1"
+$ hef_path="/local/workspace/tappas/apps/h8/gstreamer/general/detection/resources/yolov8m.hef"
+$ json_config_path="null"
+$ nms_score_threshold=0.3
+$ nms_iou_threshold=0.45
+$ thresholds_str="nms-score-threshold=${nms_score_threshold} nms-iou-threshold=${nms_iou_threshold} output-format-type=HAILO_FORMAT_TYPE_FLOAT32"
+$ video_sink="fpsdisplaysink video-sink=xvimagesink text-overlay=true"
+$ sync_pipeline=false
+$ additional_parameters=""
+$ device_id_prop=""
+```
+5. Define Hailo-8 Device Count
+```
+$ hailortcli scan | grep -c "Device:"
+
+# Set according to the number of Hailo-8 devices detected.
+# For example, EAI-1200 may have 1 device, while EAI-3300 may have 2.
+$ device_count=2
+```
+6. Run the GStreamer Inference Pipeline
+```
+$ gst-launch-1.0 \
+    $source_element ! \
+    queue leaky=no max-size-buffers=30 max-size-bytes=0 max-size-time=0 ! \
+    videoscale qos=false n-threads=2 ! video/x-raw, pixel-aspect-ratio=1/1 ! \
+    queue leaky=no max-size-buffers=30 max-size-bytes=0 max-size-time=0 ! \
+    videoconvert n-threads=2 qos=false ! \
+    queue leaky=no max-size-buffers=30 max-size-bytes=0 max-size-time=0 ! \
+    hailonet hef-path=$hef_path device-count=$device_count $device_id_prop batch-size=$batch_size $thresholds_str ! \
+    queue leaky=no max-size-buffers=30 max-size-bytes=0 max-size-time=0 ! \
+    hailofilter function-name=$network_name so-path=$postprocess_so config-path=$json_config_path qos=false ! \
+    queue leaky=no max-size-buffers=30 max-size-bytes=0 max-size-time=0 ! \
+    hailooverlay qos=false ! \
+    queue leaky=no max-size-buffers=30 max-size-bytes=0 max-size-time=0 ! \
+    videoconvert n-threads=2 qos=false ! \
+    queue leaky=no max-size-buffers=30 max-size-bytes=0 max-size-time=0 ! \
+    $video_sink name=hailo_display sync=$sync_pipeline $additional_parameters
 ```
 
-Result:
+7. Result:
 
 ![EAS_Startkit_object-detection](assets/hailo_object_detection_video.png)
 
 ---
-
-### Change Input Video or Model
-
-You can directly change the input source or select a model using command-line arguments when running `detection_new.sh`.
-
-#### Change Input Source
-
-- **Use MP4 file as input:**
-
-  ```bash
-  $ ./detection_new.sh --input <video_path>/sample.mp4
-  ```
-
-- **Use USB Camera as input:**
-
-  ```bash
-  $ ./detection_new.sh --input /dev/video0
-  ```
-
-#### Change Model
-
-To switch the model, use the `--network` parameter. Only the following models are supported:
-
-- `yolov5s`
-- `yolov8m`
-- `mobilenet_ssd`
-
-**Example:**
-
-```bash
-$ ./detection_new.sh -i /dev/video0 --network yolov8m
-```
 
 > See more supported parameters and usage in [this link](https://github.com/hailo-ai/tappas/tree/master/apps/h8/gstreamer/general/detection)
 
