@@ -175,7 +175,7 @@ $ gst-launch-1.0 \
 
 ---
 
-### Quick Start
+### Download Script File To Quick Start
 To quickly run steps 1 through 7, simply use the following script:
 > Model : yolov8m <br/>
 > Source : /local/workspace/tappas/apps/h8/gstreamer/general/detection/resources/detection.mp4 <br/>
