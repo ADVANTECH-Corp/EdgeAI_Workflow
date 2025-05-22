@@ -181,6 +181,7 @@ To quickly run steps 1 through 7, simply use the following script:
 > Source : /local/workspace/tappas/apps/h8/gstreamer/general/detection/resources/detection.mp4 <br/>
 > Device Count : Automatically detects and uses the maximum available Hailo-8 devices
 ```bash
+$ git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git
 $ cd EdgeAI_Workflow/ai_accelerator/eai-1200_3300/script
 $ chmod +x hailo_detection_yolov8_video.sh
 $ ./hailo_detection_yolov8_video.sh
