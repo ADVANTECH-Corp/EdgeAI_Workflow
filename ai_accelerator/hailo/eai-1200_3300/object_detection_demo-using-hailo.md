@@ -182,6 +182,7 @@ To quickly run steps 1 through 7, simply use the following script:
 > Device Count : Automatically detects and uses the maximum available Hailo-8 devices
 ```bash
 $ cd EdgeAI_Workflow/ai_accelerator/eai-1200_3300/script
+$ chmod +x hailo_detection_yolov8_video.sh
 $ ./hailo_detection_yolov8_video.sh
 ```
 ---
