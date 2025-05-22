@@ -53,12 +53,12 @@ System requirements
 
 
 ### Install HailoRT & PCIe Driver
-```
+```bash
 $ sudo apt-get update -y
 $ sudo apt install -y build-essential gcc-12
 $ sudo apt install -y dkms build-essential linux-headers-$(uname -r)
 ```
-```
+```bash
 $ git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git
 $ cd EdgeAI_Workflow/ai_accelerator/eai-1200_3300/tool
 
@@ -71,7 +71,7 @@ $ echo "Y" | sudo DEBIAN_FRONTEND=noninteractive dpkg -i hailort_4.20.0_amd64.de
 ### Install Docker & Hailo Docker
 1. Install Docker Step on [Docker Install](https://docs.docker.com/engine/install/ubuntu/)
 2. docker pull
-```
+```bash
 $ docker pull advigw/eas-x86-hailo8:ubuntu22.04-1.0.0
 ```
 
@@ -88,13 +88,16 @@ Launch an AI application.
 
 ## Run Application
 ### Objection Detection (Yolov8m)
-
+#### Step 1 & 2: On the Host
+Open a terminal on your host machine and execute these two steps. Upon running step 2, you will enter the Hailo-8 Docker container with an interactive shell.
+<br/>
+<br/>
 1. Grant Docker Display Permission
-```
+```bash
 $ xhost +local:
 ```
 2. Launch Docker Container for Hailo-8
-```
+```bash
 $ docker run --rm --privileged --network host --name adv_hailo --ipc=host \
   --device /dev/dri:/dev/dri \
   -v /tmp/hailo_docker.xauth:/home/hailo/.Xauthority \
@@ -108,38 +111,46 @@ $ docker run --rm --privileged --network host --name adv_hailo --ipc=host \
   -it advigw/eas-x86-hailo8:ubuntu22.04-1.0.0 \
   /bin/bash
 ```
-3. Select Input Source (Camera or Video)
+#### Step 3 to 7: Inside the Docker Container
+After completing step 2 and entering the Docker container, proceed with steps 3 through 7 inside the container to configure settings and start the inference pipeline.
+<br/>
+<br/>
 
+3. Select Input Source (Camera or Video)
+   
 | Source | Command |
 | -------- | -------- |
 | USB Camera | $ input_source="/dev/video0"<br>$ source_element="v4l2src device=$input_source name=src_0 ! videoflip video-direction=horiz"   |
 | Video File | $ input_source="/local/workspace/tappas/apps/h8/gstreamer/general/detection/resources/detection.mp4"<br>$ source_element="filesrc location=$input_source name=src_0 ! decodebin"   |
 
-4. Configure Pipeline Parameters
-```
-$ postprocess_so="/local/workspace/tappas/apps/h8/gstreamer/libs/post_processes/libyolo_hailortpp_post.so"
+4. Model Configuration
+```bash
 $ network_name="yolov8m"
-$ batch_size="1"
 $ hef_path="/local/workspace/tappas/apps/h8/gstreamer/general/detection/resources/yolov8m.hef"
+
+# Post-processing settings specific for yolov8
+$ postprocess_so="/local/workspace/tappas/apps/h8/gstreamer/libs/post_processes/libyolo_hailortpp_post.so"
 $ json_config_path="null"
-$ nms_score_threshold=0.3
-$ nms_iou_threshold=0.45
-$ thresholds_str="nms-score-threshold=${nms_score_threshold} nms-iou-threshold=${nms_iou_threshold} output-format-type=HAILO_FORMAT_TYPE_FLOAT32"
+$ thresholds_str="nms-score-threshold=0.3 nms-iou-threshold=0.45 output-format-type=HAILO_FORMAT_TYPE_FLOAT32"
+```
+5. Pipeline Parameter Configuration
+```bash
+$ batch_size="1"
 $ video_sink="fpsdisplaysink video-sink=xvimagesink text-overlay=true"
 $ sync_pipeline=false
 $ additional_parameters=""
 $ device_id_prop=""
 ```
-5. Define Hailo-8 Device Count
-```
+6. Define Hailo-8 Device Count
+```bash
 $ hailortcli scan | grep -c "Device:"
 
 # Set according to the number of Hailo-8 devices detected.
 # For example, EAI-1200 may have 1 device, while EAI-3300 may have 2.
 $ device_count=2
 ```
-6. Run the GStreamer Inference Pipeline
-```
+7. Run the GStreamer Inference Pipeline
+```bash
 $ gst-launch-1.0 \
     $source_element ! \
     queue leaky=no max-size-buffers=30 max-size-bytes=0 max-size-time=0 ! \
@@ -158,10 +169,21 @@ $ gst-launch-1.0 \
     $video_sink name=hailo_display sync=$sync_pipeline $additional_parameters
 ```
 
-7. Result:
+8. Result:
 
 ![EAS_Startkit_object-detection](assets/hailo_object_detection_video.png)
 
+---
+
+### Quick Start
+To quickly run steps 1 through 7, simply use the following script:
+> Model : yolov8m <br/>
+> Source : /local/workspace/tappas/apps/h8/gstreamer/general/detection/resources/detection.mp4 <br/>
+> Device Count : Automatically detects and uses the maximum available Hailo-8 devices
+```bash
+$ cd EdgeAI_Workflow/ai_accelerator/eai-1200_3300/script
+$ ./hailo_detection_yolov8_video.sh
+```
 ---
 
 > See more supported parameters and usage in [this link](https://github.com/hailo-ai/tappas/tree/master/apps/h8/gstreamer/general/detection)
