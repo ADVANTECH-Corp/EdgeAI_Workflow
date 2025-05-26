@@ -45,20 +45,20 @@ Refer to the following requirements to prepare the target and develop environmen
 
 ## Development
 
+### System requirements
+| Item | Content | Note |
+| -------- | -------- | -------- |
+| Platform | Intel 10 ~ 13th CPU   |  x86_64    |
+| OS/Kernel | Ubuntu 22.04 | * Python 3.10 |
+
+<br/>
+
 ### Install Edge AI SDK 3.3.0
 Base on **Target Environment** <br/>
 Please install the corresponding version of EdgeAISDK to obtain the following development environment.
 > Install :  [Edge AI SDK install link](https://ess-wiki.advantech.com.tw/view/Edge_AI_SDK/Download)
 
 <br/>
-<br/>
-
-#### System requirements
-| Item | Content | Note |
-| -------- | -------- | -------- |
-| Platform | Intel 10 ~ 13th CPU   |  x86_64    |
-| OS/Kernel | Ubuntu 22.04 | * Python 3.10 |
-
 
 #### AI Frameworks & Environment
 
@@ -79,26 +79,36 @@ Please install the corresponding version of EdgeAISDK to obtain the following de
 # Develop
 
 The Docker container named **adv_hailo** is automatically launched by EdgeAISDK 3.3.0. <br/>
-The container is started with the following command.
+The container is started with the following command.<br/>
 
-> docker run --rm --privileged --network host --name adv_hailo --ipc=host --device /dev/dri:/dev/dri -v /tmp/hailo_docker.xauth:/home/hailo/.Xauthority -v /tmp/.X11-unix/:/tmp/.X11-unix/ -v /dev:/dev -v /lib/firmware:/lib/firmware --group-add 44 -e DISPLAY=$DISPLAY -e XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR -e hailort_enable_service=yes -v /opt/Advantech/EdgeAISuite/Accelerator/Hailo_8/tool/docker/shared_with_docker:/local/shared_with_docker -it advigw/eas-x86-hailo8:ubuntu22.04-1.0.0 /bin/bash 
+> ⚠️ **Note:** If Edge AI SDK 3.3.0 is successfully installed, you do **not** need to run this command manually.
+```bash
+docker run --rm --privileged --network host --name adv_hailo --ipc=host --device /dev/dri:/dev/dri -v /tmp/hailo_docker.xauth:/home/hailo/.Xauthority -v /tmp/.X11-unix/:/tmp/.X11-unix/ -v /dev:/dev -v /lib/firmware:/lib/firmware --group-add 44 -e DISPLAY=$DISPLAY -e XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR -e hailort_enable_service=yes -v /opt/Advantech/EdgeAISuite/Accelerator/Hailo_8/tool/docker/shared_with_docker:/local/shared_with_docker -it advigw/eas-x86-hailo8:ubuntu22.04-1.0.0 /bin/bash 
+```
+<br/>
+<br/>
 
 <a name="Model"/>
 
 ## Prepare your AI Model 
-> Model : yolov8m
+**Model : yolov8m**
 <br/>
-model path in docker container : /local/workspace/tappas/apps/h8/gstreamer/general/detection/resources/yolov8m.hef
+<br/>
+This model is pre-packaged and stored inside the Docker container. You can find the model file at the following path within the container:<br/>
+``/local/workspace/tappas/apps/h8/gstreamer/general/detection/resources/yolov8m.hef``
 
 <a name="App"/>
 
 ## App
-To quickly deploy, simply use the following script:
+Sample script:
 > Model : yolov8m <br/>
 > Source : /local/workspace/tappas/apps/h8/gstreamer/general/detection/resources/detection.mp4 <br/>
 > Device Count : Automatically detects and uses the maximum available Hailo-8 devices
 ```bash
+# Download
 $ git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git
+
+# Execute
 $ cd EdgeAI_Workflow/ai_accelerator/eai-1200_3300/script
 $ chmod +x hailo_detection_yolov8_video.sh
 $ ./hailo_detection_yolov8_video.sh
