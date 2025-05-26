@@ -1,23 +1,34 @@
 # Create an Object Detection on Hailo-8 ( EAI-1200 / EAI-3300 )
+
+---
+
+# Overview
 This example will demonstrate how to develop an vision AI Object Detection on Hailo-8 ( EAI-1200 / EAI-3300 ) platform.
 Developers can easily complete the Visual AI development by following these steps.
 
 * Application: Objection Detection
 * Model: Yolov8
 * Input: Video / USB Camera
-  
-# Table of Contents
-- [Environment](#Environment)
+
+![eas_ai_workflow](assets/EdgeAI_Workflow_Hailo8.png)
+
+
+- [Pre-requirements](#Pre-requirements)
   - [Target](#Target)
   - [Development](#Development) 
+- [Develop](#Develop)
+  - [Prepare your AI Model](#Model)
+  - [App](#App) 
 - [Deploy](#Deploy)
   - [Application](#Application)
 
 ---
 
-<a name="Environment"/>
+<a name="Pre-requirements"/>
+<br/>
+<br/>
 
-# Environment
+# Pre-requirements
 Refer to the following requirements to prepare the target and develop environment.
 
 <a name="Target"/>
@@ -34,16 +45,22 @@ Refer to the following requirements to prepare the target and develop environmen
 
 ## Development
 
-Base on **Target Environment**
+### Install Edge AI SDK 3.3.0
+Base on **Target Environment** <br/>
+Please install the corresponding version of EdgeAISDK to obtain the following development environment.
+> Install :  [Edge AI SDK install link](https://ess-wiki.advantech.com.tw/view/Edge_AI_SDK/Download)
 
-System requirements
+<br/>
+<br/>
+
+#### System requirements
 | Item | Content | Note |
 | -------- | -------- | -------- |
 | Platform | Intel 10 ~ 13th CPU   |  x86_64    |
 | OS/Kernel | Ubuntu 22.04 | * Python 3.10 |
 
 
-### AI Frameworks & Environment
+#### AI Frameworks & Environment
 
 | Environment    | Frameworks  | Description  | Version |
 |----------------|-------------|---------------------|---------|
@@ -51,33 +68,47 @@ System requirements
 | **Docker**     | TAPPAS<br>OpenCV<br>GStreamer<br>PyGObject    | This Docker environment is built on Ubuntu 22.04 and includes TAPPAS, OpenCV, GStreamer, and PyGObject. It provides a ready-to-use platform for developing and deploying AI vision applications with the Hailo-8 accelerator. The image contains preconfigured tools and example pipelines for fast prototyping and evaluation. | TAPPAS: 3.31.0<br>OpenCV: 4.5.4<br>GStreamer: 1.20.3<br>PyGObject: 3.42.0 |
 | **Docker Image** | -         | `advigw/eas-x86-hailo8:ubuntu22.04-1.0.0`   | 1.0.0   |
 
+<br/>
 
-### Install HailoRT & PCIe Driver
-```bash
-$ sudo apt-get update -y
-$ sudo apt install -y build-essential gcc-12
-$ sudo apt install -y dkms build-essential linux-headers-$(uname -r)
-```
+---
+
+<a name="Develop"/>
+<br/>
+<br/>
+
+# Develop
+
+The Docker container named **adv_hailo** is automatically launched by EdgeAISDK 3.3.0. <br/>
+The container is started with the following command.
+
+> docker run --rm --privileged --network host --name adv_hailo --ipc=host --device /dev/dri:/dev/dri -v /tmp/hailo_docker.xauth:/home/hailo/.Xauthority -v /tmp/.X11-unix/:/tmp/.X11-unix/ -v /dev:/dev -v /lib/firmware:/lib/firmware --group-add 44 -e DISPLAY=$DISPLAY -e XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR -e hailort_enable_service=yes -v /opt/Advantech/EdgeAISuite/Accelerator/Hailo_8/tool/docker/shared_with_docker:/local/shared_with_docker -it advigw/eas-x86-hailo8:ubuntu22.04-1.0.0 /bin/bash 
+
+<a name="Model"/>
+
+## Prepare your AI Model 
+> Model : yolov8m
+<br/>
+model path in docker container : /local/workspace/tappas/apps/h8/gstreamer/general/detection/resources/yolov8m.hef
+
+<a name="App"/>
+
+## App
+To quickly deploy, simply use the following script:
+> Model : yolov8m <br/>
+> Source : /local/workspace/tappas/apps/h8/gstreamer/general/detection/resources/detection.mp4 <br/>
+> Device Count : Automatically detects and uses the maximum available Hailo-8 devices
 ```bash
 $ git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git
-$ cd EdgeAI_Workflow/ai_accelerator/eai-1200_3300/tool
-
-$ echo "dkms dkms/autoinstall boolean true" | sudo debconf-set-selections
-$ echo "Y" | sudo DEBIAN_FRONTEND=noninteractive dpkg -i hailort-pcie-driver_4.20.0_all.deb
-$ echo "Y" | sudo DEBIAN_FRONTEND=noninteractive dpkg -i hailort_4.20.0_amd64.deb
+$ cd EdgeAI_Workflow/ai_accelerator/eai-1200_3300/script
+$ chmod +x hailo_detection_yolov8_video.sh
+$ ./hailo_detection_yolov8_video.sh
 ```
 
-
-### Install Docker & Hailo Docker
-1. Install Docker Step on [Docker Install](https://docs.docker.com/engine/install/ubuntu/)
-2. docker pull
-```bash
-$ docker pull advigw/eas-x86-hailo8:ubuntu22.04-1.0.0
-```
 
 <br/>
 
 ---
+<br/>
 
 <a name="Deploy"/>
 
@@ -98,18 +129,7 @@ $ xhost +local:
 ```
 2. Launch Docker Container for Hailo-8
 ```bash
-$ docker run --rm --privileged --network host --name adv_hailo --ipc=host \
-  --device /dev/dri:/dev/dri \
-  -v /tmp/hailo_docker.xauth:/home/hailo/.Xauthority \
-  -v /tmp/.X11-unix/:/tmp/.X11-unix/ \
-  -v /dev:/dev \
-  -v /lib/firmware:/lib/firmware \
-  --group-add 44 \
-  -e DISPLAY=$DISPLAY \
-  -e XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR \
-  -e hailort_enable_service=yes \
-  -it advigw/eas-x86-hailo8:ubuntu22.04-1.0.0 \
-  /bin/bash
+$ docker exec -it adv_hailo /bin/bash
 ```
 #### Step 3 to 7: Inside the Docker Container
 After completing step 2 and entering the Docker container, proceed with steps 3 through 7 inside the container to configure settings and start the inference pipeline.
@@ -169,23 +189,16 @@ $ gst-launch-1.0 \
     $video_sink name=hailo_display sync=$sync_pipeline $additional_parameters
 ```
 
-8. Result:
+8. Result: 
+
+| Platform | Reference Performance |
+| -------- | -------- |
+| EAI-1200 | FPS : 32    |
+| EAI-3300 | FPS : 118   |
+<br/>
 
 ![EAS_Startkit_object-detection](assets/hailo_object_detection_video.png)
 
----
-
-### Download Script File To Quick Start
-To quickly run steps 1 through 7, simply use the following script:
-> Model : yolov8m <br/>
-> Source : /local/workspace/tappas/apps/h8/gstreamer/general/detection/resources/detection.mp4 <br/>
-> Device Count : Automatically detects and uses the maximum available Hailo-8 devices
-```bash
-$ git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git
-$ cd EdgeAI_Workflow/ai_accelerator/eai-1200_3300/script
-$ chmod +x hailo_detection_yolov8_video.sh
-$ ./hailo_detection_yolov8_video.sh
-```
 ---
 
 > See more supported parameters and usage in [this link](https://github.com/hailo-ai/tappas/tree/master/apps/h8/gstreamer/general/detection)
