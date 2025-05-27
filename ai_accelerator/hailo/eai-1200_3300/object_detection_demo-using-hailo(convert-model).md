@@ -94,26 +94,28 @@ docker run --rm --privileged --network host --name adv_hailo --ipc=host --device
 **Model : yolov8m**
 <br/>
 <br/>
-1. Prepare a python environment
+1. Prepare a Python environment<br/>
 ```bash
 $ python -m venv test
 $ source test/bin/activate
 ```
-2. install python package
+2. Install required Python packages<br/>
 ```bash
-$ hailort-4.20.0-cp310-cp310-linux_x86_64.whl
-$ hailo_dataflow_compiler-3.31.0-py3-none-linux_x86_64.whl
+$ pip install hailort-4.20.0-cp310-cp310-linux_x86_64.whl
+$ pip install hailo_dataflow_compiler-3.31.0-py3-none-linux_x86_64.whl
 ```
-3. install model zoo
+3. Install the Hailo Model Zoo<br/>
 ```bash
 $ git clone https://github.com/hailo-ai/hailo_model_zoo.git
 $ cd hailo_model_zoo; pip install -e .
 ```
-3. prepare model (ex: yolov8m.onnx)
+4. Prepare your model file (ex: yolov8m.onnx)<br/>
 
-4. prepare dataset (png/jpg)
+5. Prepare calibration dataset<br/>
+Prepare a dataset of images (in .png or .jpg format) to be used for model calibration during conversion. Ensure there are enough images (at least 2) for accurate calibration.
 
-5. convert Model
+7. Convert the ONNX model to HEF format<br/>
+Use the hailomz tool to compile the model with the following command:
 ```bash
 $ hailomz compile yolov8m --ckpt /path/to/yolov8m.onnx --hw-arch hailo8 --classes 80 --calib-path /path/dataset
 ```
