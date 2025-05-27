@@ -95,7 +95,9 @@ docker run --rm --privileged --network host --name adv_hailo --ipc=host --device
 <br/>
 <br/>
 This model is pre-packaged and stored inside the Docker container. You can find the model file at the following path within the container:<br/>
-``/local/workspace/tappas/apps/h8/gstreamer/general/detection/resources/yolov8m.hef``
+``/local/workspace/tappas/apps/h8/gstreamer/general/detection/resources/yolov8m.hef``<br/>
+<br/>
+Model install path : [Compiled model install link](https://github.com/hailo-ai/hailo_model_zoo/blob/master/docs/public_models/HAILO8/HAILO8_object_detection.rst)
 
 <a name="App"/>
 
