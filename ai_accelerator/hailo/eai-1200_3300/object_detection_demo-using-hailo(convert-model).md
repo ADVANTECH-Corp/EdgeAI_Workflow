@@ -121,8 +121,16 @@ Prepare a dataset of images (in .png or .jpg format) to be used for model calibr
 8. Convert the ONNX model to HEF format<br/>
 Use the hailomz tool to compile the model with the following command:
 ```bash
-$ hailomz compile yolov8m --ckpt /path/to/yolov8m.onnx --hw-arch hailo8 --classes 80 --calib-path /path/dataset
+$ hailomz compile --ckpt /path/to/yolov8m.onnx --hw-arch hailo8 --yaml /path/to/yolov8m.yaml --classes 80 --calib-path /path/dataset
 ```
+* | ``--ckpt`` - path to  your ONNX file.
+* | ``--calib-path`` - path to a directory with your calibration images in JPEG/png format
+* | ``--yaml`` - path to your configuration YAML file.[yolov8m.yaml](https://github.com/hailo-ai/hailo_model_zoo/blob/master/hailo_model_zoo/cfg/networks/yolov8m.yaml)
+* | ``--classes`` - adjusting the number of classes in post-processing configuration (optional).
+* | The model zoo will take care of adding the input normalization to be part of the model.
+> [More Models yaml file](https://github.com/hailo-ai/hailo_model_zoo/tree/master/hailo_model_zoo/cfg/networks)
+
+<br/>
 <a name="App"/>
 
 ## App
