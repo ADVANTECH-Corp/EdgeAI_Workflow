@@ -112,11 +112,13 @@ $ git clone https://github.com/hailo-ai/hailo_model_zoo.git
 $ cd hailo_model_zoo; pip install -e .
 ```
 4. Prepare your model file (ex: yolov8m.onnx)<br/>
+[Download Yolov8m.onnx](https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov8m/2023-02-02/yolov8m.zip)
 
-5. Prepare calibration dataset<br/>
-Prepare a dataset of images (in .png or .jpg format) to be used for model calibration during conversion. Ensure there are enough images (at least 2) for accurate calibration.
+6. Prepare calibration dataset<br/>
+Prepare a dataset of images (in .png or .jpg format) to be used for model calibration during conversion.<br/>
+[Download COCO Dataset](https://cocodataset.org/#download)
 
-7. Convert the ONNX model to HEF format<br/>
+8. Convert the ONNX model to HEF format<br/>
 Use the hailomz tool to compile the model with the following command:
 ```bash
 $ hailomz compile yolov8m --ckpt /path/to/yolov8m.onnx --hw-arch hailo8 --classes 80 --calib-path /path/dataset
