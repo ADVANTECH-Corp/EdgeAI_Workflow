@@ -98,10 +98,11 @@ docker run --rm --privileged --network host --name adv_hailo --ipc=host --device
 <br/>
 1. Prepare a Python environment<br/>
 ```bash
-$ python -m venv test
-$ source test/bin/activate
+$ python -m venv hailomz-env
+$ source hailomz-env/bin/activate
 ```
-2. Install required Python packages<br/>
+2. Install required Python packages in *hailomz-env*<br/>
+Register Developer zoo & Download python packages : https://hailo.ai/developer-zone/software-downloads/
 ```bash
 $ pip install hailort-4.20.0-cp310-cp310-linux_x86_64.whl
 $ pip install hailo_dataflow_compiler-3.31.0-py3-none-linux_x86_64.whl
