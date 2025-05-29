@@ -106,6 +106,12 @@ $ source hailomz-env/bin/activate
 Choose `AI Software Suite -> HailoRT -> x86 -> Linux -> 3.10` to install `HailoRT - Python package (whl) for Python 3.10,x86_64`<br/>
 Choose `AI Software Suite -> Dataflow Compiler -> x86 -> Linux -> 3.10` to install `Hailo Dataflow Compiler - Python package (whl)`
 ```bash
+# Install System dependencies
+$ sudo apt update
+$ sudo apt install -y graphviz graphviz-dev build-essential
+$ pip install pygraphviz
+
+# Install python package (wheels)
 $ pip install hailort-4.20.0-cp310-cp310-linux_x86_64.whl
 $ pip install hailo_dataflow_compiler-3.31.0-py3-none-linux_x86_64.whl
 ```
