@@ -98,38 +98,40 @@ docker run --rm --privileged --network host --name adv_hailo --ipc=host --device
 <br/>
 1. Prepare a Python environment<br/>
 ```bash
-$ python -m venv hailomz-env
+$ python3 -m venv hailomz-env
 $ source hailomz-env/bin/activate
 ```
 2. Install required Python packages in *hailomz-env*<br/>
-Register Developer zoo & Download python packages : https://hailo.ai/developer-zone/software-downloads/
+**Register Developer Zone** & Download python packages : [Hailo Developer Zone](https://hailo.ai/developer-zone/software-downloads/)<br/>
+Choose `AI Software Suite -> HailoRT -> x86 -> Linux -> 3.10` to install `HailoRT - Python package (whl) for Python 3.10,x86_64`<br/>
+Choose `AI Software Suite -> Dataflow Compiler -> x86 -> Linux -> 3.10` to install `Hailo Dataflow Compiler - Python package (whl)`
 ```bash
 $ pip install hailort-4.20.0-cp310-cp310-linux_x86_64.whl
 $ pip install hailo_dataflow_compiler-3.31.0-py3-none-linux_x86_64.whl
 ```
-3. Install the Hailo Model Zoo<br/>
+3. Install the Hailo Model Zoo in *hailomz-env*<br/>
 ```bash
 $ git clone https://github.com/hailo-ai/hailo_model_zoo.git
 $ cd hailo_model_zoo; pip install -e .
 ```
-4. Prepare your model file (ex: yolov8m.onnx)<br/>
-[Download Yolov8m.onnx](https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov8m/2023-02-02/yolov8m.zip)
+4. Prepare your onnx model file (ex: yolov8m.onnx)<br/>
+[Download Yolov8m.onnx](https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov8m/2023-02-02/yolov8m.zip)  ,  [More pretrained models](https://github.com/hailo-ai/hailo_model_zoo/blob/master/docs/public_models/HAILO8/HAILO8_object_detection.rst)
 
 6. Prepare calibration dataset<br/>
 Prepare a dataset of images (in .png or .jpg format) to be used for model calibration during conversion.<br/>
-[Download COCO Dataset](https://cocodataset.org/#download)
+ex : [Download COCO Dataset](https://cocodataset.org/#download)
 
-8. Convert the ONNX model to HEF format<br/>
+8. Convert the ONNX model to HEF format in *hailomz-env*<br/>
 Use the hailomz tool to compile the model with the following command:
 ```bash
-$ hailomz compile --ckpt /path/to/yolov8m.onnx --hw-arch hailo8 --yaml /path/to/yolov8m.yaml --classes 80 --calib-path /path/dataset
+$ hailomz compile --ckpt <path_to_model>/yolov8m.onnx --hw-arch hailo8 --yaml <path_to_yaml>/yolov8m.yaml --classes 80 --calib-path <path_to_dataset>
 ```
 * | ``--ckpt`` - path to  your ONNX file.
-* | ``--calib-path`` - path to a directory with your calibration images in JPEG/png format
-* | ``--yaml`` - path to your configuration YAML file.[yolov8m.yaml](https://github.com/hailo-ai/hailo_model_zoo/blob/master/hailo_model_zoo/cfg/networks/yolov8m.yaml)
+* | ``--yaml`` - path to your configuration YAML file.[Download yolov8m.yaml](https://github.com/hailo-ai/hailo_model_zoo/blob/master/hailo_model_zoo/cfg/networks/yolov8m.yaml)
 * | ``--classes`` - adjusting the number of classes in post-processing configuration (optional).
+* | ``--calib-path`` - path to a directory with your calibration images in JPEG/png format
 * | The model zoo will take care of adding the input normalization to be part of the model.
-> [More Models yaml file](https://github.com/hailo-ai/hailo_model_zoo/tree/master/hailo_model_zoo/cfg/networks)
+> [More Model's yaml file](https://github.com/hailo-ai/hailo_model_zoo/tree/master/hailo_model_zoo/cfg/networks)
 
 <br/>
 <a name="App"/>
