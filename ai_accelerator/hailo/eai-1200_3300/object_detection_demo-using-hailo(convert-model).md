@@ -109,7 +109,6 @@ Choose `AI Software Suite -> Dataflow Compiler -> x86 -> Linux -> 3.10` to insta
 # Install System dependencies
 $ sudo apt update
 $ sudo apt install -y graphviz graphviz-dev build-essential
-$ pip install pygraphviz
 
 # Install python package (wheels)
 $ pip install hailort-4.20.0-cp310-cp310-linux_x86_64.whl
