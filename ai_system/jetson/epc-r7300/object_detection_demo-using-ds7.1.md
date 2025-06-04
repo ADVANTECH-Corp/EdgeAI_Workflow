@@ -104,7 +104,7 @@ Note: The reference [pt to onnx](https://docs.ultralytics.com/zh/integrations/on
    $git clone https://github.com/marcoslucianops/DeepStream-Yolo.git
    $cd DeepStream-Yolo
  
-2. **Compile the lib with container** 
+3. **Compile the lib with container** 
    $docker run -it --rm --runtime=nvidia --network=host -e NVIDIA_DRIVER_CAPABILITIES=compute,utility,video,graphics --gpus all --privileged -e DISPLAY=$DISPLAY -v ./DeepStream-Yolo:/DeepStream-Yolo -v /tmp/.X11-unix:/tmp/.X11-unix -v /etc/X11:/etc/X11 nvcr.io/nvidia/deepstream:7.1-samples-multiarch
     
    **Docker shell**
