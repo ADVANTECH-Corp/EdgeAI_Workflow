@@ -10,7 +10,7 @@ Developers can easily complete the Visual AI development by following these step
 * Model: YoloV11
 * Input: Video / USB Camera
 
-![eas_ai_workflow](assets/EdgeAIWorkflow_AIR-030.ppt.png)
+![eas_ai_workflow](assets/EdgeAIWorkflow_AIR-030.pptx.png)
 
 
 - [Pre-requirements](#Pre-requirements)
@@ -150,9 +150,9 @@ Note: The reference [pt to onnx](https://docs.ultralytics.com/zh/integrations/on
  7. $xhost +
  8. $docker run -it --rm --runtime=nvidia --network=host -e NVIDIA_DRIVER_CAPABILITIES=compute,utility,video,graphics --gpus all --privileged -e DISPLAY=$DISPLAY -v $(pwd):/DeepStream-Yolo -v /tmp/.X11-unix:/tmp/.X11-unix -v /etc/X11:/etc/X11 nvcr.io/nvidia/deepstream:7.0-samples-multiarch
  
- **Docker shell**
- 9.  $cd /DeepStream-Yolo
- 10. $deepstream-app -c deepstream_app_config_yoloV11.txt
+ **Docker shell** 
+ 9.  $cd /DeepStream-Yolo<br/>
+ 10. $deepstream-app -c deepstream_app_config_yoloV11.txt<br/>
  **Note: Trying to create engine from model files**
  **If there is no *.engine file , it will generate *.engine file at first time.**
   
@@ -160,7 +160,9 @@ Note: The reference [pt to onnx](https://docs.ultralytics.com/zh/integrations/on
 <br/>
 <br/> 
 <br/>
-
+## Result
+<br/> 
+<br/>
 ![EAS_Startkit_object-detection](assets/result.png)
 
 ---
