@@ -20,7 +20,7 @@ Developers can easily complete the Visual AI development by following these step
   - [Convert AI Model](#Model)
   - [Application](#App) 
 - [Deploy](#Deploy)
-  - [Run](#Run)
+  - [Run App](#Run)
 
 ---
 
@@ -141,7 +141,7 @@ $ hailomz compile --ckpt <path_to_model>/yolov8m.onnx --hw-arch hailo8 --yaml <p
 <br/>
 <a name="App"/>
 
-## App
+## Application
 Sample script:
 > Model : yolov8m <br/>
 > Source : /local/workspace/tappas/apps/h8/gstreamer/general/detection/resources/detection.mp4 <br/>
@@ -169,7 +169,7 @@ Launch an AI application.
 
 <a name="Run"/>
 
-## Run Application
+## Run App
 ### Objection Detection (Yolov8m)
 #### Step 1 & 2: On the Host
 Open a terminal on your host machine and execute these two steps. Upon running step 2, you will enter the Hailo-8 Docker container with an interactive shell.
