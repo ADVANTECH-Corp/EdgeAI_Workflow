@@ -142,35 +142,7 @@ $ hailomz compile --ckpt <path_to_model>/yolov8m.onnx --hw-arch hailo8 --yaml <p
 <a name="App"/>
 
 ## Application
-Sample script:
-> Model : yolov8m <br/>
-> Source : /local/workspace/tappas/apps/h8/gstreamer/general/detection/resources/detection.mp4 <br/>
-> Device Count : Automatically detects and uses the maximum available Hailo-8 devices
-```bash
-# Download
-$ git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git
-
-# Execute
-$ cd EdgeAI_Workflow/ai_accelerator/eai-1200_3300/script
-$ chmod +x hailo_detection_yolov8_video.sh
-$ ./hailo_detection_yolov8_video.sh
-```
-
-
-<br/>
-
----
-<br/>
-
-<a name="Deploy"/>
-
-# Deploy
-Launch an AI application.
-
-<a name="Run"/>
-
-## Run App
-### Objection Detection (Yolov8m)
+ex : Object Detection
 #### Step 1 & 2: On the Host
 Open a terminal on your host machine and execute these two steps. Upon running step 2, you will enter the Hailo-8 Docker container with an interactive shell.
 <br/>
@@ -246,7 +218,37 @@ $ gst-launch-1.0 \
     $video_sink name=hailo_display sync=$sync_pipeline $additional_parameters
 ```
 
-9. Result: 
+
+> See more in [this link](https://github.com/hailo-ai/tappas/tree/master/apps/h8/gstreamer/general/detection)
+
+<br/>
+
+---
+<br/>
+
+<a name="Deploy"/>
+
+# Deploy
+Launch an AI application.
+
+<a name="Run"/>
+
+## Run App
+### Objection Detection (Yolov8m)
+Sample script:
+> Model : yolov8m <br/>
+> Source : /local/workspace/tappas/apps/h8/gstreamer/general/detection/resources/detection.mp4 <br/>
+> Device Count : Automatically detects and uses the maximum available Hailo-8 devices
+```bash
+# Download
+$ git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git
+
+# Execute
+$ cd EdgeAI_Workflow/ai_accelerator/eai-1200_3300/script
+$ chmod +x hailo_detection_yolov8_video.sh
+$ ./hailo_detection_yolov8_video.sh
+```
+Result: 
 
 | Platform | Reference Performance |
 | -------- | -------- |
@@ -256,7 +258,5 @@ $ gst-launch-1.0 \
 
 ![EAS_Startkit_object-detection](assets/hailo_object_detection_video.png)
 
----
 
-> See more supported parameters and usage in [this link](https://github.com/hailo-ai/tappas/tree/master/apps/h8/gstreamer/general/detection)
 
