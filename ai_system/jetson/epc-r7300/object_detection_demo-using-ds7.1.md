@@ -16,11 +16,16 @@ Developers can easily complete the Visual AI development by following these step
 - [Pre-requirements](#Pre-requirements)
   - [Target](#Target)
   - [Development](#Development) 
+   - [System requirements](#System requirements)
+   - [Install Edge AI SDK ](#Install Edge AI SDK)
+   - [Frameworks](#Frameworks)
 - [Develop](#Develop)
-  - [Prepare your AI Model](#Model)
-  - [App](#App) 
-- [Deploy](#Deploy)
+  - [Convert AI Model](#Model)
   - [Application](#Application)
+   - [Build library](#Build library)
+   - [Prepare files](#Prepare files)
+- [Deploy](#Deploy)
+  - [Run](#Run)
 
 ---
 
@@ -49,14 +54,14 @@ Refer to the following requirements to prepare the target and develop environmen
 It's the same to [Target](#Target)
 <br/>
 
-### Install Edge AI SDK v3.3.0
+### Install Edge AI SDK 
 Base on **Target Environment** <br/>
 Please install the corresponding version of EdgeAISDK to obtain the following development environment.
-> Install :  [Edge AI SDK install link](https://ess-wiki.advantech.com.tw/view/Edge_AI_SDK/Download)
+Install :  [Edge AI SDK(v3.3.0) install](https://ess-wiki.advantech.com.tw/view/Edge_AI_SDK/Download)
 
 <br/>
 
-#### AI Frameworks & Environment
+### Frameworks
 
 | Frameworks  | Description  | Note | 
 |----------------|-------------|---------------------| 
@@ -78,7 +83,7 @@ The container is started with the following command.<br/>
  
 <a name="Model"/>
 
-## Prepare your AI Model 
+## Convert AI Model 
 **Model : yolo11m**
 <br/>
 <br/>
@@ -87,31 +92,29 @@ The container is started with the following command.<br/>
    The [source model link](https://github.com/ultralytics/assets/releases/download/v8.3.0/yolo11m.pt)
  
 2. Convert pt to onnx :
-    **Install the required package for YOLO11**
-    $pip install ultralytics
-    **Export a YOLO11m PyTorch model to ONNX format**
-    $yolo export model=yolo11m.pt format=onnx # creates 'yolo11m.onnx'
-    
+**Install the required package for YOLO11**
+$pip install ultralytics
+**Export a YOLO11m PyTorch model to ONNX format**
+$yolo export model=yolo11m.pt format=onnx # creates 'yolo11m.onnx'
+ 
 Note: The reference [pt to onnx](https://docs.ultralytics.com/zh/integrations/onnx/#supported-deployment-options)
 
       
 <a name="App"/>
 
-## Build libray for yolo11
- 
+## Build library
 1. **Get repository**
-   **Host shell**
-   $git clone https://github.com/marcoslucianops/DeepStream-Yolo.git
-   $cd DeepStream-Yolo
- 
-3. **Compile the lib with container** 
-   $docker run -it --rm --runtime=nvidia --network=host -e NVIDIA_DRIVER_CAPABILITIES=compute,utility,video,graphics --gpus all --privileged -e DISPLAY=$DISPLAY -v ./DeepStream-Yolo:/DeepStream-Yolo -v /tmp/.X11-unix:/tmp/.X11-unix -v /etc/X11:/etc/X11 nvcr.io/nvidia/deepstream:7.1-samples-multiarch
-   
-   **Docker shell**
-   $cd /DeepStream-Yolo
-   $apt-get install build-essential
-   $/opt/nvidia/deepstream/deepstream/user_additional_install.sh 
-   $export CPATH=/usr/local/cuda-12.6/targets/aarch64-linux/include:$CPATH
+**Host shell**
+$git clone https://github.com/marcoslucianops/DeepStream-Yolo.git
+$cd DeepStream-Yolo
+
+2. **Compile the lib with container**
+$docker run -it --rm --runtime=nvidia --network=host -e NVIDIA_DRIVER_CAPABILITIES=compute,utility,video,graphics --gpus all --privileged -e DISPLAY=$DISPLAY -v ./DeepStream-Yolo:/DeepStream-Yolo -v /tmp/.X11-unix:/tmp/.X11-unix -v /etc/X11:/etc/X11 nvcr.io/nvidia/deepstream:7.1-samples-multiarch
+**Docker shell**
+$cd /DeepStream-Yolo
+$apt-get install build-essential
+$/opt/nvidia/deepstream/deepstream/user_additional_install.sh
+$export CPATH=/usr/local/cuda-12.6/targets/aarch64-linux/include:$CPATH
    $export LD_LIBRARY_PATH=/usr/local/cuda-12.6/targets/aarch64-linux/lib:$LD_LIBRARY_PATH
    $export PATH=/usr/local/cuda-12.6/bin:$PATH
    $export CUDA_VER=12.6
@@ -119,7 +122,7 @@ Note: The reference [pt to onnx](https://docs.ultralytics.com/zh/integrations/on
    **libnvdsinfer_custom_impl_Yolo.so in directory "nvdsinfer_custom_impl_Yolo"**
    
    
-## Prepare files to run
+## Prepare files
   **Host shell**
  1. $mkdir object-detect-deepstream 
  2. $git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git
@@ -127,46 +130,31 @@ Note: The reference [pt to onnx](https://docs.ultralytics.com/zh/integrations/on
                 /EdgeAI_Workflow/ai_system/jetson/epc-r7300/script/deepstream_app_config_yoloV11_video.txt (input:video file)
                 /EdgeAI_Workflow/ai_system/jetson/epc-r7300/script/deepstream_app_config_yoloV11_usb-camera.txt (input:usb-camera)
                 /EdgeAI_Workflow/ai_system/jetson/epc-r7300/script/config_infer_primary_yolo11.txt
-    to directory "object-detect-deepstream"
-   
- 4. copy yolo11m.onnx (pre-build) and directory "DeepStream-Yolo/nvdsinfer_custom_impl_Yolo" (libnvdsinfer_custom_impl_Yolo.so has existed) 
-    to directory "object-detect-deepstream" 
-   
- 5. object-detect-deepstream included files/directory: nvdsinfer_custom_impl_Yolo / config_infer_primary_yolo11.txt /     deepstream_app_config_yoloV11_video.txt / deepstream_app_config_yoloV11_usb-camera.txt / labels.txt / yolo11m.onnx
- 
+                /EdgeAI_Workflow/ai_system/jetson/epc-r7300/script/run_yolo11.sh
+                to directory "object-detect-deepstream"
+ 4. copy yolo11m.onnx (pre-build) and directory "DeepStream-Yolo/nvdsinfer_custom_impl_Yolo" (libnvdsinfer_custom_impl_Yolo.so has existed) to directory "object-detect-deepstream"
+ 5. object-detect-deepstream included files/directory: nvdsinfer_custom_impl_Yolo / config_infer_primary_yolo11.txt /deepstream_app_config_yoloV11_video.txt / deepstream_app_config_yoloV11_usb-camera.txt / labels.txt / run_yolo11.sh / yolo11m.onnx
 <br/>
-
----
 <br/>
-
 <a name="Deploy"/>
 
 # Deploy
  
 <a name="Application"/>
 
-## Run Application
-### Objection Detection (Yolo11m)
- 
- Refer to  [Prepare files](#Prepare files to run)
- **Host shell**
- 1. $cd object-detect-deepstream 
- 2. $xhost +
- 3. $docker run -it --rm --runtime=nvidia --network=host -e NVIDIA_DRIVER_CAPABILITIES=compute,utility,video,graphics --gpus all --privileged -e DISPLAY=$DISPLAY -v $(pwd):/DeepStream-Yolo -v /tmp/.X11-unix:/tmp/.X11-unix -v /etc/X11:/etc/X11 nvcr.io/nvidia/deepstream:7.1-samples-multiarch
- 
- **Docker shell**
- 4. $cd /DeepStream-Yolo
-   
- **Input is video file**
- 5. $deepstream-app -c deepstream_app_config_yoloV11_video.txt
+## Run
   
- **Input is usb-camera**
- 6. $deepstream-app -c deepstream_app_config_yoloV11_usb-camera.txt
- 
+ **Host shell**
+ Refer to [Prepare files](#Prepare files)
+ $cd object-detect-deepstream
+    **Input is video file**
+    => $ ./run_yolo11.sh
+    **Input is /dev/video0 (usb-camera)**
+ => $ ./run_yolo11.sh "camera"
  **Note: Trying to create engine from model files**
  **If there is no *.engine file , it will generate *.engine file at first time.**
  
-#### 
+ 
 <br/>
 <br/> 
 <br/>
