@@ -4,34 +4,28 @@ echo "Step 1: Grant Docker Display Permission"
 xhost +local:
 
 echo "Step 2: Launch Hailo-8 Docker container with interactive shell"
-docker run --rm --privileged --network host --name adv_hailo --ipc=host \
-  --device /dev/dri:/dev/dri \
-  -v /tmp/hailo_docker.xauth:/home/hailo/.Xauthority \
-  -v /tmp/.X11-unix/:/tmp/.X11-unix/ \
-  -v /dev:/dev \
-  -v /lib/firmware:/lib/firmware \
-  --group-add 44 \
-  -e DISPLAY=$DISPLAY \
-  -e XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR \
-  -e hailort_enable_service=yes \
-  -it advigw/eas-x86-hailo8:ubuntu22.04-1.0.0 /bin/bash << 'EOF'
+docker exec -i adv_hailo /bin/bash << 'EOF'
 
 echo "Inside Docker container - Starting setup and inference pipeline"
+
 #Source
 input_source="/local/workspace/tappas/apps/h8/gstreamer/general/detection/resources/detection.mp4"
 source_element="filesrc location=$input_source name=src_0 ! decodebin"
+
 #Model
 network_name="yolov8m"
 hef_path="/local/workspace/tappas/apps/h8/gstreamer/general/detection/resources/yolov8m.hef"
 postprocess_so="/local/workspace/tappas/apps/h8/gstreamer/libs/post_processes/libyolo_hailortpp_post.so"
 json_config_path="null"
 thresholds_str="nms-score-threshold=0.3 nms-iou-threshold=0.45 output-format-type=HAILO_FORMAT_TYPE_FLOAT32"
+
 #Parameters
 batch_size="1"
 video_sink="fpsdisplaysink video-sink=xvimagesink text-overlay=true"
 sync_pipeline=false
 additional_parameters=""
 device_id_prop=""
+
 #Device Count
 device_count=$(hailortcli scan | grep -c "Device:")
 echo "Detected Hailo-8 devices: $device_count"
