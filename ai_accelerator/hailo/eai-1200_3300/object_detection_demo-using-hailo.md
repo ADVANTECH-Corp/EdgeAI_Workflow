@@ -17,10 +17,10 @@ Developers can easily complete the Visual AI development by following these step
   - [Target](#Target)
   - [Development](#Development) 
 - [Develop](#Develop)
-  - [Prepare your AI Model](#Model)
-  - [App](#App) 
+  - [Convert AI Model](#Model)
+  - [Application](#App) 
 - [Deploy](#Deploy)
-  - [Application](#Application)
+  - [Run](#Run)
 
 ---
 
@@ -167,7 +167,7 @@ $ ./hailo_detection_yolov8_video.sh
 # Deploy
 Launch an AI application.
 
-<a name="Application"/>
+<a name="Run"/>
 
 ## Run Application
 ### Objection Detection (Yolov8m)
