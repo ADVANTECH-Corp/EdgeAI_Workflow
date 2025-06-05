@@ -13,5 +13,5 @@ if [[ "$1" = *"camera"* ]]; then
 fi
   
 docker exec ${container_id} /bin/bash -c "cd /EdgeAI && deepstream-app -c $txt"
- 
+
 docker stop ${container_id}
