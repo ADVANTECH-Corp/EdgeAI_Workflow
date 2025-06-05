@@ -106,7 +106,7 @@ Note: The reference [pt to onnx](https://docs.ultralytics.com/zh/integrations/on
  
 3. **Compile the lib with container** 
    $docker run -it --rm --runtime=nvidia --network=host -e NVIDIA_DRIVER_CAPABILITIES=compute,utility,video,graphics --gpus all --privileged -e DISPLAY=$DISPLAY -v ./DeepStream-Yolo:/DeepStream-Yolo -v /tmp/.X11-unix:/tmp/.X11-unix -v /etc/X11:/etc/X11 nvcr.io/nvidia/deepstream:7.1-samples-multiarch
-    
+   
    **Docker shell**
    $cd /DeepStream-Yolo
    $apt-get install build-essential
@@ -117,7 +117,22 @@ Note: The reference [pt to onnx](https://docs.ultralytics.com/zh/integrations/on
    $export CUDA_VER=12.6
    $make -C nvdsinfer_custom_impl_Yolo clean && make -C nvdsinfer_custom_impl_Yolo
    **libnvdsinfer_custom_impl_Yolo.so in directory "nvdsinfer_custom_impl_Yolo"**
- 
+   
+   
+## Prepare files to run
+  **Host shell**
+ 1. $mkdir object-detect-deepstream 
+ 2. $git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git
+ 3. copy files: /EdgeAI_Workflow/ai_system/jetson/epc-r7300/script/labels.txt
+                /EdgeAI_Workflow/ai_system/jetson/epc-r7300/script/deepstream_app_config_yoloV11_video.txt (input:video file)
+                /EdgeAI_Workflow/ai_system/jetson/epc-r7300/script/deepstream_app_config_yoloV11_usb-camera.txt (input:usb-camera)
+                /EdgeAI_Workflow/ai_system/jetson/epc-r7300/script/config_infer_primary_yolo11.txt
+    to directory "object-detect-deepstream"
+   
+ 4. copy yolo11m.onnx (pre-build) and directory "DeepStream-Yolo/nvdsinfer_custom_impl_Yolo" (libnvdsinfer_custom_impl_Yolo.so has existed) 
+    to directory "object-detect-deepstream" 
+   
+ 5. object-detect-deepstream included files/directory: nvdsinfer_custom_impl_Yolo / config_infer_primary_yolo11.txt /     deepstream_app_config_yoloV11_video.txt / deepstream_app_config_yoloV11_usb-camera.txt / labels.txt / yolo11m.onnx
  
 <br/>
 
@@ -127,35 +142,30 @@ Note: The reference [pt to onnx](https://docs.ultralytics.com/zh/integrations/on
 <a name="Deploy"/>
 
 # Deploy
-
  
- **Prepare files (Host shell)**
- 1. $mkdir object-detect-deepstream 
- 2. $git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git
- 3. copy files: /EdgeAI_Workflow/ai_system/jetson/epc-r7300/script/labels.txt
-                /EdgeAI_Workflow/ai_system/jetson/epc-r7300/script/deepstream_app_config_yoloV11.txt
-                /EdgeAI_Workflow/ai_system/jetson/epc-r7300/script/config_infer_primary_yolo11.txt
-    to directory "object-detect-deepstream"
-   
- 4. copy yolo11m.onnx (pre-build) and directory "DeepStream-Yolo/nvdsinfer_custom_impl_Yolo" (libnvdsinfer_custom_impl_Yolo.so has existed) 
-    to directory "object-detect-deepstream" 
-   
- 5. object-detect-deepstream included files/directory: nvdsinfer_custom_impl_Yolo / config_infer_primary_yolo11.txt / deepstream_app_config_yoloV11.txt / labels.txt / yolo11m.onnx
 <a name="Application"/>
 
 ## Run Application
 ### Objection Detection (Yolo11m)
  
- 6. $cd object-detect-deepstream
- 7. $xhost +
- 8. $docker run -it --rm --runtime=nvidia --network=host -e NVIDIA_DRIVER_CAPABILITIES=compute,utility,video,graphics --gpus all --privileged -e DISPLAY=$DISPLAY -v $(pwd):/DeepStream-Yolo -v /tmp/.X11-unix:/tmp/.X11-unix -v /etc/X11:/etc/X11 nvcr.io/nvidia/deepstream:7.1-samples-multiarch
+ Refer to  [Prepare files](#Prepare files to run)
+ **Host shell**
+ 1. $cd object-detect-deepstream 
+ 2. $xhost +
+ 3. $docker run -it --rm --runtime=nvidia --network=host -e NVIDIA_DRIVER_CAPABILITIES=compute,utility,video,graphics --gpus all --privileged -e DISPLAY=$DISPLAY -v $(pwd):/DeepStream-Yolo -v /tmp/.X11-unix:/tmp/.X11-unix -v /etc/X11:/etc/X11 nvcr.io/nvidia/deepstream:7.1-samples-multiarch
  
  **Docker shell**
- 9.  $cd /DeepStream-Yolo
- 10. $deepstream-app -c deepstream_app_config_yoloV11.txt
+ 4. $cd /DeepStream-Yolo
+   
+ **Input is video file**
+ 5. $deepstream-app -c deepstream_app_config_yoloV11_video.txt
+  
+ **Input is usb-camera**
+ 6. $deepstream-app -c deepstream_app_config_yoloV11_usb-camera.txt
+ 
  **Note: Trying to create engine from model files**
  **If there is no *.engine file , it will generate *.engine file at first time.**
-  
+ 
 #### 
 <br/>
 <br/> 
