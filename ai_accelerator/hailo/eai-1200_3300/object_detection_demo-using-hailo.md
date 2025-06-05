@@ -17,10 +17,10 @@ Developers can easily complete the Visual AI development by following these step
   - [Target](#Target)
   - [Development](#Development) 
 - [Develop](#Develop)
-  - [Prepare your AI Model](#Model)
-  - [App](#App) 
+  - [Convert AI Model](#Model)
+  - [Application](#App) 
 - [Deploy](#Deploy)
-  - [Application](#Application)
+  - [Run App](#Run)
 
 ---
 
@@ -90,47 +90,59 @@ docker run --rm --privileged --network host --name adv_hailo --ipc=host --device
 
 <a name="Model"/>
 
-## Prepare your AI Model 
-**Model : yolov8m**
-<br/>
-<br/>
-This model is pre-packaged and stored inside the Docker container. You can find the model file at the following path within the container:<br/>
-``/local/workspace/tappas/apps/h8/gstreamer/general/detection/resources/yolov8m.hef``<br/>
-<br/>
-Model install path : [Compiled model install link](https://github.com/hailo-ai/hailo_model_zoo/blob/master/docs/public_models/HAILO8/HAILO8_object_detection.rst)
+## Convert AI Model
 
+### How to Convert an ONNX Model to HEF Format
+**Example Model : yolov8m**
+<br/>
+<br/>
+1. Prepare a Python environment<br/>
+```bash
+$ python3 -m venv hailomz-env
+$ source hailomz-env/bin/activate
+```
+2. Install required Python packages in *hailomz-env*<br/>
+**Register Developer Zone** & Download python packages : [Hailo Developer Zone](https://hailo.ai/developer-zone/software-downloads/)<br/>
+Choose `AI Software Suite -> HailoRT -> x86 -> Linux -> 3.10` to install `HailoRT - Python package (whl) for Python 3.10,x86_64`<br/>
+Choose `AI Software Suite -> Dataflow Compiler -> x86 -> Linux -> 3.10` to install `Hailo Dataflow Compiler - Python package (whl)`
+```bash
+# Install System dependencies
+$ sudo apt update
+$ sudo apt install -y graphviz graphviz-dev build-essential
+
+# Install python package (wheels)
+$ pip install hailort-4.20.0-cp310-cp310-linux_x86_64.whl
+$ pip install hailo_dataflow_compiler-3.31.0-py3-none-linux_x86_64.whl
+```
+3. Install the Hailo Model Zoo in *hailomz-env*<br/>
+```bash
+$ git clone https://github.com/hailo-ai/hailo_model_zoo.git
+$ cd hailo_model_zoo; pip install -e .
+```
+4. Prepare your onnx model file (ex: yolov8m.onnx)<br/>
+[Download Yolov8m.onnx](https://hailo-model-zoo.s3.eu-west-2.amazonaws.com/ObjectDetection/Detection-COCO/yolo/yolov8m/2023-02-02/yolov8m.zip)  ,  [More pretrained models](https://github.com/hailo-ai/hailo_model_zoo/blob/master/docs/public_models/HAILO8/HAILO8_object_detection.rst)
+
+6. Prepare calibration dataset<br/>
+Prepare a dataset of images (in .png or .jpg format) to be used for model calibration during conversion.<br/>
+ex : [Download COCO Dataset](https://cocodataset.org/#download)
+
+8. Convert the ONNX model to HEF format in *hailomz-env*<br/>
+Use the hailomz tool to compile the model with the following command:
+```bash
+$ hailomz compile --ckpt <path_to_model>/yolov8m.onnx --hw-arch hailo8 --yaml <path_to_yaml>/yolov8m.yaml --classes 80 --calib-path <path_to_dataset>
+```
+* | ``--ckpt`` - path to  your ONNX file.
+* | ``--yaml`` - path to your configuration YAML file.[Download yolov8m.yaml](https://github.com/hailo-ai/hailo_model_zoo/blob/master/hailo_model_zoo/cfg/networks/yolov8m.yaml)
+* | ``--classes`` - adjusting the number of classes in post-processing configuration (optional).
+* | ``--calib-path`` - path to a directory with your calibration images in JPEG/png format
+* | The model zoo will take care of adding the input normalization to be part of the model.
+> [More Model's yaml file](https://github.com/hailo-ai/hailo_model_zoo/tree/master/hailo_model_zoo/cfg/networks)
+
+<br/>
 <a name="App"/>
 
-## App
-Sample script:
-> Model : yolov8m <br/>
-> Source : /local/workspace/tappas/apps/h8/gstreamer/general/detection/resources/detection.mp4 <br/>
-> Device Count : Automatically detects and uses the maximum available Hailo-8 devices
-```bash
-# Download
-$ git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git
-
-# Execute
-$ cd EdgeAI_Workflow/ai_accelerator/eai-1200_3300/script
-$ chmod +x hailo_detection_yolov8_video.sh
-$ ./hailo_detection_yolov8_video.sh
-```
-
-
-<br/>
-
----
-<br/>
-
-<a name="Deploy"/>
-
-# Deploy
-Launch an AI application.
-
-<a name="Application"/>
-
-## Run Application
-### Objection Detection (Yolov8m)
+## Application
+ex : Object Detection
 #### Step 1 & 2: On the Host
 Open a terminal on your host machine and execute these two steps. Upon running step 2, you will enter the Hailo-8 Docker container with an interactive shell.
 <br/>
@@ -143,29 +155,34 @@ $ xhost +local:
 ```bash
 $ docker exec -it adv_hailo /bin/bash
 ```
+3. Move your own Model to docker shared file
+```bash
+$ cd <path-of-your-convert-model>/yolov8m.hef /opt/Advantech/EdgeAISuite/Accelerator/Hailo_8/tool/docker/shared_with_docker/
+```
+
 #### Step 3 to 7: Inside the Docker Container
 After completing step 2 and entering the Docker container, proceed with steps 3 through 7 inside the container to configure settings and start the inference pipeline.
 <br/>
 <br/>
 
-3. Select Input Source (Camera or Video)
+4. Select Input Source (Camera or Video)
    
 | Source | Command |
 | -------- | -------- |
 | USB Camera | $ input_source="/dev/video0"<br>$ source_element="v4l2src device=$input_source name=src_0 ! videoflip video-direction=horiz"   |
 | Video File | $ input_source="/local/workspace/tappas/apps/h8/gstreamer/general/detection/resources/detection.mp4"<br>$ source_element="filesrc location=$input_source name=src_0 ! decodebin"   |
 
-4. Model Configuration
+5. Model Configuration
 ```bash
 $ network_name="yolov8m"
-$ hef_path="/local/workspace/tappas/apps/h8/gstreamer/general/detection/resources/yolov8m.hef"
+$ hef_path="/local/shared_with_docker/yolov8m.hef"
 
-# Post-processing settings specific for yolov8
+# Post-processing settings specific for yolov8m
 $ postprocess_so="/local/workspace/tappas/apps/h8/gstreamer/libs/post_processes/libyolo_hailortpp_post.so"
 $ json_config_path="null"
 $ thresholds_str="nms-score-threshold=0.3 nms-iou-threshold=0.45 output-format-type=HAILO_FORMAT_TYPE_FLOAT32"
 ```
-5. Pipeline Parameter Configuration
+6. Pipeline Parameter Configuration
 ```bash
 $ batch_size="1"
 $ video_sink="fpsdisplaysink video-sink=xvimagesink text-overlay=true"
@@ -173,7 +190,7 @@ $ sync_pipeline=false
 $ additional_parameters=""
 $ device_id_prop=""
 ```
-6. Define Hailo-8 Device Count
+7. Define Hailo-8 Device Count
 ```bash
 $ hailortcli scan | grep -c "Device:"
 
@@ -181,7 +198,7 @@ $ hailortcli scan | grep -c "Device:"
 # For example, EAI-1200 may have 1 device, while EAI-3300 may have 2.
 $ device_count=2
 ```
-7. Run the GStreamer Inference Pipeline
+8. Run the GStreamer Inference Pipeline
 ```bash
 $ gst-launch-1.0 \
     $source_element ! \
@@ -201,7 +218,37 @@ $ gst-launch-1.0 \
     $video_sink name=hailo_display sync=$sync_pipeline $additional_parameters
 ```
 
-8. Result: 
+
+> See more in [this link](https://github.com/hailo-ai/tappas/tree/master/apps/h8/gstreamer/general/detection)
+
+<br/>
+
+---
+<br/>
+
+<a name="Deploy"/>
+
+# Deploy
+Launch an AI application.
+
+<a name="Run"/>
+
+## Run App
+### Objection Detection (Yolov8m)
+Sample script:
+> Model : yolov8m <br/>
+> Source : /local/workspace/tappas/apps/h8/gstreamer/general/detection/resources/detection.mp4 <br/>
+> Device Count : Automatically detects and uses the maximum available Hailo-8 devices
+```bash
+# Download
+$ git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git
+
+# Execute
+$ cd EdgeAI_Workflow/ai_accelerator/eai-1200_3300/script
+$ chmod +x hailo_detection_yolov8_video.sh
+$ ./hailo_detection_yolov8_video.sh
+```
+Result: 
 
 | Platform | Reference Performance |
 | -------- | -------- |
@@ -211,7 +258,5 @@ $ gst-launch-1.0 \
 
 ![EAS_Startkit_object-detection](assets/hailo_object_detection_video.png)
 
----
 
-> See more supported parameters and usage in [this link](https://github.com/hailo-ai/tappas/tree/master/apps/h8/gstreamer/general/detection)
 
