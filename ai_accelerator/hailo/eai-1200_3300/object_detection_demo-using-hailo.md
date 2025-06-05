@@ -90,7 +90,7 @@ docker run --rm --privileged --network host --name adv_hailo --ipc=host --device
 
 <a name="Model"/>
 
-## Prepare your AI Model 
+## Convert AI Model
 
 ### How to Convert an ONNX Model to HEF Format
 **Example Model : yolov8m**
