@@ -78,12 +78,20 @@ The container is started with the following command.
 
 1. Download [yolo11m.pt link](https://github.com/ultralytics/assets/releases/download/v8.3.0/yolo11m.pt)  
    
-2. Convert pt to onnx :  
-   **Install the required package for YOLO11**  
+  
+2. Install the required package for YOLO11 :  
+   **Create virtual environment**
+   $python3 -m venv convert_onnx  
+   $source convert_onnx/bin/activate  
+   
+   **In virtual environment**  
    $pip install ultralytics  
-
+   
+   
+3. Convert pt to onnx  
    **Export a PyTorch model to ONNX format(creates 'yolo11m.onnx')**  
    **Note: The reference [pt to onnx](https://docs.ultralytics.com/zh/integrations/onnx/#supported-deployment-options)**  
+   **In virtual environment and go to yolo11m.pt of directory**  
    $yolo export model=yolo11m.pt format=onnx  
 
 
@@ -92,10 +100,11 @@ The container is started with the following command.
 1. **Get repository**  
 **Host shell**  
 $git clone https://github.com/marcoslucianops/DeepStream-Yolo.git  
-$cd DeepStream-Yolo  
+
 
 2. **Compile the lib with container**  
-$docker run -it --rm --runtime=nvidia --network=host -e NVIDIA_DRIVER_CAPABILITIES=compute,utility,video,graphics --gpus all --privileged -e DISPLAY=$DISPLAY -v ./DeepStream-Yolo:/DeepStream-Yolo -v /tmp/.X11-unix:/tmp/.X11-unix -v /etc/X11:/etc/X11 nvcr.io/nvidia/deepstream:7.1-samples-multiarch  
+   **Be with the "DeepStream-Yolo" in the same directory**  
+$docker run -it --rm --runtime=nvidia --network=host -e NVIDIA_DRIVER_CAPABILITIES=compute,utility,video,graphics --gpus all --privileged -e DISPLAY=$DISPLAY -v ./DeepStream-Yolo:/DeepStream-Yolo -v /tmp/.X11-unix:/tmp/.X11-unix -v /etc/X11:/etc/X11 nvcr.io/nvidia/deepstream:7.1-triton-multiarch  
 
 **Docker shell**  
 
