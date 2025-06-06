@@ -16,7 +16,7 @@ Developers can easily complete the Visual AI development by following these step
 - [Pre-Requirements](#pre-requirements) <!-- prerequisite -->
   - [Target](#target) <!-- prerequisite -->
   - [Development](#development) <!-- prerequisite -->
-       - [System Requirements](#system-requirements)  
+       - [System Requirements](#system-requirements)
        - [Install Edge AI SDK](#install-edge-ai-sdk)
        - [Frameworks](#frameworks)
 - [Develop](#develop)<!-- prerequisite -->
@@ -80,7 +80,7 @@ The container is started with the following command.
    
   
 2. Install the required package for YOLO11 :  
-   **Create virtual environment**
+   **Create virtual environment**  
    $python3 -m venv convert_onnx  
    $source convert_onnx/bin/activate  
    
@@ -96,11 +96,12 @@ The container is started with the following command.
 
 
 ## Application   
-### Build Library      
-1. **Get repository**  
-**Host shell**  
-$git clone https://github.com/marcoslucianops/DeepStream-Yolo.git  
+### Build Library 
 
+**Host shell**  
+
+1. **Get repository**  
+$git clone https://github.com/marcoslucianops/DeepStream-Yolo.git  
 
 2. **Compile the lib with container**  
    **Be with the "DeepStream-Yolo" in the same directory**  
@@ -133,15 +134,17 @@ $make -C nvdsinfer_custom_impl_Yolo clean && make -C nvdsinfer_custom_impl_Yolo
  
  2. $git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git  
  
- 3. copy files: /EdgeAI_Workflow/ai_system/jetson/air-030/script/labels.txt  
-                /EdgeAI_Workflow/ai_system/jetson/air-030/script/deepstream_app_config_yoloV11_video.txt (input:video file)  
-                /EdgeAI_Workflow/ai_system/jetson/air-030/script/deepstream_app_config_yoloV11_usb-camera.txt (input:usb-camera)  
-                /EdgeAI_Workflow/ai_system/jetson/air-030/script/config_infer_primary_yolo11.txt  
-                /EdgeAI_Workflow/ai_system/jetson/air-030/script/run_yolo11.sh  
-                to directory "object-detect-deepstream"        
+ 3. copy files below to directory "object-detect-deepstream"  
+                /EdgeAI_Workflow/ai_system/jetson/air-030/script/labels.txt
+                /EdgeAI_Workflow/ai_system/jetson/air-030/script/deepstream_app_config_yoloV11_video.txt (input:video file)
+                /EdgeAI_Workflow/ai_system/jetson/air-030/script/deepstream_app_config_yoloV11_usb-camera.txt (input:usb-camera)
+                /EdgeAI_Workflow/ai_system/jetson/air-030/script/config_infer_primary_yolo11.txt
+                /EdgeAI_Workflow/ai_system/jetson/air-030/script/run_yolo11.sh
+                     
  4. copy yolo11m.onnx (pre-build) and directory "DeepStream-Yolo/nvdsinfer_custom_impl_Yolo" (libnvdsinfer_custom_impl_Yolo.so has existed) to directory "object-detect-deepstream"  
  
- 5. object-detect-deepstream included files/directory: nvdsinfer_custom_impl_Yolo / config_infer_primary_yolo11.txt /deepstream_app_config_yoloV11_video.txt / deepstream_app_config_yoloV11_usb-camera.txt / labels.txt / run_yolo11.sh / yolo11m.onnx    
+ 5. object-detect-deepstream included files/directory:  
+ nvdsinfer_custom_impl_Yolo / config_infer_primary_yolo11.txt /deepstream_app_config_yoloV11_video.txt / deepstream_app_config_yoloV11_usb-camera.txt / labels.txt / run_yolo11.sh / yolo11m.onnx  
  
  
  
@@ -159,7 +162,7 @@ $make -C nvdsinfer_custom_impl_Yolo clean && make -C nvdsinfer_custom_impl_Yolo
  => $ ./run_yolo11.sh "camera"  
 
  **Note: Trying to create engine from model files**  
- **Note: If there is no "engine file",it will generate    "engine file" at first time**   
+ **Note: If there is no "engine file",it will generate    "engine file" at first time**  
  
  
  
