@@ -6,7 +6,7 @@ The Edge AI Workflow is designed to help developers kickstart AI application dev
 # AI System
 | Model |  SOC | OS |  README |
 | -------- | -------- | -------- | ---- |
-| AOM-2721     | Qualcomm QCS640 | LE/QIRP 1.1 Yocto-4.0 | [README](ai_system/qualcomm/aom-2721/README.md) |
+| AOM-DK2721     | Qualcomm QCS640 | LE/QIRP 1.1 Yocto-4.0 | [README](ai_system/qualcomm/aom-dk2721/README.md) |
 | AFE-R360     | Intel Core Ultra | Ubuntu 24.04 | [README](ai_system/intel/afe-r360/README.md)  |
 
 # AI Accelerator
