@@ -1,5 +1,5 @@
-# Create an Object Detection Demo on AOM-2721 ( Qualcomm/QCS6490 ) using Qualcomm SNPE
-This example will demonstrate how to develop an vision AI Object Detection on AOM-2721 ( Qualcomm QCS6490 ) platform.
+# Create an Object Detection Demo on AOM-DK2721 ( Qualcomm/QCS6490 ) using Qualcomm SNPE
+This example will demonstrate how to develop an vision AI Object Detection on AOM-DK2721 ( Qualcomm QCS6490 ) platform.
 Developers can easily complete the Visual AI development by following these steps.
 
 * Application: Objection Detection
@@ -73,7 +73,7 @@ How to intsll the SNPE on x86_x64 host machine
 <a name="DevelopFlow"/>
 
 # Develop Flow
-Follow these steps on the development platform (x86_64) to obtain a pre-trained AI model from the Qualcomm AI Hub or an open AI model, then optimize and convert it for the AOM-2721 (QCS6490) device. <br>
+Follow these steps on the development platform (x86_64) to obtain a pre-trained AI model from the Qualcomm AI Hub or an open AI model, then optimize and convert it for the AOM-DK2721 (QCS6490) device. <br>
  
 <a name="Open_AI_Model"/>
 
@@ -93,7 +93,7 @@ Follow these steps on the development platform (x86_64) to obtain a pre-trained 
       - step-2: To execute the step1 to step6 of the download file. 
 - 4.  To get label file:<br>
       - git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git
-      - EdgeAI_Workflow\ai_system\qualcomm\aom-2721\labels\yolov5.labels
+      - EdgeAI_Workflow\ai_system\qualcomm\aom-dk2721\labels\yolov5.labels
  
 <a name="Deploy"/>
 
@@ -105,8 +105,8 @@ Copy the optimized AI model to target device and  launch an AI application with 
 ## Application
 | Device   | Command  | Introduction  |
 | -------- | -------- | ------------- |
-| AOM-2721 | export XDG_RUNTIME_DIR=/dev/socket/weston <br> export WAYLAND_DISPLAY=wayland-1 <br> source /opt/qcom/qirp-sdk/qirp-setup.sh <br> gst-launch-1.0 -e qtivcomposer name=mixer sink_1::dimensions="<1920,1080>" ! queue ! waylandsink sync=true fullscreen=false x=10 y=10 width=1280 height=720 v4l2src device="/dev/video2"  ! tee name=t ! queue ! mixer. t. ! queue ! qtimlvconverter mean="<0.0, 0.0, 0.0>" sigma="<0.003921, 0.003921, 0.003921>" ! queue ! qtimlsnpe delegate=dsp model="yolov5n-quant.dlc" layers="</model.24/m.0/Conv,/model.24/m.1/Conv,/model.24/m.2/Conv>" ! queue ! qtimlvdetection threshold=51.0 results=10 module=yolov5 labels="yolov5.labels" ! video/x-raw,width=480,height=270 ! queue ! mixer. | Run on dsp (usb camera) |
-| AOM-2721 | export XDG_RUNTIME_DIR=/dev/socket/weston <br> export WAYLAND_DISPLAY=wayland-1 <br> source /opt/qcom/qirp-sdk/qirp-setup.sh <br> gst-launch-1.0 -e qtivcomposer name=mixer sink_1::dimensions="<1920,1080>" ! queue ! waylandsink sync=true fullscreen=false x=10 y=10 width=1280 height=720 filesrc  location="file.mp4" ! qtdemux ! queue ! h264parse ! v4l2h264dec capture-io-mode=5 output-io-mode=5 ! queue ! tee name=t ! queue ! mixer.  t. ! queue ! qtimlvconverter mean="<0.0, 0.0, 0.0>" sigma="<0.003921, 0.003921, 0.003921>" ! queue ! qtimlsnpe delegate=dsp model="yolov5n-quant.dlc" layers="</model.24/m.0/Conv,/model.24/m.1/Conv,/model.24/m.2/Conv>" ! queue !  qtimlvdetection threshold=51.0 results=10 module=yolov5 labels="yolov5.labels" ! video/x-raw,width=480,height=270 ! queue ! mixer. | Run on dsp (video file) |
+| AOM-DK2721 | export XDG_RUNTIME_DIR=/dev/socket/weston <br> export WAYLAND_DISPLAY=wayland-1 <br> source /opt/qcom/qirp-sdk/qirp-setup.sh <br> gst-launch-1.0 -e qtivcomposer name=mixer sink_1::dimensions="<1920,1080>" ! queue ! waylandsink sync=true fullscreen=false x=10 y=10 width=1280 height=720 v4l2src device="/dev/video2"  ! tee name=t ! queue ! mixer. t. ! queue ! qtimlvconverter mean="<0.0, 0.0, 0.0>" sigma="<0.003921, 0.003921, 0.003921>" ! queue ! qtimlsnpe delegate=dsp model="yolov5n-quant.dlc" layers="</model.24/m.0/Conv,/model.24/m.1/Conv,/model.24/m.2/Conv>" ! queue ! qtimlvdetection threshold=51.0 results=10 module=yolov5 labels="yolov5.labels" ! video/x-raw,width=480,height=270 ! queue ! mixer. | Run on dsp (usb camera) |
+| AOM-DK2721 | export XDG_RUNTIME_DIR=/dev/socket/weston <br> export WAYLAND_DISPLAY=wayland-1 <br> source /opt/qcom/qirp-sdk/qirp-setup.sh <br> gst-launch-1.0 -e qtivcomposer name=mixer sink_1::dimensions="<1920,1080>" ! queue ! waylandsink sync=true fullscreen=false x=10 y=10 width=1280 height=720 filesrc  location="file.mp4" ! qtdemux ! queue ! h264parse ! v4l2h264dec capture-io-mode=5 output-io-mode=5 ! queue ! tee name=t ! queue ! mixer.  t. ! queue ! qtimlvconverter mean="<0.0, 0.0, 0.0>" sigma="<0.003921, 0.003921, 0.003921>" ! queue ! qtimlsnpe delegate=dsp model="yolov5n-quant.dlc" layers="</model.24/m.0/Conv,/model.24/m.1/Conv,/model.24/m.2/Conv>" ! queue !  qtimlvdetection threshold=51.0 results=10 module=yolov5 labels="yolov5.labels" ! video/x-raw,width=480,height=270 ! queue ! mixer. | Run on dsp (video file) |
 ## Result
 
 ![eas_ai_workflow](assets/rom-2860_objectdetection_result.png)

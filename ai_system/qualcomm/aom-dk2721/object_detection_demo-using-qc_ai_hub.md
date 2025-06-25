@@ -1,6 +1,6 @@
-# Create an Object Detection Demo on AOM-2721(Qualcomm/QCS6490) using Qualcomm AI Hub
+# Create an Object Detection Demo on AOM-DK2721(Qualcomm/QCS6490) using Qualcomm AI Hub
 
-This example will demonstrate how to develop an vision AI model from Qualcomm AI Hub on AOM-2721 ( Qualcomm QCS6490 ) platform.
+This example will demonstrate how to develop an vision AI model from Qualcomm AI Hub on AOM-DK2721 ( Qualcomm QCS6490 ) platform.
 Developers can easily complete the Visual AI development by following these steps.
 
  Application: Objection Detection
@@ -73,7 +73,7 @@ Step 5. Get Model (.tflite)<br>
 
 Step 6. To get label file:<br>
     $ git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git <br>
-    => EdgeAI_Workflow/ai_system/qualcomm/aom-2721/labels/coco_labels.txt <br>
+    => EdgeAI_Workflow/ai_system/qualcomm/aom-dk2721/labels/coco_labels.txt <br>
  
 <a name="Deploy-AI-Hub"/>
 
@@ -85,8 +85,8 @@ Copy the optimized AI model (yolov8_det_quantized.tflite is created based on pre
 ## Application
 | Device   | Command  | Introduction  |
 | -------- | -------- | ------------- |
-| AOM-2721 | export XDG_RUNTIME_DIR=/dev/socket/weston && export WAYLAND_DISPLAY=wayland-1 <br> source /opt/qcom/qirp-sdk/qirp-setup.sh <br> gst-launch-1.0 -e v4l2src device="/dev/video2" ! queue ! tee name=split split. ! queue ! qtivcomposer name=mixer sink_1::dimensions="<640,480>" sink_1::alpha=0.5 ! queue ! waylandsink fullscreen=false width=1280 height=720 split. ! queue ! qtivtransform ! video/x-raw (memory:GBM\),format=NV12,width=640,height=480 ! qtimlvconverter ! queue ! qtimltflite delegate=external external-delegate-path=libQnnTFLiteDelegate.so external-delegate-options="QNNExternalDelegate,backend_type=htp;" model=yolov8_det_quantized.tflite ! queue ! qtimlvdetection threshold=10.0 results=10 module=yolov8 labels=coco_labels.txt constants="YOLOv8,q-offsets=<20.0, 0.0, 0.0>,q-scales=<3.1391797, 0.0037510, 1.0>;" ! video/x-raw,format=BGRA,width=640,height=360 ! queue ! mixer. | Run on dsp (usb camera) |
-| AOM-2721 | export XDG_RUNTIME_DIR=/dev/socket/weston && export WAYLAND_DISPLAY=wayland-1 <br> source /opt/qcom/qirp-sdk/qirp-setup.sh <br> gst-launch-1.0 -e filesrc location="ObjectDetection.mp4" ! qtdemux ! queue ! h264parse ! v4l2h264dec capture-io-mode=5 output-io-mode=5 ! queue ! tee name=split split. ! queue ! qtivcomposer name=mixer sink_1::dimensions="<640,480>" sink_1::alpha=0.5 ! queue ! waylandsink fullscreen=false width=1280 height=720 split. ! queue ! qtivtransform ! video/x-raw\(memory:GBM\),format=NV12,width=640,height=480 ! qtimlvconverter ! queue ! qtimltflite delegate=external external-delegate-path=libQnnTFLiteDelegate.so external-delegate-options="QNNExternalDelegate,backend_type=htp;" model=yolov8_det_quantized.tflite ! queue ! qtimlvdetection threshold=31.0 results=5 module=yolov8 labels=coco_labels.txt constants="YOLOv8,q-offsets=<20.0, 0.0, 0.0>,q-scales=<3.1391797,0.0037510, 1.0>;" ! video/x-raw,format=BGRA,width=640,height=360 ! queue ! mixer. | Run on dsp (video file) |
+| AOM-DK2721 | export XDG_RUNTIME_DIR=/dev/socket/weston && export WAYLAND_DISPLAY=wayland-1 <br> source /opt/qcom/qirp-sdk/qirp-setup.sh <br> gst-launch-1.0 -e v4l2src device="/dev/video2" ! queue ! tee name=split split. ! queue ! qtivcomposer name=mixer sink_1::dimensions="<640,480>" sink_1::alpha=0.5 ! queue ! waylandsink fullscreen=false width=1280 height=720 split. ! queue ! qtivtransform ! video/x-raw (memory:GBM\),format=NV12,width=640,height=480 ! qtimlvconverter ! queue ! qtimltflite delegate=external external-delegate-path=libQnnTFLiteDelegate.so external-delegate-options="QNNExternalDelegate,backend_type=htp;" model=yolov8_det_quantized.tflite ! queue ! qtimlvdetection threshold=10.0 results=10 module=yolov8 labels=coco_labels.txt constants="YOLOv8,q-offsets=<20.0, 0.0, 0.0>,q-scales=<3.1391797, 0.0037510, 1.0>;" ! video/x-raw,format=BGRA,width=640,height=360 ! queue ! mixer. | Run on dsp (usb camera) |
+| AOM-DK2721 | export XDG_RUNTIME_DIR=/dev/socket/weston && export WAYLAND_DISPLAY=wayland-1 <br> source /opt/qcom/qirp-sdk/qirp-setup.sh <br> gst-launch-1.0 -e filesrc location="ObjectDetection.mp4" ! qtdemux ! queue ! h264parse ! v4l2h264dec capture-io-mode=5 output-io-mode=5 ! queue ! tee name=split split. ! queue ! qtivcomposer name=mixer sink_1::dimensions="<640,480>" sink_1::alpha=0.5 ! queue ! waylandsink fullscreen=false width=1280 height=720 split. ! queue ! qtivtransform ! video/x-raw\(memory:GBM\),format=NV12,width=640,height=480 ! qtimlvconverter ! queue ! qtimltflite delegate=external external-delegate-path=libQnnTFLiteDelegate.so external-delegate-options="QNNExternalDelegate,backend_type=htp;" model=yolov8_det_quantized.tflite ! queue ! qtimlvdetection threshold=31.0 results=5 module=yolov8 labels=coco_labels.txt constants="YOLOv8,q-offsets=<20.0, 0.0, 0.0>,q-scales=<3.1391797,0.0037510, 1.0>;" ! video/x-raw,format=BGRA,width=640,height=360 ! queue ! mixer. | Run on dsp (video file) |
 
 ## Download Script Files 
    To get applications for script files.<br> 
@@ -98,10 +98,10 @@ Copy the optimized AI model (yolov8_det_quantized.tflite is created based on pre
    2. coco_labels.txt : in the working directory
       
    To run with usb-camera <br>
-   => EdgeAI_Workflow/ai_system/qualcomm/aom-2721/script/yolov8_cam_ai_hub.sh <br>
+   => EdgeAI_Workflow/ai_system/qualcomm/aom-dk2721/script/yolov8_cam_ai_hub.sh <br>
    
    To run with video files (Any mp4 files named "ObjectDetection.mp4" in the working directory) <br>
-   => EdgeAI_Workflow/ai_system/qualcomm/aom-2721/script/yolov8_videofile_ai_hub.sh <br>
+   => EdgeAI_Workflow/ai_system/qualcomm/aom-dk2721/script/yolov8_videofile_ai_hub.sh <br>
 
 ## Result (usb camera)
  ![AI_Hub_sample_pic.png](assets/AI_Hub_sample_pic.png)
