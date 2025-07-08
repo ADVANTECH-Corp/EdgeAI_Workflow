@@ -65,13 +65,16 @@ Step 3. Install AI-Hub Tool:<br>
   
 Step 4. Install AI-Hub Model:<br>
     $ qai-hub configure --api_token  **token-value(refer to Step 2)** <br>
-    $ pip install "qai-hub-models[yolov8-det-quantized]" <br>
-    $ python3 -m qai_hub_models.models.yolov8_det_quantized.export <br>
+    $ pip install "qai-hub-models[yolov8-det]" <br>
+    $ python3 -m qai_hub_models.models.yolov8_det.export --quantize w8a8 <br>
 
 Step 5. Get Model (.tflite)<br>
-    $ build/yolov8_det_quantized/yolov8_det_quantized.tflite <br>
+    $ build/yolov8_det/yolov8_det.tflite <br>
 
-Step 6. To get label file:<br>
+Step 6. To re-name  (.tflite)<br>
+    $ mv yolov8_det.tflite yolov8_det_quantized.tflite
+
+Step 7. To get label file:<br>
     $ git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git <br>
     => EdgeAI_Workflow/ai_system/qualcomm/aom-dk2721/labels/coco_labels.txt <br>
  
