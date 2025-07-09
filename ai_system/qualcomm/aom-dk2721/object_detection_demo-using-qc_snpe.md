@@ -11,7 +11,6 @@ Developers can easily complete the Visual AI development by following these step
   - [Target](#Target)
   - [Development](#Development) 
 - [Develop Flow](#DevelopFlow)
-  - [Qualcomm AI Hub](#QC_AI_Hub)
   - [Open AI Model](#Open_AI_Model)
 - [Deploy](#Deploy)
   - [Application](#Application)
