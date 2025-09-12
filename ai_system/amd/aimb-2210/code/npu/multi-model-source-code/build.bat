@@ -14,7 +14,7 @@ set ONNXRUNTIME_ROOTDIR=%RYZEN_AI_INSTALLATION_PATH%/onnxruntime
   
 
  :: below edit path by opencv source code build : 
-    set OpenCV_DIR=C:\Users\AIMB-2210\Desktop\dev\opencv\mybuild\build
+    set OpenCV_DIR=C:\Users\kkkkkk\Desktop\data\git\opencv\mybuild\build
 
 
 set buildType=Release

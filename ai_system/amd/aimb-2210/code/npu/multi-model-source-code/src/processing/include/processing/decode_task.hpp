@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <chrono>
 #include <fstream>
 #include <future>
@@ -16,9 +16,10 @@
 bool is_camera(const std::string& file) {
   return file.size() == 1 && file[0] >= '0' && file[0] <= '9';
 }
-std::unique_ptr<cv::VideoCapture> open_stream(const std::string& video_file) {
-  auto video_stream =
-      std::unique_ptr<cv::VideoCapture>(new cv::VideoCapture(video_file));
+std::unique_ptr<cv::VideoCapture> open_stream(const std::string& video_file ) {
+  
+  auto video_stream =  std::unique_ptr<cv::VideoCapture>(new cv::VideoCapture(video_file));
+     
   if (!video_stream->isOpened()) {
     PRINT("can't open: " << video_file);
     g_stop();
@@ -141,6 +142,9 @@ class DecodeCameraTask : public DecodeTask {
   DecodeCameraTask() {}
   virtual ~DecodeCameraTask() {}
   void init(const Config& config) override {
+
+      PRINT("Test  init: open_stream : Camera  ");
+
     output_queue_ =
         std::make_shared<BoundedFrameQueue>(GLOBAL_BOUNDED_QUEUE_CAPACITY);
     CONFIG_GET(config, std::string, video_file, "video_file_path")
@@ -170,8 +174,13 @@ class DecodeCameraTask : public DecodeTask {
 
  private:
   void open_stream() {
+   // PRINT("Test 1: open_stream : Camera  ");
+     
     video_stream_ = std::unique_ptr<cv::VideoCapture>(
-        new cv::VideoCapture(std::stoi(video_file_)));
+        new cv::VideoCapture(std::stoi(video_file_), cv::CAP_DSHOW)); //add for faster to decode (2025-09-12)
+
+   // PRINT("Test 2: open_stream : Camera  "  );
+
     if (!video_stream_->isOpened()) {
       PRINT("can't open: " << video_file_);
       g_stop();
