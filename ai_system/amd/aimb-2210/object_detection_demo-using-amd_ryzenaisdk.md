@@ -8,7 +8,7 @@ Developers can easily complete the Visual AI development by following these step
  
 * Application: Objection Detection  
 * Model: YoloV8 / YoloVX  
-* Input: Video / USB Camera
+* Input: Video File / USB Camera   
 
 
 
@@ -78,9 +78,9 @@ The develop package is installed with the Edge AI SDK.
  
 
 ## Build Package
-
+(To use Administrator to open terminal)          
  
-1. build  Opencv 4.7.0 : 
+1. build  Opencv 4.7.0 :   
 
 git clone https://github.com/opencv/opencv.git -b 4.7.0  
 cd opencv  
@@ -115,24 +115,30 @@ cd ../..
 3. edit file : "CMakeLists.txt" :  
 
    example => set(ONNXRUNTIME_DIR_INCLUDE "directory_absolute_path")  
-   
+
+   refer to : [System Requirements](#system-requirements)           
    set(ONNXRUNTIME_DIR_INCLUDE "Microsoft.ML.OnnxRuntime.DirectML.1.18.0/build/native/include")  
-   set(ONNXRUNTIME_DIR_LIB "Microsoft.ML.OnnxRuntime.DirectML.1.18.0/runtimes/win-x64/native")  
-   set(OpenCV_DIR_INCLUDE "opencv/build/include")  
+   set(ONNXRUNTIME_DIR_LIB "Microsoft.ML.OnnxRuntime.DirectML.1.18.0/runtimes/win-x64/native")   
+
+   refer to : [Build Package](#build-package)        
+   set(OpenCV_DIR_INCLUDE "opencv/build/include")    
    set(OpenCV_DIR_LIB "opencv/build/x64/vc16/lib")  
-   set(gFLAG_DIR_INCLUDE "gflags/build/native/include")  
-   set(gFLAG_DIR_LIB "gflags/build/native/x64/v120/dynamic/Lib")    
 
-4. To execute : "build.bat"  
+   refer to : [Build Package](#build-package)        
+   set(gFLAG_DIR_INCLUDE "gflags/build/native/include")    
+   set(gFLAG_DIR_LIB "gflags/build/native/x64/v120/dynamic/Lib")         
 
-5. output: "yolov8-object.exe"  
+5. To execute : "build.bat"  
+
+6. output: "yolov8-object.exe"  
 
 #### For NPU
 1. git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git   
 
 2. cd "EdgeAI_Workflow\ai_system\amd\aimb-2210\code\npu\multi-model-source-code"   
 
-3. edit file : "build.bat" :    
+3. edit file : "build.bat" :
+   refer to : [Build Package](#build-package)        
    set OpenCV_DIR=opencv\mybuild\build   
    
 4. To execute : "build.bat"     
@@ -148,17 +154,22 @@ cd ../..
 
    2. "EdgeAI_Workflow\ai_system\amd\aimb-2210\code"  => coco.txt    
 
-   3. "yolov8n.onnx" (refer to [Download AI Files](#download-ai-files))    
+   3. "yolov8n.onnx" (refer to [Download AI Files](#download-ai-files))      
 
    4.  Copy "coco.txt" , "yolov8n.onnx" and "yolov8-object.exe" to "C:\temp"        
 
-### Run / Input is video file   
+### Run  
 
-   1. cd "C:\temp"    
+   1. cd "C:\temp"     
 
-   2. yolov8-object.exe --device=CPU --model=yolov8n.onnx --input=test.mp4         
+   2. To run CPU:   
+      yolov8-object.exe --device=CPU --model=yolov8n.onnx --input="test.mp4" // Video file    
+      yolov8-object.exe --device=CPU --model=yolov8n.onnx --input="0"        // Usb-Camera       
+               
  
-   3. yolov8-object.exe --device=GPU --model=yolov8n.onnx --input=test.mp4    
+   3. To run iGPU:  
+      yolov8-object.exe --device=GPU --model=yolov8n.onnx --input="test.mp4" // Video file        
+      yolov8-object.exe --device=GPU --model=yolov8n.onnx --input="0"        // Usb-Camera      
 
    ![iGPU_Object-Detection](assets/ryzen8000-object-detect-igpu.png)  
 
@@ -172,11 +183,12 @@ cd ../..
           
    3. Copy file "npu_multi_models.exe"(pre-build) to "C:\temp\npu_modelsx4_demo"        
   
-### Run  / Input is video file         
-
+### Run    
    1. cd "C:\temp\npu_modelsx4_demo"  
 
-   2. run_yolovx.bat test.mp4  
+   2. To run :  
+      run_yolovx.bat "0"         //  Usb-Camera   
+      run_yolovx.bat "test.mp4"  //  Video file   
 
    ![NPY_Object-Detection](assets/ryzen8000-object-detect-npu.png)  
 
