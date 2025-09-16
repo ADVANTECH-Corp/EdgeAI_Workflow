@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\kkkkkk\Desktop\data\git\EdgeAI_Workflow\ai_system\amd\aimb-2210\code\cpu_igpu\Yolov8-Object\yolov8-object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\kkkkkk\Desktop\data\git\EdgeAI_Workflow\ai_system\amd\aimb-2210\code\cpu_igpu\Yolov8-Object\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{60EEAC5E-3C9A-35D7-B0A3-6E8C5C31B71B}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

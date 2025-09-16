@@ -15,7 +15,7 @@ string(APPEND CMAKE_CXX_FLAGS " /wd4996")
 string(APPEND CMAKE_CXX_FLAGS " /WX")
 string(APPEND CMAKE_CXX_FLAGS " /W0")
 
- set(OpenCV_DIR "${CMAKE_SOURCE_DIR}/opencv/mybuild/build")
+# set(OpenCV_DIR "${CMAKE_SOURCE_DIR}/opencv/mybuild/build")
  
 
 include_directories("${ONNXRUNTIME_ROOTDIR}/include"                           # Pre-built package

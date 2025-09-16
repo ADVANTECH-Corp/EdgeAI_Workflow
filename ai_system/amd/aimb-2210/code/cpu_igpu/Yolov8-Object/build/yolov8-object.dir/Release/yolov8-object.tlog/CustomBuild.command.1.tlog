@@ -1,0 +1,10 @@
+^C:\USERS\KKKKKK\DESKTOP\DATA\GIT\EDGEAI_WORKFLOW\AI_SYSTEM\AMD\AIMB-2210\CODE\CPU_IGPU\YOLOV8-OBJECT\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/kkkkkk/Desktop/data/git/EdgeAI_Workflow/ai_system/amd/aimb-2210/code/cpu_igpu/Yolov8-Object -BC:/Users/kkkkkk/Desktop/data/git/EdgeAI_Workflow/ai_system/amd/aimb-2210/code/cpu_igpu/Yolov8-Object/build --check-stamp-file C:/Users/kkkkkk/Desktop/data/git/EdgeAI_Workflow/ai_system/amd/aimb-2210/code/cpu_igpu/Yolov8-Object/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

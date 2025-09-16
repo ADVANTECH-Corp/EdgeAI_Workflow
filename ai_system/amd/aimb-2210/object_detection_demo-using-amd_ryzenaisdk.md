@@ -48,7 +48,6 @@ Refer to the following requirements to prepare the target and develop environmen
 1. Install tool :
    - Visual Studio 2022 (with Desktop dev c++ )  
    - cmake   
-   - [onnxruntime Download Link](https://github.com/microsoft/onnxruntime/releases/download/v1.18.0/Microsoft.ML.OnnxRuntime.DirectML.1.18.0.zip)
 
 
 ### Install Edge AI SDK 
@@ -78,32 +77,40 @@ The develop package is installed with the Edge AI SDK.
  
 
 ## Build Package
-(To use Administrator to open terminal)          
- 
-1. build  Opencv 4.7.0 :   
 
+1. mkdir "C:\temp\git"    
+
+ 
+2. build  Opencv 4.7.0 :   
+
+cd "C:\temp\git"  
 git clone https://github.com/opencv/opencv.git -b 4.7.0  
 cd opencv  
 mkdir mybuild  
 cd mybuild  
-cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DBUILD_SHARED_LIBS=OFF -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DCMAKE_CONFIGURATION_TYPES=Release -A x64 -T host=x64 -G "Visual Studio 17 2022" -DCMAKE_INSTALL_PREFIX="C:\Program Files\opencv" -DCMAKE_PREFIX_PATH=".\opencv" -DCMAKE_BUILD_TYPE=Release -DBUILD_opencv_python2=OFF -DBUILD_opencv_python3=OFF -DBUILD_WITH_STATIC_CRT=OFF -B build -S ../  
+cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DBUILD_SHARED_LIBS=ON -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DCMAKE_CONFIGURATION_TYPES=Release -A x64 -T host=x64 -G "Visual Studio 17 2022" -DCMAKE_INSTALL_PREFIX="C:\temp\opencv" -DCMAKE_PREFIX_PATH=".\opencv" -DCMAKE_BUILD_TYPE=Release -DBUILD_opencv_python2=OFF -DBUILD_opencv_python3=OFF -DBUILD_WITH_STATIC_CRT=OFF -DBUILD_opencv_world=ON -B build -S ../  
 cmake --build build --config Release  
 cmake --install build --config Release  
+ 
 
-
-2. build gflags :
-
+3. build gflags :
+  
+cd "C:\temp\git"  
 git clone https://github.com/gflags/gflags.git  
 cd gflags  
 mkdir mybuild  
 cd mybuild  
-cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DBUILD_SHARED_LIBS=OFF -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DCMAKE_CONFIGURATION_TYPES=Release -A x64 -T host=x64 -G "Visual Studio 17 2022" -DCMAKE_INSTALL_PREFIX="C:\Program Files\gflag"  -B build -S ../  
+cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DBUILD_SHARED_LIBS=ON -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DCMAKE_CONFIGURATION_TYPES=Release -A x64 -T host=x64 -G "Visual Studio 17 2022" -DCMAKE_INSTALL_PREFIX="C:\temp\gflag"  -B build -S ../  
 cmake --build build --config Release  
 cmake --install build --config Release  
 cd ../..  
 
+3. Prepare Files (onnxruntime ):    
+- [onnxruntime Download Link](https://github.com/microsoft/onnxruntime/releases/download/v1.18.0/Microsoft.ML.OnnxRuntime.DirectML.1.18.0.zip)         
+- unzip to "C:\temp" and set directory name to "Microsoft.ML.OnnxRuntime.DirectML.1.18.0"  
 
- 
+
+
 ## Application     
 ### Build Source Code   
 
@@ -111,56 +118,56 @@ cd ../..
 1. git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git  
 
 2. cd "EdgeAI_Workflow\ai_system\amd\aimb-2210\code\cpu_igpu\Yolov8-Object"  
+ 
+3. To execute : "build.bat"   
 
-3. edit file : "CMakeLists.txt" :  
+   If failed , to check the directory path of "CMakeLists.txt" existed ?   
+   set(ONNXRUNTIME_DIR_INCLUDE "C:/temp/Microsoft.ML.OnnxRuntime.DirectML.1.18.0/buin-x64/native")      
+   set(OpenCV_DIR_INCLUDE "C:/temp/opencv/include")       
+   set(OpenCV_DIR_LIB "C:/temp/opencv/lib")        
+   set(gFLAG_DIR_INCLUDE "C:/temp/gflag/include")         
+   set(gFLAG_DIR_LIB "C:/temp/gflag/lib")     
 
-   example => set(ONNXRUNTIME_DIR_INCLUDE "directory_absolute_path")  
-
-   refer to : [System Requirements](#system-requirements)           
-   set(ONNXRUNTIME_DIR_INCLUDE "Microsoft.ML.OnnxRuntime.DirectML.1.18.0/build/native/include")  
-   set(ONNXRUNTIME_DIR_LIB "Microsoft.ML.OnnxRuntime.DirectML.1.18.0/runtimes/win-x64/native")   
-
-   refer to : [Build Package](#build-package)        
-   set(OpenCV_DIR_INCLUDE "opencv/build/include")    
-   set(OpenCV_DIR_LIB "opencv/build/x64/vc16/lib")  
-
-   refer to : [Build Package](#build-package)        
-   set(gFLAG_DIR_INCLUDE "gflags/build/native/include")    
-   set(gFLAG_DIR_LIB "gflags/build/native/x64/v120/dynamic/Lib")         
-
-5. To execute : "build.bat"  
-
-6. output: "yolov8-object.exe"  
+ 
+4. output: "build\Release\yolov8-object.exe"    
 
 #### For NPU
-1. git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git   
+1. git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git      
 
-2. cd "EdgeAI_Workflow\ai_system\amd\aimb-2210\code\npu\multi-model-source-code"   
+2. cd "EdgeAI_Workflow\ai_system\amd\aimb-2210\code\npu\multi-model-source-code"      
 
-3. edit file : "build.bat" :
-   refer to : [Build Package](#build-package)        
-   set OpenCV_DIR=opencv\mybuild\build   
+3. Refer to : [Build Package](#build-package)        
+   If failed , to check the directory path of "build.bat" existed ?                 
+   set OpenCV_DIR=C:\temp\git\opencv\mybuild\build      
    
-4. To execute : "build.bat"     
+4. To execute : "build.bat"        
 
-5. output: "npu_multi_models.exe"   
+5. output: "bin\npu_multi_models.exe"       
 
 # Deploy 
 
 ## Run CPU/iGPU  
 ### Prepare files
 
-   1. mkdir "C:\temp"         
+   1. mkdir "C:\temp\test1"           
 
-   2. "EdgeAI_Workflow\ai_system\amd\aimb-2210\code"  => coco.txt    
+   2. "EdgeAI_Workflow\ai_system\amd\aimb-2210\code"  => coco.txt       
 
-   3. "yolov8n.onnx" (refer to [Download AI Files](#download-ai-files))      
+   3. "yolov8n.onnx" (refer to [Download AI Files](#download-ai-files))         
 
-   4.  Copy "coco.txt" , "yolov8n.onnx" and "yolov8-object.exe" to "C:\temp"        
+   4. Copy "coco.txt" , "yolov8n.onnx" and "yolov8-object.exe" to "C:\temp\test1"       
+
+   5. Copy files below to "C:\temp\test1"             
+      - C:\temp\gflag\bin\gflags.dll           
+      - C:\temp\Microsoft.ML.OnnxRuntime.DirectML.1.18.0\runtimes\win-x64\native\onnxruntime.dll           
+      - C:\temp\opencv\bin\opencv_videoio_ffmpeg470_64.dll               
+      - C:\temp\opencv\bin\opencv_world470.dll                
+
+
 
 ### Run  
 
-   1. cd "C:\temp"     
+   1. cd "C:\temp\test1"    
 
    2. To run CPU:   
       yolov8-object.exe --device=CPU --model=yolov8n.onnx --input="test.mp4" // Video file    
@@ -177,7 +184,7 @@ cd ../..
 ## Run  NPU    
 ### Prepare files 
 
-   1. mkdir "C:\temp"  
+   1. mkdir "C:\temp\test2"  
 
    2. After install "EdgeAISDK 3.4.0" ,  copy directory "bin" and "npu_modelsx4_demo" in "C:\Program Files\Advantech\EdgeAI\System\AMD_Ryzen\VisionAI\app\npu" to "C:\temp"             
           
