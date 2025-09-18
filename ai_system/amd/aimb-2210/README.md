@@ -6,3 +6,11 @@ This folder contains the process and instructions for AI development on the  AIM
 | Name | Content | Note |
 | -------- | -------- | -------- |
 | How To Create an Object Detection demo using RyzenAI SDK | Refer to [Link](object_detection_demo-using-amd_ryzenaisdk.md) |   AIMB-2210 (Ryzen 8000) |
+
+
+# Generate AI
+
+| Name | Content | Note |
+| -------- | -------- | -------- |
+| How To Create an mcp server | Refer to [Link](create_mcp_server.md) |   AIMB-2210 (Ryzen 8000) |
+
