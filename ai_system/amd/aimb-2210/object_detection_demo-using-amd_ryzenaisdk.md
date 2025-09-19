@@ -6,7 +6,7 @@
 This example will demonstrate how to develop an vision AI Object Detection on AIMB-2210 ( AMD / Ryzen 8000 series ) platform.
 Developers can easily complete the Visual AI development by following these steps.
  
-* Application: Objection Detection  
+* Application: Object Detection   
 * Model: YoloV8 / YoloVX  
 * Input: Video File / USB Camera   
 
@@ -37,7 +37,7 @@ Refer to the following requirements to prepare the target and develop environmen
 | -------- | -------- | -------- |
 | Platform |   AIMB-2210  |  Ryzen 8000   |
 | SOC  |    Ryzen 7 PRO 8845HS  |   |
-| OS/Kernel |  Windows 11 ToT  | Build 26100  |
+| OS/Kernel |  Windows 11 IoT  | Build 26100  |
 | SDK| RyzenAI SDK 1.4 |   |
 
 
@@ -169,14 +169,14 @@ cd ../..
 
    1. cd "C:\temp\test1"     
 
-   2. To run CPU:   
-      yolov8-object.exe --device=CPU --model=yolov8n.onnx --input="test.mp4" // Video file      
-      yolov8-object.exe --device=CPU --model=yolov8n.onnx --input="0"        // Usb-Camera          
+   2. To run CPU:
+      yolov8-object.exe --device=CPU --model=yolov8n.onnx --input="test.mp4"            
+      yolov8-object.exe --device=CPU --model=yolov8n.onnx --input="0"                         
                
  
-   3. To run iGPU:  
-      yolov8-object.exe --device=GPU --model=yolov8n.onnx --input="test.mp4" // Video file           
-      yolov8-object.exe --device=GPU --model=yolov8n.onnx --input="0"        // Usb-Camera          
+   4. To run iGPU:  
+      yolov8-object.exe --device=GPU --model=yolov8n.onnx --input="test.mp4"                   
+      yolov8-object.exe --device=GPU --model=yolov8n.onnx --input="0"                       
 
    ![iGPU_Object-Detection](assets/ryzen8000-object-detect-igpu.png)    
 
@@ -196,8 +196,8 @@ cd ../..
    1. cd "C:\temp\test2\npu_modelsx4_demo"    
 
    2. To run :   
-      run_yolovx.bat "0"         //  Usb-Camera    
-      run_yolovx.bat "test.mp4"  //  Video file    
+      run_yolovx.bat "0"              
+      run_yolovx.bat "test.mp4"         
 
    ![NPY_Object-Detection](assets/ryzen8000-object-detect-npu.png)     
 
