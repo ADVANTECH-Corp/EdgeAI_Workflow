@@ -70,13 +70,26 @@ Install :  [Edge AI SDK(v3.4.0) install](https://ess-wiki.advantech.com.tw/view/
 The develop package is installed with the Edge AI SDK.  
 
  
-## Download AI Files
-**Model : yolov8 (onnx) for CPU/iGPU**   
+## Download AI Files     
+**Model : yolov8 (onnx) for CPU/iGPU**       
   
-1. [Download Link](https://github.com/ultralytics/assets/releases/download/v8.3.0/yolov8n.pt)   
+1. [Download .pt file Link](https://github.com/ultralytics/assets/releases/download/v8.3.0/yolov8n.pt)          
  
+2. Make sure Python is installed.       
 
-## Build Package  
+3. <To open Command Prompt (cmd) or PowerShell> :       
+   python -m venv yolov8_env    
+   yolov8_env\Scripts\activate    
+   pip install --upgrade pip     
+   pip install ultralytics onnx onnxruntime       
+       
+4. <onnx input shape [1, 3, 640, 640] and FP32 precision> :        
+
+   yolo export model=yolov8n.pt format=onnx dynamic=False batch=1 half=False           
+   
+5. output =>  yolov8n.onnx         
+
+## Build Package     
 
 1. mkdir "C:\temp\git"    
 
