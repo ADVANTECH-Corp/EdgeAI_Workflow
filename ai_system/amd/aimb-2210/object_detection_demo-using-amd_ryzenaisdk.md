@@ -1,4 +1,4 @@
-# Create an Object Detection on AIMB-2210 ( AMD / Ryzen 8000 series )
+# Create an Object Detection on AIMB-2210 (AMD / Ryzen 8000 series)
 
 ---
 
@@ -6,10 +6,11 @@
 This example will demonstrate how to develop an vision AI Object Detection on AIMB-2210 ( AMD / Ryzen 8000 series ) platform.
 Developers can easily complete the Visual AI development by following these steps.
  
-* Application: Object Detection   
-* Model: YoloV8 / YoloVX  
-* Input: Video File / USB Camera   
+* Application: Object Detection     
+* Model: YoloV8 / YoloVX    
+* Input: Video File / USB Camera    
 
+![eas_ai_workflow](assets/EdgeAISDK-AIMB-2210.pptx.png)    
 
 
 - [Pre-Requirements](#pre-requirements) <!-- prerequisite -->
