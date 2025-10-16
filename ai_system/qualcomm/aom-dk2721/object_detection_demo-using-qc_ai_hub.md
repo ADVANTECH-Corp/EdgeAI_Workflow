@@ -11,7 +11,8 @@ Developers can easily complete the Visual AI development by following these step
 # Table of Contents
 - [Environment](#Environment-AI-Hub)
   - [Target](#Target-AI-Hub)
-  - [Development](#Development-AI-Hub) 
+  - [Development](#Development-AI-Hub)
+- [Develop Flow](#DevelopFlow)
   - [AI Hub On Host](#How-To-Use-AI-Hub)
 - [Deploy](#Deploy-AI-Hub)
   - [Application](#Application-AI-Hub)
@@ -48,10 +49,14 @@ System requirements
 | Platform | Intel 10 ~ 13th CPU   |  x86_64    |
 | OS/Kernel | Ubuntu 22.04 | * Python 3.10 |
 
- 
+<a name="DevelopFlow"/>
+
+# Develop Flow
+Follow these steps on the development platform (x86_64) to obtain a pre-trained AI model from the Qualcomm AI Hub, then optimize and convert it for the AOM-DK2721 (QCS6490) device. <br>
+
 <a name="How-To-Use-AI-Hub"/>
 
-### How to use the AI-Hub on x86_x64 host machine
+## How to use the AI-Hub on x86_x64 host machine
 Step 1. Sign Up / Login  (Qualcomm AI Hub) <br>
      https://app.aihub.qualcomm.com/
 
