@@ -157,16 +157,21 @@ Copy the optimized AI model(`yolov11_det_w8a16.dlc`) to target device
  - CMake 3.30.4
  - Visual Studio 2022 (with `Desktop development with C++` workload)
    * **Step 1. Select Base Workload**
+
       In the Installer, select the `Desktop development with C++` workload.
       
     * **Step 2. Enable ARM64 Support (Crucial)**
+
       By default, the workload only includes x64/x86 tools. You must manually select the ARM64 compiler for cross-compilation.
       
       Go to `Individual components` and check:
+
       ![ARM64 Selection](assets/arm64-compiler.png)
 
     * **Step 3. Verify Configuration**
+
       Ensure your complete installation matches the list below:
+      
       ![Full Configuration Reference](assets/vs_lib.png)
 
 
