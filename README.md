@@ -6,7 +6,7 @@ The Edge AI Workflow is designed to help developers kickstart AI application dev
 # AI System
 | Vendor | Device |  SOC | Edge AI Workflow | Model Conversion & Optimization | Deploy Application |
 | -------- | -------- | -------- | ---- | ---- | ---- |
-| Qualcomm | AOM-DK2721  | QCS6490 | [How-To](ai_system/qualcomm/aom-dk2721/README.md) | [Convert & Optimize](ai_system/qualcomm/aom-dk2721/object_detection_demo-using-qc_snpe.md#Open_AI_Model) | [App Guide](ai_system/qualcomm/aom-dk2721/object_detection_demo-using-qc_snpe.md#Application) |
+| Qualcomm | AOM-DK2721  | QCS6490 | [How-To](ai_system/qualcomm/aom-dk2721/README.md) | [Convert & Optimize](ai_system/qualcomm/aom-dk2721/linux/object_detection_demo-using-qc_snpe.md#Open_AI_Model) | [App Guide](ai_system/qualcomm/aom-dk2721/linux/object_detection_demo-using-qc_snpe.md#Application) |
 | Intel | AFE-R360    | Core Ultra | [How-To](ai_system/intel/afe-r360/README.md)  | [Convert & Optimize](ai_system/intel/afe-r360/object_detection_demo-using-intel_openvino.md#Covert_Optimize) |[App Guide](ai_system/intel/afe-r360/object_detection_demo-using-intel_openvino.md#Deploy) |
 | NVIDIA | AIR-030     | Jetson AGX Orin | [How-To](ai_system/jetson/air-030/README.md)  | [Convert & Optimize](ai_system/jetson/air-030/object_detection_demo-using-ds7.0.md#convert-ai-model) |[App Guide](ai_system/jetson/air-030/object_detection_demo-using-ds7.0.md#application) |
 | NVIDIA | EPC-R7300   | Jetson Orin Nano   | [How-To](ai_system/jetson/epc-r7300/README.md)  | [Convert & Optimize](ai_system/jetson/epc-r7300/object_detection_demo-using-ds7.1.md#convert-ai-model) | [App Guide](ai_system/jetson/epc-r7300/object_detection_demo-using-ds7.1.md#application) |
