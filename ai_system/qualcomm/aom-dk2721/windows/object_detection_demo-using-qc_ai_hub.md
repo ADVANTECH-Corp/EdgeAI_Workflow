@@ -274,7 +274,7 @@ Copy the executable (`yolov11-object-npu-aihub.exe`) to the target device
 
 * Base on Target Environment
 * Please install the corresponding version of EdgeAISDK to obtain the following development environment.  
-* Install :  [Edge AI SDK(v3.5.0) install](https://happy-coast-0a2494f00.2.azurestaticapps.net/docs/Hardware/AI_System/Qualcomm/)  
+* Install :  [Edge AI SDK(v3.5.0) install](https://happy-coast-0a2494f00.2.azurestaticapps.net/docs/Hardware/AI_System/Qualcomm/AOM-DK2721-Windows)  
 
 ### Run CPU/iGPU
 
