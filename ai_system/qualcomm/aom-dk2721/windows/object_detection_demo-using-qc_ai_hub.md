@@ -182,18 +182,18 @@ Copy the ONNX AI model(`yolo11n.onnx`) to target device
 ### Get the DLC model for NPU
 <!-- The Edge AI SDK on the target device already includes a pre-quantized DLC model. No manual generation is required. -->
 
-##### Step 1. Convert the YOLOv11n model to yolov11_det_w8a16.dlc
+##### Step 1. Convert the YOLOv11n model to yolov11_det.dlc
 * Activate ai-hub venv
   ```
   cd ~/ai-hub
   source ai-hub/bin/activate
   ```
-* Get yolov11_det_w8a16.dlc
+* Get yolov11_det.dlc
   ```
   python3 -m qai_hub_models.models.yolov11_det.export \
     --quantize w8a16 \
     --target-runtime qnn_dlc \
-    --chipset qualcomm-qcs6490-proxy \
+    --chipset qualcomm-qcs6490 \
     --output-dir ~/ai-hub \
     --height 320 \
     --width 320 \
@@ -208,7 +208,7 @@ Copy the ONNX AI model(`yolo11n.onnx`) to target device
 
 
 ##### Step 2. Transfer the Model to the Target Device
-Copy the optimized AI model(`yolov11_det_w8a16.dlc`) to target device
+Copy the optimized AI model(`yolov11_det.dlc`) to target device
 
 ---
 
@@ -340,13 +340,13 @@ Copy the executable (`yolov11-object-npu-aihub.exe`) to the target device
   ```
   mkdir "C:\temp\npu-aihub"
   ```
-* Copy `yolov11_det_w8a16.dlc` to `"C:\temp\npu-aihub"`
+* Copy `yolov11_det.dlc` to `"C:\temp\npu-aihub"`
 
 
   <!-- * **Use the dlc model from `EdgeAISDK 3.5.0`** -->
   ```
   Copy-Item "C:\Program Files\Advantech\EdgeAI\System\Qualcomm_QCS6490\VisionAI\app\npu\yolov11n_w8a16_imgsz_320_pics1000.dlc" -Destination "C:\temp\npu-aihub" -Force
-  Rename-Item "C:\temp\npu-aihub\yolov11n_w8a16_imgsz_320_pics1000.dlc" "yolov11_det_w8a16.dlc"
+  Rename-Item "C:\temp\npu-aihub\yolov11n_w8a16_imgsz_320_pics1000.dlc" "yolov11_det.dlc"
   ```
 * Copy `yolov11-object-npu-aihub.exe` (refer to [For NPU](#for-npu)) to `"C:\temp\npu-aihub"`
 
@@ -396,7 +396,7 @@ Copy the executable (`yolov11-object-npu-aihub.exe`) to the target device
   * Run with USB Camera
     ```
     .\yolov11-object-npu-aihub.exe `
-    --model="yolov11_det_w8a16.dlc" `
+    --model="yolov11_det.dlc" `
     --device=DSP `
     --labels=coco.txt `
     --conf=0.1 `
@@ -407,7 +407,7 @@ Copy the executable (`yolov11-object-npu-aihub.exe`) to the target device
   * Run with Video File
     ```
     .\yolov11-object-npu-aihub.exe `
-    --model="yolov11_det_w8a16.dlc" `
+    --model="yolov11_det.dlc" `
     --device=DSP `
     --labels=coco.txt `
     --conf=0.1 `
