@@ -270,6 +270,8 @@ After a successful build, the executable will be generated at:
     --iou=0.45 \
     --device=CPU
   ```
+- Result
+  <video src="assets/cpu.mp4" autoplay loop muted playsinline></video>
 
 ##### Run on iGPU
 
@@ -294,6 +296,8 @@ After a successful build, the executable will be generated at:
     --iou=0.45 \
     --device=GPU
   ```
+- Result
+  <video src="assets/igpu.mp4" autoplay loop muted playsinline></video>
 
 ##### Run on NPU
 
@@ -318,3 +322,5 @@ After a successful build, the executable will be generated at:
     --iou=0.45 \
     --device=DSP
   ```
+- Result
+  <video src="assets/npu.mp4" autoplay loop muted playsinline></video>
