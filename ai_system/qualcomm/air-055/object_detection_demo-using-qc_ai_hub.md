@@ -271,7 +271,7 @@ After a successful build, the executable will be generated at:
     --device=CPU
   ```
 - Result
-  <video src="assets/cpu.mp4" autoplay loop muted playsinline></video>
+  ![CPU Demo](assets/cpu.webp)
 
 ##### Run on iGPU
 
@@ -297,7 +297,7 @@ After a successful build, the executable will be generated at:
     --device=GPU
   ```
 - Result
-  <video src="assets/igpu.mp4" autoplay loop muted playsinline></video>
+  ![GPU Demo](assets/igpu.webp)
 
 ##### Run on NPU
 
@@ -323,4 +323,4 @@ After a successful build, the executable will be generated at:
     --device=DSP
   ```
 - Result
-  <video src="assets/npu.mp4" autoplay loop muted playsinline></video>
+  ![NPU Demo](assets/npu.webp)
