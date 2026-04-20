@@ -119,8 +119,7 @@ pip install "qai-hub-models[yolov11-det]"==0.50.2
 
 * Base on Target Environment
 * Please install the corresponding version of EdgeAISDK to obtain the following development environment.  
-* Install :  Edge AI SDK(v3.6.1)
-<!-- * Install :  [Edge AI SDK(v3.6.1) install](https://happy-coast-0a2494f00.2.azurestaticapps.net/docs/Hardware/AI_System/Qualcomm/AOM-DK2721-Windows)   -->
+* Install :  [Edge AI SDK(v3.6.1) install](https://docs.edge-ai-sdk.advantech.com/docs/Hardware/AI_System/Qualcomm/IQ9075/AIR-055#Ub2404_snpe241)  
 
 # Development Flow
 
