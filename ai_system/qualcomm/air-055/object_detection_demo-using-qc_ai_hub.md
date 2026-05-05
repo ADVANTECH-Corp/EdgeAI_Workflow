@@ -20,7 +20,7 @@ This guide walks developers through the complete workflow for building a Vision 
 - [Development Flow](#development-flow)
   - [Generate Model via Qualcomm AI Hub](#generate-model-via-qualcomm-ai-hub)
   - [Build the Application](#build-the-application)
-- [Execution](#execution)
+- [Deploy](#deploy)
   - [Run on CPU](#run-on-cpu)
   - [Run on iGPU](#run-on-igpu)
   - [Run on NPU](#run-on-npu)
@@ -197,7 +197,7 @@ After a successful build, the executable will be generated at:
 
 ---
 
-# Execution
+# Deploy
 
 ### Step 1. Prepare required files
 
