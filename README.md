@@ -12,6 +12,7 @@ The Edge AI Workflow is designed to help developers kickstart AI application dev
 | NVIDIA | AIR-030     | Jetson AGX Orin | [How-To](ai_system/jetson/air-030/README.md)  | [Convert & Optimize](ai_system/jetson/air-030/object_detection_demo-using-ds7.0.md#convert-ai-model) |[App Guide](ai_system/jetson/air-030/object_detection_demo-using-ds7.0.md#application) |
 | NVIDIA | EPC-R7300   | Jetson Orin Nano   | [How-To](ai_system/jetson/epc-r7300/README.md)  | [Convert & Optimize](ai_system/jetson/epc-r7300/object_detection_demo-using-ds7.1.md#convert-ai-model) | [App Guide](ai_system/jetson/epc-r7300/object_detection_demo-using-ds7.1.md#application) |
 | NVIDIA | AIR-020R   | Jetson Orin Nano   | [How-To](ai_system/jetson/air-020r/README.md)  | [Convert & Optimize](ai_system/jetson/air-020r/object_detection_demo-using-ds7.1.md#convert-ai-model) | [App Guide](ai_system/jetson/air-020r/object_detection_demo-using-ds7.1.md#application) |
+| NVIDIA | AIR-075   | Jetson Orin Thor   | [How-To](ai_system/jetson/air-075/README.md)  | [Convert & Optimize](ai_system/jetson/air-075/object_detection_demo-using-ds8.0.md#convert-ai-model) | [App Guide](ai_system/jetson/air-075/object_detection_demo-using-ds8.0.md#application) |
 | AMD | AIMB-2210   | Ryzen 8000 Series | [How-To](ai_system/amd/aimb-2210/README.md)  | [Convert & Optimize](ai_system/amd/aimb-2210/object_detection_demo-using-amd_ryzenaisdk.md#download-ai-files) | [App Guide](ai_system/amd/aimb-2210/object_detection_demo-using-amd_ryzenaisdk.md#application) |
 
 
