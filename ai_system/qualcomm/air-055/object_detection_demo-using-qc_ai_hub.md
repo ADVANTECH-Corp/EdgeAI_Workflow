@@ -85,8 +85,8 @@ python3 -m venv ai-hub
 source ai-hub/bin/activate
 
 # Install Base Python Libraries
-pip install qai-hub==0.48.0
-pip install "qai-hub-models[yolov11-det]"==0.50.2
+pip install qai-hub
+pip install "qai-hub-models[yolov11-det]"
 ```
 
 ##### Step 2. Configure Qualcomm AI Hub

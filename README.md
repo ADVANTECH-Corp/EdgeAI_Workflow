@@ -6,6 +6,7 @@ The Edge AI Workflow is designed to help developers kickstart AI application dev
 # AI System
 | Vendor | Device |  SOC | Edge AI Workflow | Model Conversion & Optimization | Deploy Application |
 | -------- | -------- | -------- | ---- | ---- | ---- |
+| Qualcomm | AOM-6731  | X-Elite | [How-To](ai_system/qualcomm/aom-6731/README.md) | [Convert & Optimize](ai_system/qualcomm/aom-6731/object_detection_demo-using-qc_ai_hub.md#how-to-use-qualcomm-ai-hub-on-an-ubuntu-2204-x86_64-host-machine) | [App Guide](ai_system/qualcomm/aom-6731/object_detection_demo-using-qc_ai_hub.md#how-to-develop-on-aom-6731) |
 | Qualcomm | AIR-055  | IQ9075 | [How-To](ai_system/qualcomm/air-055/README.md) | [Convert & Optimize](ai_system/qualcomm/air-055/object_detection_demo-using-qc_ai_hub.md#generate-model-via-qualcomm-ai-hub) | [App Guide](ai_system/qualcomm/air-055/object_detection_demo-using-qc_ai_hub.md#build-the-application) |
 | Qualcomm | AOM-DK2721  | QCS6490 | [How-To](ai_system/qualcomm/aom-dk2721/README.md) | [Convert & Optimize](ai_system/qualcomm/aom-dk2721/linux/object_detection_demo-using-qc_snpe.md#Open_AI_Model) | [App Guide](ai_system/qualcomm/aom-dk2721/linux/object_detection_demo-using-qc_snpe.md#Application) |
 | Intel | AFE-R360    | Core Ultra | [How-To](ai_system/intel/afe-r360/README.md)  | [Convert & Optimize](ai_system/intel/afe-r360/object_detection_demo-using-intel_openvino.md#Covert_Optimize) |[App Guide](ai_system/intel/afe-r360/object_detection_demo-using-intel_openvino.md#Deploy) |
