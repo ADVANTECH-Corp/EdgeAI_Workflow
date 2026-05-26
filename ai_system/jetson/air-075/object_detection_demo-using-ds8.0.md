@@ -1,9 +1,9 @@
-# Create an Object Detection on Jetson-Orin (AIR-075)
+# Create an Object Detection on Jetson Thor (AIR-075)
 
 ---
 
 # Overview
-This example will demonstrate how to develop an vision AI Object Detection on Jetosn-Orin ( AIR-075 ) platform.  
+This example will demonstrate how to develop an vision AI Object Detection on Jetosn Thor ( AIR-075 ) platform.  
 Developers can easily complete the Visual AI development by following these steps.  
 
 * Application: Objection Detection  
@@ -37,9 +37,9 @@ Refer to the following requirements to prepare the target and develop environmen
 ## Target
 | Item | Content | Note |
 | -------- | -------- | -------- |
-| Platform |   AIR-075  | Jetson-Orin   |
-| SOC  |   Jetson-Orin  | Thor |
-| OS/Kernel |  Ubuntu 24.04   | kernel:6.8.12-tegra |
+| Platform |   AIR-075  | Jetson Thor   |
+| SOC  |   Jetson Thor  | Thor |
+| OS/Kernel |  Jetson Linux ( L4T) 24.04 LTS     | kernel:6.8.12-tegra |
 | SDK| JetPack 7.1 / Deepstream 8.0|   |
 
  
