@@ -10,7 +10,7 @@ Developers can easily complete the Visual AI development by following these step
 * Model: YoloV11  
 * Input: Video / USB Camera  
 
-![eas_ai_workflow](assets/EdgeAIWorkflow_AIR-075.png)
+![eas_ai_workflow](assets/EdgeAIWorkflow_AIR-075-new.png)
 
 
 - [Pre-Requirements](#pre-requirements) <!-- prerequisite -->
