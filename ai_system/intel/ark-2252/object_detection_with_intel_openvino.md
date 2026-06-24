@@ -37,7 +37,7 @@ Base on **Edge AI SDK 3.6.4**
 | Item | Content | Note |
 | --- | --- | --- |
 | Platform | Advantech EdgeAI Intel platform | CPU / iGPU / NPU |
-| OS | Windows 11 | Command Prompt |
+| OS | Windows 11 | Command Prompt or PowerShell |
 | Product Miniconda | `C:\Program Files\Advantech\EdgeAI\System\Intel\SDK\miniconda3` | Used to create the model conversion environment |
 | Runtime conda env | `vision-runtime-py310` | Created by this guide to run the C++ demo |
 | Model | `ssd_mobilenet_v1_coco` | Public Open Model Zoo model |
@@ -56,8 +56,8 @@ The model conversion flow uses Python 3.10 and legacy Open Model Zoo tools. This
 | Python | | 3.10 |
 | numpy | | 1.26.x |
 | OpenCV | https://github.com/opencv/opencv.git    | 4.13.0 |
-| open model zoo  | https://github.com/openvinotoolkit/open_model_zoo/tree/releases/2024/3   | 2024.3.0  |
-| openvino-dev  | Contains omz_downloader & omz_converter tools<br>https://github.com/openvinotoolkit/open_model_zoo/blob/releases/2024/3/tools/model_tools/README.md  | 2024.6.0 |
+| open model zoo  | https://github.com/openvinotoolkit/open_model_zoo/tree/releases/2026/1   | releases/2026/1  |
+| openvino-dev  | Contains omz_downloader & omz_converter tools<br>https://github.com/openvinotoolkit/open_model_zoo/tree/releases/2026/1/tools/model_tools  | 2024.6.0 |
 | tensorflow  | https://www.tensorflow.org/   | 2.15.1 |
 
 
@@ -110,6 +110,8 @@ Create a Python 3.10 conversion environment:
 "%CONDA_ROOT%\Scripts\conda.exe" create -p "%CONVERT_ENV%" python=3.10 -y
 ```
 
+If `conda create` prints `SafetyError` messages from the product Miniconda package cache, first continue with the checks below. If the created environment runs and the package checks pass, the environment is usable. If Python or package installation fails, clean or repair the product Miniconda package cache, then create the environment again.
+
 Install model conversion packages:
 
 ```bat
@@ -136,6 +138,8 @@ Create a separate runtime environment for the C++ demo:
 ```bat
 "%CONDA_ROOT%\Scripts\conda.exe" create -p "%RUNTIME_ENV%" python=3.10 -y
 ```
+
+The same `SafetyError` guidance applies here: treat it as blocking only if the environment cannot run or the package checks fail.
 
 Install OpenVINO runtime:
 
@@ -209,7 +213,7 @@ Build requirements:
 
 Download OpenCV 4.13.0 from the OpenCV release page:
 
-[Downlod Link OpenCV 4.13.0](https://github.com/opencv/opencv/releases/download/4.13.0/opencv-4.13.0-windows.exe)
+[Download Link OpenCV 4.13.0](https://github.com/opencv/opencv/releases/download/4.13.0/opencv-4.13.0-windows.exe)
 
 
 This guide assumes OpenCV is extracted to:
@@ -217,6 +221,14 @@ This guide assumes OpenCV is extracted to:
 ```text
 C:\opencv
 ```
+
+When using the OpenCV Windows self-extractor, extract it to `C:\` so the final folder becomes:
+
+```text
+C:\opencv\build
+```
+
+If you extract to `C:\opencv`, the self-extractor may create `C:\opencv\opencv\build` instead. In that case, either move the folder back to `C:\opencv\build` or update `OpenCV_DIR` and `OPENCV_BIN` to the actual path.
 
 Example build flow:
 
@@ -234,6 +246,16 @@ cmake ^
   "%WORKSPACE%\open_model_zoo\demos"
 
 cmake --build . --config Release --target object_detection_demo
+```
+
+If you run the CMake configure command in PowerShell, quote the CMake policy argument:
+
+```powershell
+cmake `
+  -DOpenCV_DIR="C:\opencv\build" `
+  -DOpenVINO_DIR="$env:RUNTIME_ENV\Lib\site-packages\openvino\cmake" `
+  '-DCMAKE_POLICY_VERSION_MINIMUM=3.5' `
+  "$env:WORKSPACE\open_model_zoo\demos"
 ```
 
 Expected output:
@@ -270,7 +292,17 @@ set "RUNTIME_ENV=C:\Advantech\VisionAI\envs\vision-runtime-py310"
 set "APP_DIR=C:\Advantech\VisionAI\build\omz_demos_build\intel64\Release"
 set "APP_EXE=%APP_DIR%\object_detection_demo.exe"
 set "MODEL_XML=C:\Advantech\VisionAI\models\public\ssd_mobilenet_v1_coco\FP16\ssd_mobilenet_v1_coco.xml"
-set "VIDEO=<workspace>\EdgeAI_Workflow\data\video\ObjectDetection.mp4"
+set "EDGEAI_WORKFLOW=<repo>\EdgeAI_Workflow"
+set "VIDEO=%EDGEAI_WORKFLOW%\data\video\ObjectDetection.mp4"
+```
+
+`ObjectDetection.mp4` is included in this repository under `data\video`. If the repository is not already on the target machine, clone or copy it first, then set `EDGEAI_WORKFLOW` to that local repository path.
+
+```bat
+cd /d "%WORKSPACE%"
+git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git
+set "EDGEAI_WORKFLOW=%WORKSPACE%\EdgeAI_Workflow"
+set "VIDEO=%EDGEAI_WORKFLOW%\data\video\ObjectDetection.mp4"
 ```
 
 If the Advantech product already includes `object_detection_demo.exe`, you can use the product executable instead:
@@ -288,7 +320,8 @@ call "%CONDA_ROOT%\Scripts\activate.bat" "%RUNTIME_ENV%"
 
 set "OV_PYTHON_LIBS=%RUNTIME_ENV%\Lib\site-packages\openvino\libs"
 set "OV_CONDA_BINS=%RUNTIME_ENV%\Library\bin"
-set "PATH=%APP_DIR%;%OV_PYTHON_LIBS%;%OV_CONDA_BINS%;%PATH%"
+set "OPENCV_BIN=C:\opencv\build\x64\vc16\bin"
+set "PATH=%APP_DIR%;%OPENCV_BIN%;%OV_PYTHON_LIBS%;%OV_CONDA_BINS%;%PATH%"
 ```
 
 Check:

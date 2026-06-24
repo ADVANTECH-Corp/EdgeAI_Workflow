@@ -48,7 +48,17 @@ Check disk space first:
 Get-PSDrive C | Select-Object Name,Free,Used
 ```
 
-This guide assumes the document folder and helper scripts are extracted to `C:\Advantech\GenAI\genai_ovms_vlm_guides`. If you use another location, change `GUIDE_ROOT` in the commands below.
+This guide assumes the document folder and helper script folder are available on the target machine. If you clone this repository, set `GUIDE_ROOT` to the ARK-2252 guide folder:
+
+```bat
+set "GUIDE_ROOT=<repo>\EdgeAI_Workflow\ai_system\intel\ark-2252"
+```
+
+If you copy only this guide and its helper script folder to another location, set `GUIDE_ROOT` to that folder instead, for example:
+
+```bat
+set "GUIDE_ROOT=C:\Advantech\GenAI\genai_ovms_vlm_guides"
+```
 
 ```bat
 set "CONDA_ROOT=C:\Program Files\Advantech\EdgeAI\System\Intel\SDK\miniconda3"
@@ -92,6 +102,24 @@ The models above are already converted to OpenVINO IR format. The preparation st
 
 ### Mode 1: Step-by-step Commands
 
+The OpenVINO Gemma model repositories may require Hugging Face authentication and accepted model access terms. If access is not granted, the download can fail with `401 Unauthorized` or `GatedRepoError`.
+
+Before running the download commands:
+
+1. Sign in to Hugging Face.
+2. Open the model repository page in a browser and accept any required access terms.
+3. Log in from the command line:
+
+```bat
+"%ENV_PATH%\Scripts\huggingface-cli.exe" login
+```
+
+You can also provide a token through the environment:
+
+```bat
+set "HF_TOKEN=hf_your_token_here"
+```
+
 Create model root:
 
 ```bat
@@ -102,13 +130,13 @@ mkdir "%MODEL_ROOT%"
 Download CPU / iGPU model:
 
 ```bat
-"%ENV_PATH%\python.exe" -c "from huggingface_hub import snapshot_download; p=snapshot_download(repo_id='OpenVINO/gemma-3-4b-it-int4-ov', local_dir=r'%MODEL_ROOT%\gemma-3-4b-it-int4'); print(p)"
+"%ENV_PATH%\python.exe" -c "import os; from huggingface_hub import snapshot_download; p=snapshot_download(repo_id='OpenVINO/gemma-3-4b-it-int4-ov', local_dir=r'%MODEL_ROOT%\gemma-3-4b-it-int4', token=os.environ.get('HF_TOKEN')); print(p)"
 ```
 
 Download NPU model:
 
 ```bat
-"%ENV_PATH%\python.exe" -c "from huggingface_hub import snapshot_download; p=snapshot_download(repo_id='OpenVINO/gemma-3-4b-it-int4-cw-ov', local_dir=r'%MODEL_ROOT%\gemma-3-4b-it-int4-cw-ov'); print(p)"
+"%ENV_PATH%\python.exe" -c "import os; from huggingface_hub import snapshot_download; p=snapshot_download(repo_id='OpenVINO/gemma-3-4b-it-int4-cw-ov', local_dir=r'%MODEL_ROOT%\gemma-3-4b-it-int4-cw-ov', token=os.environ.get('HF_TOKEN')); print(p)"
 ```
 
 Check required files:
@@ -123,14 +151,13 @@ dir "%MODEL_ROOT%\gemma-3-4b-it-int4-cw-ov\openvino_language_model.xml"
 Use the helper script:
 
 ```bat
-set "GUIDE_ROOT=C:\Advantech\GenAI\genai_ovms_vlm_guides"
 cd /d "%GUIDE_ROOT%"
 ```
 
 Download CPU / iGPU model:
 
 ```bat
-"%ENV_PATH%\python.exe" scripts\download_model.py ^
+"%ENV_PATH%\python.exe" script\download_model.py ^
   --repo-id Advantech-EIOT/intel_google-gemma-3-4b-it-int4 ^
   --output "%MODEL_ROOT%\gemma-3-4b-it-int4"
 ```
@@ -138,7 +165,7 @@ Download CPU / iGPU model:
 Download NPU model:
 
 ```bat
-"%ENV_PATH%\python.exe" scripts\download_model.py ^
+"%ENV_PATH%\python.exe" script\download_model.py ^
   --repo-id Advantech-EIOT/intel_google-gemma-3-4b-it-int4-cw-ov ^
   --output "%MODEL_ROOT%\gemma-3-4b-it-int4-cw-ov"
 ```
@@ -166,6 +193,14 @@ Download the Windows package, extract it to `C:\Advantech\GenAI\ovms`, then set:
 
 ```bat
 set "OVMS_EXE=C:\Advantech\GenAI\ovms\ovms.exe"
+```
+
+Choose the Windows x64 package that contains `ovms.exe`. After extraction, confirm the actual location of `ovms.exe` and update `OVMS_EXE` if the extracted folder name is different.
+
+If the Edge AI SDK product already includes OVMS, you can use the product executable instead:
+
+```bat
+set "OVMS_EXE=C:\Program Files\Advantech\EdgeAI\System\Intel\GenAI\app\engine\intel\scripts\ovms_2026_2\ovms.exe"
 ```
 
 Check:
@@ -234,14 +269,13 @@ Open another Command Prompt:
 
 ```bat
 set "ENV_PATH=C:\Advantech\GenAI\envs\ovms-vlm"
-set "GUIDE_ROOT=C:\Advantech\GenAI\genai_ovms_vlm_guides"
 cd /d "%GUIDE_ROOT%"
 ```
 
 For CPU / iGPU:
 
 ```bat
-"%ENV_PATH%\python.exe" scripts\ovms_chat_client.py ^
+"%ENV_PATH%\python.exe" script\ovms_chat_client.py ^
   --url http://127.0.0.1:23953/v3/chat/completions ^
   --model gemma-3-4b-it-int4 ^
   --once "Answer in one sentence: what is OpenVINO?"
@@ -250,7 +284,7 @@ For CPU / iGPU:
 For NPU:
 
 ```bat
-"%ENV_PATH%\python.exe" scripts\ovms_chat_client.py ^
+"%ENV_PATH%\python.exe" script\ovms_chat_client.py ^
   --url http://127.0.0.1:23953/v3/chat/completions ^
   --model gemma-3-4b-it-int4-cw-ov ^
   --once "Answer in one sentence: what is OpenVINO?"

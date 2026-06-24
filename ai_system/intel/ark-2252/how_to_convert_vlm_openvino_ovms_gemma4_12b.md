@@ -50,7 +50,17 @@ Check disk space first. Do not start Gemma 4 12B download or conversion unless t
 Get-PSDrive C | Select-Object Name,Free,Used
 ```
 
-This guide assumes the document folder and helper scripts are extracted to `C:\Advantech\GenAI\genai_ovms_vlm_guides`. If you use another location, change `GUIDE_ROOT` in the commands below.
+This guide assumes the document folder and helper script folder are available on the target machine. If you clone this repository, set `GUIDE_ROOT` to the ARK-2252 guide folder:
+
+```bat
+set "GUIDE_ROOT=<repo>\EdgeAI_Workflow\ai_system\intel\ark-2252"
+```
+
+If you copy only this guide and its helper script folder to another location, set `GUIDE_ROOT` to that folder instead, for example:
+
+```bat
+set "GUIDE_ROOT=C:\Advantech\GenAI\genai_ovms_vlm_guides"
+```
 
 ```bat
 set "CONDA_ROOT=C:\Program Files\Advantech\EdgeAI\System\Intel\SDK\miniconda3"
@@ -59,6 +69,11 @@ set "ENV_PATH=%WORKSPACE%\envs\gemma4_12b_convert"
 set "GUIDE_ROOT=%WORKSPACE%\genai_ovms_vlm_guides"
 
 "%CONDA_ROOT%\Scripts\conda.exe" create -p "%ENV_PATH%" python=3.11 -y
+```
+
+If `conda create` prints `SafetyError` messages from the product Miniconda package cache, first continue with the checks below. If the created environment runs and the package checks pass, the environment is usable. If Python or package installation fails, clean or repair the product Miniconda package cache, then create the environment again.
+
+```bat
 "%ENV_PATH%\python.exe" -m pip install --upgrade pip
 "%ENV_PATH%\python.exe" -m pip install --index-url https://download.pytorch.org/whl/cpu torch torchvision
 "%ENV_PATH%\python.exe" -m pip install transformers==5.12.1 optimum==2.2.0 openvino==2026.1.0 openvino-genai==2026.1.0.0 nncf accelerate huggingface_hub safetensors pillow sentencepiece protobuf requests
@@ -80,7 +95,13 @@ Follow these steps to download and convert Gemma 4 12B.
 Login to Hugging Face if the model requires access:
 
 ```bat
-"%ENV_PATH%\Scripts\hf.exe" auth login
+"%ENV_PATH%\Scripts\huggingface-cli.exe" login
+```
+
+If your environment uses a token variable instead of an interactive login, set `HF_TOKEN` before downloading:
+
+```bat
+set "HF_TOKEN=hf_your_token_here"
 ```
 
 Set paths:
@@ -96,7 +117,7 @@ mkdir "%WORKSPACE%"
 Download raw model:
 
 ```bat
-"%ENV_PATH%\python.exe" -c "from huggingface_hub import snapshot_download; p=snapshot_download(repo_id=r'%MODEL_ID%', local_dir=r'%RAW_MODEL%'); print(p)"
+"%ENV_PATH%\python.exe" -c "import os; from huggingface_hub import snapshot_download; p=snapshot_download(repo_id=r'%MODEL_ID%', local_dir=r'%RAW_MODEL%', token=os.environ.get('HF_TOKEN')); print(p)"
 ```
 
 Check:
@@ -112,14 +133,13 @@ dir "%RAW_MODEL%\tokenizer.json"
 Use the provided conversion script:
 
 ```bat
-set "GUIDE_ROOT=C:\Advantech\GenAI\genai_ovms_vlm_guides"
 cd /d "%GUIDE_ROOT%"
 ```
 
 Run conversion:
 
 ```bat
-"%ENV_PATH%\python.exe" scripts\convert_gemma4_12b_openvino.py ^
+"%ENV_PATH%\python.exe" script\convert_gemma4_12b_openvino.py ^
   --model "%RAW_MODEL%" ^
   --output "%OV_MODEL%" ^
   --precision int4
@@ -173,6 +193,14 @@ Download the Windows package, extract it to `C:\Advantech\GenAI\ovms`, then set:
 set "OVMS_EXE=C:\Advantech\GenAI\ovms\ovms.exe"
 ```
 
+Choose the Windows x64 package that contains `ovms.exe`. After extraction, confirm the actual location of `ovms.exe` and update `OVMS_EXE` if the extracted folder name is different.
+
+If the Edge AI SDK product already includes OVMS, you can use the product executable instead:
+
+```bat
+set "OVMS_EXE=C:\Program Files\Advantech\EdgeAI\System\Intel\GenAI\app\engine\intel\scripts\ovms_2026_2\ovms.exe"
+```
+
 Check:
 
 ```bat
@@ -223,12 +251,11 @@ Open another Command Prompt:
 
 ```bat
 set "ENV_PATH=C:\Advantech\GenAI\envs\gemma4_12b_convert"
-set "GUIDE_ROOT=C:\Advantech\GenAI\genai_ovms_vlm_guides"
 cd /d "%GUIDE_ROOT%"
 ```
 
 ```bat
-"%ENV_PATH%\python.exe" scripts\ovms_chat_client.py ^
+"%ENV_PATH%\python.exe" script\ovms_chat_client.py ^
   --url http://127.0.0.1:23953/v3/chat/completions ^
   --model gemma-4-12b-it-int4 ^
   --once "Answer in one sentence: what is OpenVINO?"
