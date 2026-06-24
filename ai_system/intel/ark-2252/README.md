@@ -1,5 +1,5 @@
 # Overview
-This folder contains the process and instructions for AI development on the ARK-2252 ( Intel Core Ultra 5 Panther Lake).
+This folder contains the process and instructions for AI development on the ARK-2252 ( Intel Core Ultra / Panther Lake).
 
 # Computer Vision
 
