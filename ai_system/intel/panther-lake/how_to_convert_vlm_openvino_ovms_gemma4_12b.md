@@ -1,4 +1,4 @@
-# How to convert VLM with Intel OpenVINO and inference with OVMS: gemma-4-12b (CPU / iGPU)
+# How to convert VLM with Intel OpenVINO and inference with OVMS: gemma-4-12b ( Panther Lake )
 
 This example demonstrates how to prepare Gemma 4 12B VLM with OpenVINO and serve it with OpenVINO Model Server on CPU or iGPU.
 

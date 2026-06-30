@@ -1,4 +1,4 @@
-# Create an Object Detection on ARK-2252 ( Intel / Panther Lake )
+# Create an Object Detection ( Panther Lake )
 
 This example demonstrates how to prepare an OpenVINO object detection model and run the Open Model Zoo Object Detection C++ demo on an Advantech EdgeAI Intel platform.
 
@@ -57,6 +57,7 @@ The model conversion flow uses Python 3.10 and legacy Open Model Zoo tools. This
 | numpy | | 1.26.x |
 | OpenCV | https://github.com/opencv/opencv.git    | 4.13.0 |
 | open model zoo  | https://github.com/openvinotoolkit/open_model_zoo/tree/releases/2026/1   | releases/2026/1  |
+| OpenVINO | https://docs.openvino.ai/2026/index.html | 2026.1.0 |
 | openvino-dev  | Contains omz_downloader & omz_converter tools<br>https://github.com/openvinotoolkit/open_model_zoo/tree/releases/2026/1/tools/model_tools  | 2024.6.0 |
 | tensorflow  | https://www.tensorflow.org/   | 2.15.1 |
 
