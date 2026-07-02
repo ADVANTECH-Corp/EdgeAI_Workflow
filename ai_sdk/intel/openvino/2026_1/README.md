@@ -1,19 +1,5 @@
 # Overview
-This folder contains the process and instructions for AI development on the ARK-2252 ( Intel Core Ultra / Panther Lake).
-
-
-![eas_ai_workflow](/assets/intel/eas_startkit_ark-2252.png)
-
-
-## Edge AI SDK
-
-Use the workflow need to base on Edge AI SDK.
-
-Install Edge AI SDK : [Download](https://docs.edge-ai-sdk.advantech.com/docs/Hardware/AI_System/Intel/Panther%20Lake/ARK-2252#EdgeAISDK_Win11_openvino2026.1.0)
-
-
-
-
+This folder contains the process and instructions for AI development on the Intel OpenVino 2026.1.0.
 
 ## Computer Vision
 

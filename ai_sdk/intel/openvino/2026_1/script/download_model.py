@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 from pathlib import Path
 
 from huggingface_hub import snapshot_download
@@ -22,6 +23,7 @@ def main() -> int:
         repo_id=args.repo_id,
         revision=args.revision,
         local_dir=str(output),
+        token=os.environ.get("HF_TOKEN"),
     )
     print(f"[INFO] Download complete: {path}")
     return 0
@@ -29,4 +31,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
