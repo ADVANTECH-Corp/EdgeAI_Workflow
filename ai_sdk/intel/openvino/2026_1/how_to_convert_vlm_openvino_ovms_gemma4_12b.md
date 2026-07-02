@@ -35,7 +35,7 @@ Base on **Edge AI SDK**
 | RAM for conversion | 64 GB or higher | 16 GB edge systems are not recommended for conversion |
 | Disk for conversion | 100 GB free or higher | Raw model + converted model + cache |
 
-Base on Edge AI SDK 3.6.4 product Miniconda:
+Base on Edge AI SDK product Miniconda:
 
 ```text
 C:\Program Files\Advantech\EdgeAI\System\Intel\SDK\miniconda3

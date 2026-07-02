@@ -34,7 +34,7 @@ Base on **Edge AI SDK**
 | RAM | 16 GB or higher | 32 GB recommended |
 | Disk | 30 GB free or higher | For models and OVMS package |
 
-Base on Edge AI SDK 3.6.4 product Miniconda:
+Base on Edge AI SDK product Miniconda:
 
 ```text
 C:\Program Files\Advantech\EdgeAI\System\Intel\SDK\miniconda3
