@@ -144,7 +144,7 @@ This guide assumes OpenCV is extracted to `C:\opencv\build`. If the self-extract
 Open Command Prompt and run the default SSD setup:
 
 ```bat
-cd /d <repo>\ai_system\intel\openvino
+cd /d <repo>\ai_sdk\intel\openvino\2026_1
 script\object_detection\run_all_setup.bat
 ```
 
@@ -163,7 +163,7 @@ Use the step-by-step flow when you want to inspect each stage.
 Check the current environment:
 
 ```bat
-cd /d <repo>\ai_system\intel\openvino
+cd /d <repo>\ai_sdk\intel\openvino\2026_1
 script\object_detection\check_env.bat
 ```
 
@@ -227,7 +227,7 @@ C:\Program Files\Advantech\EdgeAI\System\Intel\VisionAI\app\object_detection\obj
 Run the full YOLOv4-TF setup:
 
 ```bat
-cd /d <repo>\ai_system\intel\openvino
+cd /d <repo>\ai_sdk\intel\openvino\2026_1
 script\object_detection\run_all_yolov4_setup.bat
 ```
 
@@ -258,7 +258,7 @@ Launch the Object Detection demo with one of the run scripts.
 Run default SSD model:
 
 ```bat
-cd /d <repo>\ai_system\intel\openvino
+cd /d <repo>\ai_sdk\intel\openvino\2026_1
 script\object_detection\07_run_cpu.bat
 script\object_detection\08_run_igpu.bat
 script\object_detection\09_run_npu.bat
@@ -267,7 +267,7 @@ script\object_detection\09_run_npu.bat
 Run YOLOv4-TF model:
 
 ```bat
-cd /d <repo>\ai_system\intel\openvino
+cd /d <repo>\ai_sdk\intel\openvino\2026_1
 script\object_detection\16_run_yolov4_cpu.bat
 script\object_detection\17_run_yolov4_igpu.bat
 script\object_detection\18_run_yolov4_npu.bat
