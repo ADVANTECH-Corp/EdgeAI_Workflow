@@ -112,7 +112,7 @@ Some Hugging Face repositories may require authentication and accepted access te
 Before downloading gated models:
 
 ```bat
-cd /d <repo>\ai_system\intel\openvino
+cd /d <repo>\ai_sdk\intel\openvino\2026_1
 "C:\Advantech\GenAI\envs\ovms-vlm\Scripts\huggingface-cli.exe" login
 ```
 
@@ -125,7 +125,7 @@ set "HF_TOKEN=hf_your_token_here"
 Run the full download setup:
 
 ```bat
-cd /d <repo>\ai_system\intel\openvino
+cd /d <repo>\ai_sdk\intel\openvino\2026_1
 script\genai\gemma3_4b\run_all_download.bat
 ```
 
