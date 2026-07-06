@@ -20,15 +20,16 @@ if not exist "%CONVERT_ENV%\Scripts\omz_downloader.exe" (
   exit /b 1
 )
 
-where git >nul 2>nul
-if errorlevel 1 (
-  echo [ERROR] git was not found in PATH.
+if not exist "%GIT_EXE%" (
+  echo [ERROR] Git was not found.
+  echo         Install Git for Windows or set GIT_EXE before running this script.
+  echo         Example: set "GIT_EXE=C:\Program Files\Git\cmd\git.exe"
   exit /b 1
 )
 
 if not exist "%OMZ_DIR%\.git" (
   echo [INFO] Cloning Open Model Zoo...
-  git clone https://github.com/openvinotoolkit/open_model_zoo.git "%OMZ_DIR%"
+  "%GIT_EXE%" clone https://github.com/openvinotoolkit/open_model_zoo.git "%OMZ_DIR%"
   if errorlevel 1 goto :error
 ) else (
   echo [INFO] Open Model Zoo already exists. Skipping clone.
@@ -36,11 +37,11 @@ if not exist "%OMZ_DIR%\.git" (
 
 pushd "%OMZ_DIR%"
 echo [INFO] Checking out releases/2026/1...
-git checkout releases/2026/1
+"%GIT_EXE%" checkout releases/2026/1
 if errorlevel 1 goto :pop_error
 
 echo [INFO] Updating submodules...
-git submodule update --init --recursive
+"%GIT_EXE%" submodule update --init --recursive
 if errorlevel 1 goto :pop_error
 popd
 
