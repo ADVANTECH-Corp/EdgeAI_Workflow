@@ -144,11 +144,11 @@ ai_sdk\intel\openvino\2026_1\script\object_detection
 | `07_run_cpu.bat` | Runs default SSD model on CPU |
 | `08_run_igpu.bat` | Runs default SSD model on iGPU with `-d GPU` |
 | `09_run_npu.bat` | Runs default SSD model on NPU with `-d NPU` |
-| `14_download_yolov4_tf.bat` | Downloads YOLOv4-TF model assets |
-| `15_convert_yolov4_tf.bat` | Converts YOLOv4-TF to OpenVINO IR |
-| `16_run_yolov4_cpu.bat` | Runs YOLOv4-TF on CPU |
-| `17_run_yolov4_igpu.bat` | Runs YOLOv4-TF on iGPU with `-d GPU` |
-| `18_run_yolov4_npu.bat` | Runs YOLOv4-TF on NPU with `-d NPU` |
+| `10_download_yolov4_tf.bat` | Downloads YOLOv4-TF model assets |
+| `11_convert_yolov4_tf.bat` | Converts YOLOv4-TF to OpenVINO IR |
+| `12_run_yolov4_cpu.bat` | Runs YOLOv4-TF on CPU |
+| `13_run_yolov4_igpu.bat` | Runs YOLOv4-TF on iGPU with `-d GPU` |
+| `14_run_yolov4_npu.bat` | Runs YOLOv4-TF on NPU with `-d NPU` |
 | `run_all_setup.bat` | Runs default SSD setup scripts `01` through `06` |
 | `run_all_yolov4_setup.bat` | Runs YOLOv4-TF setup: workspace, envs, download, convert, and build |
 
@@ -286,8 +286,8 @@ script\object_detection\run_all_yolov4_setup.bat
 Or run only the YOLO model steps after the common workspace and environments are ready:
 
 ```bat
-script\object_detection\14_download_yolov4_tf.bat
-script\object_detection\15_convert_yolov4_tf.bat
+script\object_detection\10_download_yolov4_tf.bat
+script\object_detection\11_convert_yolov4_tf.bat
 ```
 
 Expected YOLOv4-TF model files:
@@ -320,9 +320,9 @@ Run YOLOv4-TF model:
 
 ```bat
 cd /d <repo>\ai_sdk\intel\openvino\2026_1
-script\object_detection\16_run_yolov4_cpu.bat
-script\object_detection\17_run_yolov4_igpu.bat
-script\object_detection\18_run_yolov4_npu.bat
+script\object_detection\12_run_yolov4_cpu.bat
+script\object_detection\13_run_yolov4_igpu.bat
+script\object_detection\14_run_yolov4_npu.bat
 ```
 
 The NPU run requires Intel NPU hardware and driver support. If the platform does not expose an OpenVINO NPU device, use CPU or iGPU.
@@ -353,9 +353,9 @@ Detected objects are shown with bounding boxes.
 | SSD MobileNet | CPU | `07_run_cpu.bat` | `-at ssd -d CPU` | Supported |
 | SSD MobileNet | iGPU | `08_run_igpu.bat` | `-at ssd -d GPU` | Supported |
 | SSD MobileNet | NPU | `09_run_npu.bat` | `-at ssd -d NPU` | Supported on platforms with Intel NPU support |
-| YOLOv4-TF | CPU | `16_run_yolov4_cpu.bat` | `-at yolo -d CPU` | Supported |
-| YOLOv4-TF | iGPU | `17_run_yolov4_igpu.bat` | `-at yolo -d GPU` | Supported |
-| YOLOv4-TF | NPU | `18_run_yolov4_npu.bat` | `-at yolo -d NPU` | Supported on platforms with Intel NPU support |
+| YOLOv4-TF | CPU | `12_run_yolov4_cpu.bat` | `-at yolo -d CPU` | Supported |
+| YOLOv4-TF | iGPU | `13_run_yolov4_igpu.bat` | `-at yolo -d GPU` | Supported |
+| YOLOv4-TF | NPU | `14_run_yolov4_npu.bat` | `-at yolo -d NPU` | Supported on platforms with Intel NPU support |
 
 # Reference
 

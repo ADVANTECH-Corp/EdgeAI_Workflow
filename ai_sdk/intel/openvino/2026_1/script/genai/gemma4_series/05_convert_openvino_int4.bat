@@ -15,13 +15,13 @@ echo  Method    : official Gemma4 notebook optimum-cli export
 echo.
 
 if not exist "%ENV_PATH%\Scripts\optimum-cli.exe" (
-  echo [ERROR] optimum-cli.exe was not found. Run 02_prepare_convert_env.bat first.
+  echo [ERROR] optimum-cli.exe was not found. Run 03_prepare_convert_env.bat first.
   exit /b 1
 )
 
 if not exist "%RAW_MODEL%\config.json" (
   echo [ERROR] Raw model folder is incomplete: %RAW_MODEL%
-  echo         Run 03_download_raw_model.bat first.
+  echo         Run 04_download_raw_model.bat first.
   exit /b 1
 )
 

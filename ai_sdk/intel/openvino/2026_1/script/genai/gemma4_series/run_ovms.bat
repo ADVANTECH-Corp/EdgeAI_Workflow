@@ -21,7 +21,7 @@ echo  Port   : %REST_PORT%
 echo.
 
 if not exist "%RUN_OVMS_EXE%" (
-  echo [ERROR] ovms.exe was not found. Run 10_check_ovms.bat or update OVMS_EXE.
+  echo [ERROR] ovms.exe was not found. Run 07_check_ovms.bat or update OVMS_EXE.
   exit /b 1
 )
 

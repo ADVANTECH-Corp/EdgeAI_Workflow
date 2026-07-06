@@ -184,18 +184,18 @@ Current script list:
 | Script | Purpose |
 | --- | --- |
 | `00_config.bat` | Existing common paths, model id, output folders, OVMS path, and port |
-| `check_env.bat` | Existing environment check |
-| `01_prepare_workspace.bat` | Existing workspace setup |
-| `02_prepare_convert_env.bat` | Existing conversion environment setup |
-| `03_download_raw_model.bat` | Existing raw model download |
-| `04_convert_openvino_int4.bat` | Existing Python conversion script |
-| `05_check_converted_model.bat` | Existing converted model check |
-| `10_check_ovms.bat` | Checks `ovms.exe` |
-| `11_run_ovms_cpu.bat` | Starts OVMS on CPU |
-| `12_run_ovms_igpu.bat` | Starts OVMS on iGPU |
-| `20_chat.bat` | Sends a test prompt to OVMS |
+| `01_check_env.bat` | Existing environment check |
+| `02_prepare_workspace.bat` | Existing workspace setup |
+| `03_prepare_convert_env.bat` | Existing conversion environment setup |
+| `04_download_raw_model.bat` | Existing raw model download |
+| `05_convert_openvino_int4.bat` | Existing Python conversion script |
+| `06_check_converted_model.bat` | Existing converted model check |
+| `07_check_ovms.bat` | Checks `ovms.exe` |
+| `08_run_ovms_cpu.bat` | Starts OVMS on CPU |
+| `09_run_ovms_igpu.bat` | Starts OVMS on iGPU |
+| `10_chat.bat` | Sends a test prompt to OVMS |
 
-Important: the validated E2B conversion used the official notebook package environment and `optimum-cli export openvino`. The existing `02_prepare_convert_env.bat` and `04_convert_openvino_int4.bat` are not the validated conversion path yet.
+Important: the validated E2B conversion used the official notebook package environment and `optimum-cli export openvino`. The existing `03_prepare_convert_env.bat` and `05_convert_openvino_int4.bat` are not the validated conversion path yet.
 
 ## Configuration
 
@@ -338,7 +338,7 @@ C:\Advantech\GenAI\ovms
 Then verify:
 
 ```bat
-script\genai\gemma4_series\10_check_ovms.bat
+script\genai\gemma4_series\07_check_ovms.bat
 ```
 
 If the extracted folder is different, set the actual OVMS path before running scripts:
@@ -361,13 +361,13 @@ set "OV_MODEL_NAME=gemma-4-e2b-it-int4"
 CPU:
 
 ```bat
-script\genai\gemma4_series\11_run_ovms_cpu.bat
+script\genai\gemma4_series\08_run_ovms_cpu.bat
 ```
 
 iGPU:
 
 ```bat
-script\genai\gemma4_series\12_run_ovms_igpu.bat
+script\genai\gemma4_series\09_run_ovms_igpu.bat
 ```
 
 Keep the OVMS Command Prompt open. Open another Command Prompt to run the chat client.
@@ -378,7 +378,7 @@ After OVMS starts successfully, set the same model name and run:
 
 ```bat
 set "OV_MODEL_NAME=gemma-4-e2b-it-int4"
-script\genai\gemma4_series\20_chat.bat
+script\genai\gemma4_series\10_chat.bat
 ```
 
 # Result
@@ -393,8 +393,8 @@ Chat client example:
 
 | Device | Model | OVMS Script | Chat Script | Expected Status |
 | --- | --- | --- | --- | --- |
-| CPU | `gemma-4-e2b-it-int4` | `11_run_ovms_cpu.bat` | `20_chat.bat` | Expected after successful conversion |
-| iGPU | `gemma-4-e2b-it-int4` | `12_run_ovms_igpu.bat` | `20_chat.bat` | Expected after successful conversion |
+| CPU | `gemma-4-e2b-it-int4` | `08_run_ovms_cpu.bat` | `10_chat.bat` | Expected after successful conversion |
+| iGPU | `gemma-4-e2b-it-int4` | `09_run_ovms_igpu.bat` | `10_chat.bat` | Expected after successful conversion |
 | NPU | `gemma-4-e2b-it-int4` | Not provided | Not provided | Not supported in this guide |
 
 # Reference
