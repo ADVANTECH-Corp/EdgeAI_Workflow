@@ -18,6 +18,9 @@ if not exist "%CONDA_EXE%" (
   exit /b 1
 )
 
+call :accept_conda_tos
+if errorlevel 1 exit /b 1
+
 if not exist "%CONVERT_ENV%\python.exe" (
   echo [INFO] Creating Python 3.10 conversion environment...
   "%CONDA_EXE%" create -p "%CONVERT_ENV%" python=3.10 -y
@@ -60,3 +63,10 @@ exit /b 1
 :tool_error
 echo [ERROR] OMZ tools were not found in the conversion environment.
 exit /b 1
+
+:accept_conda_tos
+echo [INFO] Accepting Anaconda channel Terms of Service if required...
+"%CONDA_EXE%" tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main >nul 2>nul
+"%CONDA_EXE%" tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r >nul 2>nul
+"%CONDA_EXE%" tos accept --override-channels --channel https://repo.anaconda.com/pkgs/msys2 >nul 2>nul
+exit /b 0

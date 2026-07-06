@@ -12,11 +12,14 @@ echo  OMZ demos      : %OMZ_DIR%\demos
 echo  Build dir      : %BUILD_DIR%
 echo  OpenCV_DIR     : %OPENCV_DIR%
 echo  OpenVINO_DIR   : %OPENVINO_CMAKE_DIR%
+echo  Generator      : %CMAKE_GENERATOR%
+echo  Architecture   : %CMAKE_ARCH%
 echo.
 
-where cmake >nul 2>nul
-if errorlevel 1 (
-  echo [ERROR] cmake was not found in PATH.
+if not exist "%CMAKE_EXE%" (
+  echo [ERROR] CMake was not found.
+  echo         Install CMake or Visual Studio Build Tools, or set CMAKE_EXE before running this script.
+  echo         Example: set "CMAKE_EXE=C:\Program Files\CMake\bin\cmake.exe"
   exit /b 1
 )
 
@@ -28,7 +31,8 @@ if not exist "%OMZ_DIR%\demos\CMakeLists.txt" (
 
 if not exist "%OPENCV_DIR%" (
   echo [ERROR] OpenCV_DIR does not exist: %OPENCV_DIR%
-  echo         Install OpenCV or update OPENCV_DIR in 00_config.bat.
+  echo         Install OpenCV, set OPENCV_DIR, or set OPENCV_PATH before running this script.
+  echo         Example: set "OPENCV_DIR=C:\opencv\build"
   exit /b 1
 )
 
@@ -39,12 +43,22 @@ if not exist "%OPENVINO_CMAKE_DIR%\OpenVINOConfig.cmake" (
   exit /b 1
 )
 
+if not exist "%VSDEVCMD%" (
+  echo [ERROR] Microsoft C++ Build Tools were not found.
+  echo         Install Visual Studio Build Tools 2022 with the Desktop development with C++ workload.
+  echo         Download: https://visualstudio.microsoft.com/zh-hant/visual-cpp-build-tools/
+  exit /b 1
+)
+
 if not exist "%BUILD_DIR%" mkdir "%BUILD_DIR%"
 if errorlevel 1 exit /b 1
 
 pushd "%BUILD_DIR%"
 echo [INFO] Configuring CMake...
-cmake ^
+"%CMAKE_EXE%" ^
+  -G "%CMAKE_GENERATOR%" ^
+  -A "%CMAKE_ARCH%" ^
+  -T "%CMAKE_TOOLSET%" ^
   -DOpenCV_DIR="%OPENCV_DIR%" ^
   -DOpenVINO_DIR="%OPENVINO_CMAKE_DIR%" ^
   -DCMAKE_POLICY_VERSION_MINIMUM=3.5 ^
@@ -52,7 +66,7 @@ cmake ^
 if errorlevel 1 goto :pop_error
 
 echo [INFO] Building object_detection_demo...
-cmake --build . --config Release --target object_detection_demo
+"%CMAKE_EXE%" --build . --config Release --target object_detection_demo
 if errorlevel 1 goto :pop_error
 popd
 

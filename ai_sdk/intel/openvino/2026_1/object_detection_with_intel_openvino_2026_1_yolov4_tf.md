@@ -36,6 +36,52 @@ Base on **Edge AI SDK**
 | Default model | `ssd_mobilenet_v1_coco` | Public Open Model Zoo model |
 | Optional model | `yolo-v4-tf` | Public Open Model Zoo YOLOv4 TensorFlow model |
 
+## Required Tools
+
+Install these tools before preparing the environments. Adding Git and CMake to `PATH` during installation is recommended. The scripts also try to detect common installation paths automatically.
+
+| Tool | Check Command | Download |
+| --- | --- | --- |
+| Git for Windows | `git --version` or check `GIT_EXE` | https://git-scm.com/download/win |
+| CMake | `cmake --version` or check `CMAKE_EXE` | https://cmake.org/download/ |
+| OpenCV 4.13.0 Windows package | `dir C:\opencv\build` | https://github.com/opencv/opencv/releases/download/4.13.0/opencv-4.13.0-windows.exe |
+| Microsoft Visual Studio Build Tools 2022 with C++ workload | Open Visual Studio Installer and confirm `Desktop development with C++` is installed | https://visualstudio.microsoft.com/zh-hant/visual-cpp-build-tools/ |
+
+When installing Visual Studio Build Tools, select:
+
+```text
+Desktop development with C++
+MSVC v143 C++ build tools
+Windows 10/11 SDK
+C++ CMake tools for Windows
+```
+
+CMake configures the build, but it does not include a C++ compiler by itself. The demo build requires the Microsoft C++ compiler tools from Visual Studio Build Tools.
+
+This guide assumes OpenCV is extracted to:
+
+```text
+C:\opencv\build
+```
+
+If the OpenCV self-extractor creates `C:\opencv\opencv\build`, either move the inner `build` folder to `C:\opencv\build` or set `OPENCV_DIR` before running build scripts:
+
+```bat
+set "OPENCV_DIR=C:\opencv\opencv\build"
+```
+
+If Git, CMake, or OpenCV are installed in custom locations, set the paths in the same Command Prompt before running the scripts:
+
+```bat
+set "GIT_EXE=C:\Program Files\Git\cmd\git.exe"
+set "CMAKE_EXE=C:\Program Files\CMake\bin\cmake.exe"
+set "OPENCV_DIR=C:\opencv\build"
+```
+
+Then run the setup or build script in that same Command Prompt.
+
+If the build reports `nmake`, `cl`, `CMAKE_C_COMPILER`, or `CMAKE_CXX_COMPILER` errors, install Visual Studio Build Tools with the C++ workload, then open a new Command Prompt and run the build again. You can also run the build from **Developer Command Prompt for VS 2022**.
+
 ## Model Selection
 
 | Model | Architecture type | Script set | Note |
@@ -82,7 +128,7 @@ The current conversion environment already installs `tensorflow==2.15.1`, `numpy
 The object detection scripts are located in:
 
 ```text
-ai_system\intel\openvino\script\object_detection
+ai_sdk\intel\openvino\2026_1\script\object_detection
 ```
 
 | Script | Purpose |
@@ -133,18 +179,22 @@ set "OPENCV_DIR=C:\opencv\build"
 script\object_detection\06_build_demo.bat
 ```
 
-Download OpenCV 4.13.0 from the OpenCV release page:
+The scripts also support these optional path variables:
 
-[Download Link OpenCV 4.13.0](https://github.com/opencv/opencv/releases/download/4.13.0/opencv-4.13.0-windows.exe)
-
-This guide assumes OpenCV is extracted to `C:\opencv\build`. If the self-extractor creates `C:\opencv\opencv\build`, update `OPENCV_DIR` and `OPENCV_BIN` in `00_config.bat`.
+| Variable | Purpose | Example |
+| --- | --- | --- |
+| `GIT_EXE` | Full path to `git.exe` when Git is not in `PATH` | `C:\Program Files\Git\cmd\git.exe` |
+| `CMAKE_EXE` | Full path to `cmake.exe` when CMake is not in `PATH` | `C:\Program Files\CMake\bin\cmake.exe` |
+| `OPENCV_DIR` | OpenCV CMake package folder | `C:\opencv\build` |
+| `OPENCV_PATH` | Alias for `OPENCV_DIR` | `C:\opencv\build` |
 
 ## Full Setup
 
-Open Command Prompt and run the default SSD setup:
+Open Command Prompt, check the environment, then run the default SSD setup:
 
 ```bat
 cd /d <repo>\ai_sdk\intel\openvino\2026_1
+script\object_detection\check_env.bat
 script\object_detection\run_all_setup.bat
 ```
 
@@ -160,12 +210,14 @@ If any step fails, fix the reported issue and run the failed step again.
 
 Use the step-by-step flow when you want to inspect each stage.
 
-Check the current environment:
+Check the current environment before running setup scripts:
 
 ```bat
 cd /d <repo>\ai_sdk\intel\openvino\2026_1
 script\object_detection\check_env.bat
 ```
+
+Items such as workspace folders, Python environments, model files, and build output may be missing before setup. Missing Git, CMake, OpenCV, or Visual Studio Build Tools should be installed first.
 
 Prepare common workspace and environments:
 
@@ -205,7 +257,7 @@ C:\Advantech\VisionAI\open_model_zoo\demos\object_detection_demo\cpp
 
 Build requirements:
 
-* Microsoft Visual Studio Build Tools with C++ workload
+* Microsoft Visual Studio Build Tools 2022 with `Desktop development with C++`
 * CMake
 * OpenCV C++ package
 * OpenVINO C++ runtime package or another OpenVINO package that provides `OpenVINOConfig.cmake`
