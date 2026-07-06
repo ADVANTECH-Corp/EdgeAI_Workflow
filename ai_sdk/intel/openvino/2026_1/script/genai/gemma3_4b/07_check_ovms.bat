@@ -9,7 +9,7 @@ if not exist "%RUN_OVMS_EXE%" if exist "%PRODUCT_OVMS_EXE%" set "RUN_OVMS_EXE=%P
 
 echo.
 echo ============================================================
-echo  Gemma 3 4B - Check OVMS
+echo  Gemma 3 4B - Step 07 - Check OVMS
 echo ============================================================
 echo  OVMS: %RUN_OVMS_EXE%
 echo.

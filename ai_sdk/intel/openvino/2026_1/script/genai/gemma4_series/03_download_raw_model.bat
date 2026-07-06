@@ -6,7 +6,7 @@ if errorlevel 1 exit /b 1
 
 echo.
 echo ============================================================
-echo  Gemma 4 12B - Step 03 - Download raw Hugging Face model
+echo  Gemma 4 - Step 03 - Download raw Hugging Face model
 echo ============================================================
 echo  Model ID : %MODEL_ID%
 echo  Output   : %RAW_MODEL%
@@ -19,6 +19,7 @@ if not exist "%ENV_PATH%\python.exe" (
   exit /b 1
 )
 
+set "PYTHONIOENCODING=utf-8"
 if not exist "%MODEL_WORKSPACE%" mkdir "%MODEL_WORKSPACE%"
 
 pushd "%GUIDE_ROOT%"
@@ -34,5 +35,7 @@ exit /b 0
 :pop_error
 popd
 echo [ERROR] Raw model download failed.
-echo         If the repo is gated, login with huggingface-cli or set HF_TOKEN.
+echo         If the repo is gated, login with:
+echo         "%ENV_PATH%\Scripts\hf.exe" auth login
+echo         Or set HF_TOKEN in the same Command Prompt.
 exit /b 1

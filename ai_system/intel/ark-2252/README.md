@@ -26,4 +26,4 @@ Install Edge AI SDK : [Download](https://docs.edge-ai-sdk.advantech.com/docs/Har
 | Name | Content | Note |
 | -------- | -------- | -------- |
 | How to convert VLM & inference with OVMS | [Link](/ai_sdk/intel/openvino/2026_1/how_to_convert_vlm_openvino_ovms_gemma3_4b.md) |  OS : Windows 11 IoT Enterprise LTSC<br/>SDK : OpenVino 2026.1<br/>Model : gemma-3-4b-it-int4 |
-| How to convert VLM & inference with OVMS | [Link](/ai_sdk/intel/openvino/2026_1/how_to_convert_vlm_openvino_ovms_gemma4_12b.md) |  OS : Windows 11 IoT Enterprise LTSC<br/>SDK : OpenVino 2026.1<br/>Model : gemma-4-12b-it-int4 |
+| How to convert Gemma 4 series VLM & inference with OVMS | [Link](/ai_sdk/intel/openvino/2026_1/how_to_convert_vlm_openvino_ovms_gemma4_series.md) |  OS : Windows 11 IoT Enterprise LTSC<br/>SDK : OpenVino 2026.1<br/>Model : gemma-4-e2b-it-int4 |

@@ -6,7 +6,7 @@ if errorlevel 1 exit /b 1
 
 echo.
 echo ============================================================
-echo  Gemma 3 4B - Step 01 - Prepare workspace
+echo  Gemma 3 4B - Step 02 - Prepare workspace
 echo ============================================================
 echo  Workspace  : %WORKSPACE%
 echo  Model root : %MODEL_ROOT%

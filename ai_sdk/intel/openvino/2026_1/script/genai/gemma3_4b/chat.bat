@@ -17,7 +17,7 @@ echo  Model : %MODEL_NAME%
 echo.
 
 if not exist "%ENV_PATH%\python.exe" (
-  echo [ERROR] Python environment was not found. Run 02_prepare_env.bat first.
+  echo [ERROR] Python environment was not found. Run 03_prepare_convert_env.bat first.
   exit /b 1
 )
 

@@ -1,16 +1,24 @@
-# How to convert VLM with Intel OpenVINO and inference with OVMS: gemma-3-4b
+# How to convert Gemma 3 4B VLM with Intel OpenVINO and inference with OVMS
 
-This example demonstrates how to prepare Gemma 3 4B VLM models and serve them with OpenVINO Model Server on an Intel platform.
+This guide demonstrates how to convert the original Hugging Face Gemma 3 4B VLM model to OpenVINO IR, then serve it with OpenVINO Model Server on an Advantech EdgeAI Intel platform.
 
-Gemma 3 4B uses prepared OpenVINO IR models. The setup and deploy commands are packaged as batch scripts under `script\genai\gemma3_4b`.
+The main flow converts the CPU / iGPU model from the original Hugging Face model. Prepared OpenVINO IR models can also be downloaded as an alternative. The NPU model is not converted in this guide; use the prepared channel-wise OpenVINO model for NPU.
 
 - [Environment](#environment)
   - [Target](#target)
-  - [Model Selection](#model-selection)
+  - [Conversion Requirements](#conversion-requirements)
+- [Model Preparation](#model-preparation)
+  - [CPU / iGPU Model](#cpu--igpu-model)
+  - [NPU Model](#npu-model)
+  - [Hugging Face Access](#hugging-face-access)
 - [Script Workflow](#script-workflow)
   - [Configuration](#configuration)
-  - [Download Models](#download-models)
+  - [Convert CPU / iGPU Model](#convert-cpu--igpu-model)
+  - [Use Prepared Models](#use-prepared-models)
 - [Deploy](#deploy)
+  - [Prepare OVMS](#prepare-ovms)
+  - [Run OVMS](#run-ovms)
+  - [Run Chat Client](#run-chat-client)
 - [Result](#result)
 - [Reference](#reference)
 
@@ -18,9 +26,11 @@ Gemma 3 4B uses prepared OpenVINO IR models. The setup and deploy commands are p
 
 # Environment
 
-Refer to the following requirements to prepare the target and development environment.
+Base on **Edge AI SDK** product Miniconda:
 
-Base on **Edge AI SDK**
+```text
+C:\Program Files\Advantech\EdgeAI\System\Intel\SDK\miniconda3
+```
 
 ## Target
 
@@ -29,30 +39,86 @@ Base on **Edge AI SDK**
 | Platform | Advantech EdgeAI Intel platform | CPU / iGPU / NPU |
 | OS | Windows 11 | Command Prompt |
 | Python | 3.11 | Created by product Miniconda |
-| OpenVINO | 2026.1.0 | Runtime and GenAI packages |
+| OpenVINO | 2026.1.0 or newer | Runtime and GenAI packages. The validated conversion environment installed OpenVINO 2026.2.1. |
 | OVMS | 2026.2.0 | Official OpenVINO Model Server |
-| RAM | 16 GB or higher | 32 GB recommended |
-| Disk | 30 GB free or higher | For models and OVMS package |
 
-Base on Edge AI SDK product Miniconda:
+## Conversion Requirements
+
+The main conversion flow exports the original Hugging Face model to OpenVINO IR. Prepare enough disk space and memory before running conversion.
+
+| Item | Recommended |
+| --- | --- |
+| RAM | 32 GB or higher |
+| Disk | 60 GB free or higher |
+| Network | Required for Hugging Face model download |
+| Hugging Face account | Required for gated Gemma access |
+
+The conversion environment installs:
 
 ```text
-C:\Program Files\Advantech\EdgeAI\System\Intel\SDK\miniconda3
+torch / torchvision
+transformers
+gradio
+opencv-python
+optimum-intel
+openvino
+openvino-genai
+openvino-tokenizers
+nncf
+huggingface_hub
+pillow
+requests
 ```
 
-## Model Selection
+# Model Preparation
 
-| Device | Model Folder | Hugging Face Repo | Note |
+## CPU / iGPU Model
+
+CPU and iGPU can use either a model converted by this guide or a prepared OpenVINO IR model.
+
+| Method | Source | Default Model Path | Note |
 | --- | --- | --- | --- |
-| CPU | `gemma-3-4b-it-int4` | `Advantech-EIOT/intel_google-gemma-3-4b-it-int4` | Standard INT4 OpenVINO model |
-| iGPU | `gemma-3-4b-it-int4` | `Advantech-EIOT/intel_google-gemma-3-4b-it-int4` | Use OVMS `--target_device GPU` |
-| NPU | `gemma-3-4b-it-int4-cw-ov` | `Advantech-EIOT/intel_google-gemma-3-4b-it-int4-cw-ov` | Channel-wise INT4 model for NPU |
+| Convert from original model | `google/gemma-3-4b-it` | `C:\Advantech\GenAI\models\gemma-3-4b-it-converted-int4` | Main flow |
+| Download prepared OpenVINO IR | `OpenVINO/gemma-3-4b-it-int4-ov` | User-defined | Alternative path |
+| Download prepared OpenVINO IR | `Advantech-EIOT/intel_google-gemma-3-4b-it-int4` | User-defined | Alternative path |
 
-The OpenVINO organization equivalents are:
+The converted model is intended for CPU and iGPU OVMS runs:
 
 ```text
-OpenVINO/gemma-3-4b-it-int4-ov
-OpenVINO/gemma-3-4b-it-int4-cw-ov
+--target_device CPU
+--target_device GPU
+```
+
+## NPU Model
+
+NPU uses a prepared channel-wise INT4 OpenVINO model. This guide does not provide an NPU channel-wise conversion flow.
+
+| Method | Source | Default Model Path | Note |
+| --- | --- | --- | --- |
+| Download prepared OpenVINO IR only | `OpenVINO/gemma-3-4b-it-int4-cw-ov` | User-defined | Required for NPU |
+| Download prepared OpenVINO IR only | `Advantech-EIOT/intel_google-gemma-3-4b-it-int4-cw-ov` | User-defined | Required for NPU |
+
+## Hugging Face Access
+
+Gemma models may require Hugging Face authentication and accepted access terms.
+
+Before downloading or converting:
+
+1. Sign in to Hugging Face.
+2. Open the model repository page and accept the required access terms.
+3. Log in from the command line after the Python environment is created.
+
+Interactive login:
+
+```bat
+set "PYTHONIOENCODING=utf-8"
+C:\Advantech\GenAI\envs\gemma3_4b_convert\Scripts\hf.exe auth login
+```
+
+Token environment variable:
+
+```bat
+set "HF_TOKEN=hf_your_token_here"
 ```
 
 # Script Workflow
@@ -60,25 +126,27 @@ OpenVINO/gemma-3-4b-it-int4-cw-ov
 The Gemma 3 4B scripts are located in:
 
 ```text
-ai_system\intel\openvino\script\genai\gemma3_4b
+ai_sdk\intel\openvino\2026_1\script\genai\gemma3_4b
 ```
+
+The scripts use continuous numbering so users can follow them step by step.
 
 | Script | Purpose |
 | --- | --- |
 | `00_config.bat` | Common paths, model names, repository ids, OVMS path, and port |
-| `check_env.bat` | Prints the current environment and highlights missing files |
-| `01_prepare_workspace.bat` | Creates `C:\Advantech\GenAI` workspace folders |
-| `02_prepare_env.bat` | Creates Python 3.11 environment and installs OpenVINO GenAI packages |
-| `03_download_cpu_igpu_model.bat` | Downloads the CPU / iGPU prepared OpenVINO IR model |
-| `04_download_npu_model.bat` | Downloads the NPU channel-wise INT4 OpenVINO IR model |
-| `05_check_models.bat` | Checks required model files |
-| `10_check_ovms.bat` | Checks `ovms.exe` |
-| `11_run_ovms_cpu.bat` | Starts OVMS on CPU |
-| `12_run_ovms_igpu.bat` | Starts OVMS on iGPU |
-| `13_run_ovms_npu.bat` | Starts OVMS on NPU |
-| `20_chat_cpu_igpu.bat` | Sends a test prompt to the CPU / iGPU model |
-| `21_chat_npu.bat` | Sends a test prompt to the NPU model |
-| `run_all_download.bat` | Runs workspace, environment, model download, and model check steps |
+| `01_check_env.bat` | Prints the current environment and highlights missing files |
+| `02_prepare_workspace.bat` | Creates `C:\Advantech\GenAI` workspace folders |
+| `03_prepare_convert_env.bat` | Creates Python 3.11 conversion environment and installs conversion packages |
+| `04_download_raw_model.bat` | Downloads original Hugging Face Gemma 3 4B model |
+| `05_convert_openvino_int4.bat` | Converts the raw model to OpenVINO INT4 IR |
+| `06_check_converted_model.bat` | Checks converted OpenVINO model files |
+| `07_check_ovms.bat` | Checks `ovms.exe` |
+| `08_run_ovms_cpu.bat` | Starts OVMS on CPU |
+| `09_run_ovms_igpu.bat` | Starts OVMS on iGPU |
+| `10_run_ovms_npu.bat` | Starts OVMS on NPU with prepared channel-wise model |
+| `11_chat_cpu_igpu.bat` | Sends a test prompt to the CPU / iGPU model |
+| `12_chat_npu.bat` | Sends a test prompt to the NPU model |
+| `run_all_convert.bat` | Runs workspace, environment, raw model download, conversion, and model check steps |
 
 ## Configuration
 
@@ -88,16 +156,37 @@ Before running setup, review:
 script\genai\gemma3_4b\00_config.bat
 ```
 
-Default paths:
+Important default settings:
 
 | Variable | Default |
 | --- | --- |
 | `CONDA_ROOT` | `C:\Program Files\Advantech\EdgeAI\System\Intel\SDK\miniconda3` |
 | `WORKSPACE` | `C:\Advantech\GenAI` |
-| `ENV_PATH` | `%WORKSPACE%\envs\ovms-vlm` |
+| `ENV_PATH` | `%WORKSPACE%\envs\gemma3_4b_convert` |
 | `MODEL_ROOT` | `%WORKSPACE%\models` |
+| `RAW_MODEL_ID` | `google/gemma-3-4b-it` |
+| `RAW_MODEL_PATH` | `%MODEL_ROOT%\gemma-3-4b-it-raw` |
+| `CONVERT_PRECISION` | `int4` |
+| `CPU_IGPU_MODEL_NAME` | `gemma-3-4b-it-converted-int4` |
+| `CPU_IGPU_MODEL_PATH` | `%MODEL_ROOT%\%CPU_IGPU_MODEL_NAME%` |
+| `NPU_MODEL_NAME` | `gemma-3-4b-it-int4-cw-ov` |
+| `NPU_MODEL_PATH` | `%MODEL_ROOT%\%NPU_MODEL_NAME%` |
 | `OVMS_EXE` | `%WORKSPACE%\ovms\ovms.exe` |
 | `REST_PORT` | `23953` |
+
+If you use a prepared CPU / iGPU model instead of converting, set the model path before running OVMS:
+
+```bat
+set "CPU_IGPU_MODEL_NAME=gemma-3-4b-it-int4"
+set "CPU_IGPU_MODEL_PATH=C:\Advantech\GenAI\models\gemma-3-4b-it-int4"
+```
+
+If you use a prepared NPU model, set:
+
+```bat
+set "NPU_MODEL_NAME=gemma-3-4b-it-int4-cw-ov"
+set "NPU_MODEL_PATH=C:\Advantech\GenAI\models\gemma-3-4b-it-int4-cw-ov"
+```
 
 If the Edge AI SDK product already includes OVMS, the scripts also check:
 
@@ -105,49 +194,119 @@ If the Edge AI SDK product already includes OVMS, the scripts also check:
 C:\Program Files\Advantech\EdgeAI\System\Intel\GenAI\app\engine\intel\scripts\ovms_2026_2\ovms.exe
 ```
 
-## Download Models
+## Convert CPU / iGPU Model
 
-Some Hugging Face repositories may require authentication and accepted access terms. If access is not granted, downloads can fail with `401 Unauthorized` or `GatedRepoError`.
-
-Before downloading gated models:
+Open Command Prompt:
 
 ```bat
 cd /d <repo>\ai_sdk\intel\openvino\2026_1
-"C:\Advantech\GenAI\envs\ovms-vlm\Scripts\huggingface-cli.exe" login
 ```
 
-You can also set a token in the same Command Prompt:
+Check the current environment:
 
 ```bat
-set "HF_TOKEN=hf_your_token_here"
+script\genai\gemma3_4b\01_check_env.bat
 ```
 
-Run the full download setup:
+Prepare workspace and conversion environment:
 
 ```bat
-cd /d <repo>\ai_sdk\intel\openvino\2026_1
-script\genai\gemma3_4b\run_all_download.bat
+script\genai\gemma3_4b\02_prepare_workspace.bat
+script\genai\gemma3_4b\03_prepare_convert_env.bat
 ```
 
-Or run each step:
+Log in to Hugging Face if required:
 
 ```bat
-script\genai\gemma3_4b\check_env.bat
-script\genai\gemma3_4b\01_prepare_workspace.bat
-script\genai\gemma3_4b\02_prepare_env.bat
-script\genai\gemma3_4b\03_download_cpu_igpu_model.bat
-script\genai\gemma3_4b\04_download_npu_model.bat
-script\genai\gemma3_4b\05_check_models.bat
+set "PYTHONIOENCODING=utf-8"
+C:\Advantech\GenAI\envs\gemma3_4b_convert\Scripts\hf.exe auth login
 ```
 
-Expected model files:
+Download the original model and convert it:
+
+```bat
+script\genai\gemma3_4b\04_download_raw_model.bat
+script\genai\gemma3_4b\05_convert_openvino_int4.bat
+script\genai\gemma3_4b\06_check_converted_model.bat
+```
+
+Or run the full conversion setup:
+
+```bat
+script\genai\gemma3_4b\run_all_convert.bat
+```
+
+Expected converted model files:
 
 ```text
-C:\Advantech\GenAI\models\gemma-3-4b-it-int4\openvino_language_model.xml
-C:\Advantech\GenAI\models\gemma-3-4b-it-int4-cw-ov\openvino_language_model.xml
+C:\Advantech\GenAI\models\gemma-3-4b-it-converted-int4\openvino_language_model.xml
+C:\Advantech\GenAI\models\gemma-3-4b-it-converted-int4\openvino_language_model.bin
+C:\Advantech\GenAI\models\gemma-3-4b-it-converted-int4\openvino_text_embeddings_model.xml
+C:\Advantech\GenAI\models\gemma-3-4b-it-converted-int4\openvino_vision_embeddings_model.xml
+C:\Advantech\GenAI\models\gemma-3-4b-it-converted-int4\openvino_tokenizer.xml
+C:\Advantech\GenAI\models\gemma-3-4b-it-converted-int4\openvino_detokenizer.xml
 ```
 
+Validated conversion command used by `05_convert_openvino_int4.bat`:
+
+```bat
+C:\Advantech\GenAI\envs\gemma3_4b_convert\Scripts\optimum-cli.exe export openvino ^
+  --model C:\Advantech\GenAI\models\gemma-3-4b-it-raw ^
+  --task image-text-to-text ^
+  C:\Advantech\GenAI\models\gemma-3-4b-it-converted-int4 ^
+  --weight-format int4
+```
+
+Important notes from validation:
+
+* `hf.exe auth login` needs `PYTHONIOENCODING=utf-8` on some Windows consoles. Without it, Hugging Face CLI may fail with `UnicodeEncodeError`.
+* The official notebook command can infer the task when `--model google/gemma-3-4b-it` is used directly.
+* This guide downloads the raw model first and then converts from a local folder. In that local-folder flow, `--task image-text-to-text` is required.
+* `conda create` may print `SafetyError` from the EdgeAI SDK Miniconda package cache. If `python.exe` is created successfully, rerun `03_prepare_convert_env.bat` and continue package installation.
+* Hugging Face may warn that `hf_xet` is not installed. The download still works through regular HTTP, but it can be slower.
+
+## Use Prepared Models
+
+Prepared OpenVINO IR models can be downloaded manually when you do not want to run conversion.
+
+First make sure the conversion environment exists:
+
+```bat
+script\genai\gemma3_4b\02_prepare_workspace.bat
+script\genai\gemma3_4b\03_prepare_convert_env.bat
+```
+
+CPU / iGPU prepared model:
+
+```bat
+C:\Advantech\GenAI\envs\gemma3_4b_convert\python.exe -c "from huggingface_hub import snapshot_download; snapshot_download(repo_id='OpenVINO/gemma-3-4b-it-int4-ov', local_dir=r'C:\Advantech\GenAI\models\gemma-3-4b-it-int4')"
+```
+
+Then set:
+
+```bat
+set "CPU_IGPU_MODEL_NAME=gemma-3-4b-it-int4"
+set "CPU_IGPU_MODEL_PATH=C:\Advantech\GenAI\models\gemma-3-4b-it-int4"
+```
+
+NPU prepared model:
+
+```bat
+C:\Advantech\GenAI\envs\gemma3_4b_convert\python.exe -c "from huggingface_hub import snapshot_download; snapshot_download(repo_id='OpenVINO/gemma-3-4b-it-int4-cw-ov', local_dir=r'C:\Advantech\GenAI\models\gemma-3-4b-it-int4-cw-ov')"
+```
+
+Then set:
+
+```bat
+set "NPU_MODEL_NAME=gemma-3-4b-it-int4-cw-ov"
+set "NPU_MODEL_PATH=C:\Advantech\GenAI\models\gemma-3-4b-it-int4-cw-ov"
+```
+
+If access is denied, confirm that you accepted the model terms on Hugging Face and logged in with `hf.exe auth login`.
+
 # Deploy
+
+## Prepare OVMS
 
 Download OVMS 2026.2.0 from official OpenVINO Model Server releases:
 
@@ -156,21 +315,47 @@ https://github.com/openvinotoolkit/model_server/releases
 https://storage.openvinotoolkit.org/repositories/openvino_model_server/packages/2026.2.0/
 ```
 
-Download the Windows package, extract it to `C:\Advantech\GenAI\ovms`, then verify:
+Download the Windows x64 package that contains `ovms.exe`, extract it to:
 
-```bat
-script\genai\gemma3_4b\10_check_ovms.bat
+```text
+C:\Advantech\GenAI\ovms
 ```
 
-Open one Command Prompt for OVMS and run one target device:
+Then verify:
 
 ```bat
-script\genai\gemma3_4b\11_run_ovms_cpu.bat
-script\genai\gemma3_4b\12_run_ovms_igpu.bat
-script\genai\gemma3_4b\13_run_ovms_npu.bat
+script\genai\gemma3_4b\07_check_ovms.bat
 ```
 
-The NPU script uses the channel-wise INT4 model and adds NPU-specific OVMS options:
+If the extracted folder is different, set the actual OVMS path before running scripts:
+
+```bat
+set "OVMS_EXE=C:\Advantech\GenAI\ovms\ovms.exe"
+```
+
+## Run OVMS
+
+Open one Command Prompt for OVMS and run one target device.
+
+CPU:
+
+```bat
+script\genai\gemma3_4b\08_run_ovms_cpu.bat
+```
+
+iGPU:
+
+```bat
+script\genai\gemma3_4b\09_run_ovms_igpu.bat
+```
+
+NPU:
+
+```bat
+script\genai\gemma3_4b\10_run_ovms_npu.bat
+```
+
+The NPU script uses the prepared channel-wise INT4 model and adds NPU-specific OVMS options:
 
 ```text
 --max_prompt_len 2048
@@ -178,29 +363,41 @@ The NPU script uses the channel-wise INT4 model and adds NPU-specific OVMS optio
 --enable_prefix_caching false
 ```
 
-Open another Command Prompt and run the chat client:
+## Run Chat Client
+
+Open another Command Prompt and send a test prompt.
+
+CPU / iGPU:
 
 ```bat
-script\genai\gemma3_4b\20_chat_cpu_igpu.bat
-script\genai\gemma3_4b\21_chat_npu.bat
+script\genai\gemma3_4b\11_chat_cpu_igpu.bat
+```
+
+NPU:
+
+```bat
+script\genai\gemma3_4b\12_chat_npu.bat
 ```
 
 # Result
 
-OVMS EX:
+OVMS example:
+
 ![result](assets/ovms.png)
 
-Chat Client EX:
+Chat client example:
+
 ![result](assets/chatbot.png)
 
-| Device | Model | OVMS Script | Chat Script | Expected Status |
+| Device | Model Path | OVMS Script | Chat Script | Expected Status |
 | --- | --- | --- | --- | --- |
-| CPU | `gemma-3-4b-it-int4` | `11_run_ovms_cpu.bat` | `20_chat_cpu_igpu.bat` | Supported |
-| iGPU | `gemma-3-4b-it-int4` | `12_run_ovms_igpu.bat` | `20_chat_cpu_igpu.bat` | Supported |
-| NPU | `gemma-3-4b-it-int4-cw-ov` | `13_run_ovms_npu.bat` | `21_chat_npu.bat` | Supported |
+| CPU | `CPU_IGPU_MODEL_PATH` | `08_run_ovms_cpu.bat` | `11_chat_cpu_igpu.bat` | Supported after conversion or prepared model download |
+| iGPU | `CPU_IGPU_MODEL_PATH` | `09_run_ovms_igpu.bat` | `11_chat_cpu_igpu.bat` | Supported after conversion or prepared model download |
+| NPU | `NPU_MODEL_PATH` | `10_run_ovms_npu.bat` | `12_chat_npu.bat` | Supported with prepared channel-wise model only |
 
 # Reference
 
+* OpenVINO Gemma3 notebook: https://github.com/openvinotoolkit/openvino_notebooks/blob/latest/notebooks/gemma3/gemma3.ipynb
 * OpenVINO Model Server releases: https://github.com/openvinotoolkit/model_server/releases
 * OpenVINO GenAI: https://docs.openvino.ai/
 * Hugging Face OpenVINO models: https://huggingface.co/OpenVINO

@@ -6,7 +6,7 @@ if errorlevel 1 exit /b 1
 
 echo.
 echo ============================================================
-echo  Gemma 4 12B - Environment Check
+echo  Gemma 4 - Environment Check
 echo ============================================================
 
 call :check_file "Conda" "%CONDA_EXE%"
@@ -21,7 +21,8 @@ call :check_file "Product OVMS" "%PRODUCT_OVMS_EXE%"
 if defined HF_TOKEN (
   echo [OK]   HF_TOKEN is set.
 ) else (
-  echo [INFO] HF_TOKEN is not set. Use huggingface-cli login or set HF_TOKEN for gated repos.
+  echo [INFO] HF_TOKEN is not set. Use hf.exe auth login or set HF_TOKEN for gated repos.
+  echo        "%ENV_PATH%\Scripts\hf.exe" auth login
 )
 
 echo.
