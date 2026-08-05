@@ -1,46 +1,43 @@
-Developing an Object Detection Model on AOM-DK2721 (Qualcomm/QCS6490) using Qualcomm SNPE
+Developing an Object Detection Application on Qualcomm Dragonwing QCS6490 (Windows) Using Qualcomm SNPE
 ===
-This example demonstrates how to develop a vision AI model using the Qualcomm SNPE on the AOM-DK2721 (Qualcomm QCS6490) platform.
-Developers can easily complete the Vision AI development by following these steps.
+
+This example demonstrates how to develop and deploy a Vision AI application on the Qualcomm Dragonwing QCS6490 platform using Qualcomm SNPE.
+This guide walks developers through the complete workflow, from generating the model artifacts to deploying them on a Qualcomm Dragonwing QCS6490 device.
 
 * Application: Object Detection
 * Model: YOLOv11-ONNX / YOLOv11-Quantized
 * Input: Video / USB Camera  
-![workflow_snpe](assets/workflow_snpe.png)
 
 ## Table of Contents 
-
 - [Environment](#environment) 
   - [Target](#target) 
   - [Development Environment Setup](#development-environment-setup)
     - [Setup on Ubuntu 22.04 (x86_64) host machine](#setup-on-ubuntu-2204-x86_64-host-machine)
     - [Setup on Windows 11 (x86_64) host machine](#setup-on-windows-11-x86_64-host-machine)
 - [Development Flow](#development-flow) 
-  - [How to use Qualcomm SNPE on an Ubuntu 22.04 (x86_64) host machine](#how-to-use-qualcomm-snpe-on-an-ubuntu-2204-x86_64-host-machine) 
-    - [Get the ONNX model for CPU/iGPU](#get-the-onnx-model-for-cpuigpu) 
-    - [Get the DLC model for NPU](#get-the-dlc-model-for-npu) 
-  - [How to Develop on a Windows 11 (x86_64) host machine](#how-to-develop-on-a-windows-11-x86_64-host-machine) 
+  - [How to Generate Models on an Ubuntu 22.04 (x86_64) host machine](#how-to-generate-models-on-an-ubuntu-2204-x86_64-host-machine) 
+    - [Generate the ONNX Model for CPU / iGPU](#generate-the-onnx-model-for-cpu--igpu) 
+    - [Generate the DLC Model for NPU Using Qualcomm SNPE](#generate-the-dlc-model-for-npu-using-qualcomm-snpe) 
+  - [How to Build the Application on a Windows 11 (x86_64) host machine](#how-to-build-the-application-on-a-windows-11-x86_64-host-machine)
     - [For CPU / iGPU](#for-cpu--igpu) 
     - [For NPU](#for-npu) 
 - [Deploy](#deploy)
-  - [Install Edge AI SDK ](#install-edge-ai-sdk)
-  - [Run CPU / iGPU](#run-cpuigpu) 
-  - [Run NPU](#run-npu)
+  - [Run on CPU / iGPU](#run-on-cpu--igpu) 
+  - [Run on NPU](#run-on-npu)
+
 
 
 # Environment
-
-Refer to the following requirements to prepare the target and develop environments.
+Refer to the following requirements to prepare both the target device and the development environments.
 
 
 ## Target
-
 | Item | Content | Note |
 | -------- | -------- | -------- |
-| SOC | Qualcomm QCS6490 | |
+| SOC | Qualcomm Dragonwing QCS6490 | |
 | Accelerator | NPU | |
-| OS/Build | Windows 11 IoT Enterprise(ARM64) | |
-| SDK |  Qualcomm AI Runtime SDK 2.39.0  | |
+| OS/Build | Windows 11 IoT Enterprise (ARM64) | |
+| SDK | Qualcomm AI Runtime SDK 2.39.0 | |
 
 ## AI Inference Framework
 
@@ -51,80 +48,89 @@ Refer to the following requirements to prepare the target and develop environmen
 
 
 
+
 ## Development Environment Setup
 
-| Development Phase | OS | Platform |Requirements|
-| -------- | -------- | -------- | -------- |
-| Model Generation | Ubuntu 22.04   | x86_64 (Intel 10~13th) | Python 3.10 |
-| App Development  | Windows 11     | x86_64 (Intel 10~13th) | Visual Studio 2022,CMake 3.30.4|
+| Development Phase | OS | Platform | Requirements |
+| :--- | :--- | :--- | :--- |
+| Model Generation | Ubuntu 22.04 | x86_64 | Python 3.10 |
+| App Development | Windows 11 | x86_64 | Visual Studio 2022, CMake 3.30.4 |
+
 
 ---
 
-#### Setup on Ubuntu 22.04 (x86_64) Host Machine
-##### Step 1. System Setup & Virtual Environment
- ```
-  # Install System Dependencies
-  sudo apt update
-  sudo apt install git python3-pip vim -y
+## Setup on Ubuntu 22.04 (x86_64) Host Machine
 
-  # Setup Workspace and Venv
-  mkdir -p ~/snpe
-  cd ~/snpe
-  python3 -m venv snpe
-  source snpe/bin/activate
+#### Step 1. System Setup & Virtual Environment
+```
+# Install System Dependencies
+sudo apt update
+sudo apt install git vim python3-pip python3.10-venv -y
 
-  # Install Base Python Libraries
-  pip install ultralytics==8.3.216 \
-  fiftyone==1.11.0 \
-  onnx==1.12.0 \
-  onnxruntime==1.17.1 \
-  onnxsim==0.4.36 \
-  numpy==1.26.4 \
-  opencv-python==4.6.0.66 \
-  opencv-python-headless==4.6.0.66
-  ```
+# Setup Workspace and Venv
+cd ~
+git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git
+cd ~/EdgeAI_Workflow/ai_sdk/qualcomm/qairt/2.39.0.250926/windows
+mkdir -p workspace
+cd workspace
+python3 -m venv snpe
+source snpe/bin/activate
 
-##### Step 2. Download [Qualcomm AISDK 2.39.0.250926](https://qpm.qualcomm.com/#/main/tools/details/Qualcomm_AI_Runtime_Community)  and extract it to `"~/Documents"`
+# Install Base Python Libraries
+pip install ultralytics==8.3.216 \
+fiftyone==1.11.0 \
+onnx==1.12.0 \
+onnxruntime==1.17.1 \
+onnxsim==0.4.36 \
+numpy==1.26.4 \
+opencv-python==4.6.0.66 \
+opencv-python-headless==4.6.0.66
+```
+
+#### Step 2. Download [Qualcomm QAIRT 2.39.0.250926](https://qpm.qualcomm.com/#/main/tools/details/Qualcomm_AI_Runtime_Community)  and extract it to `"~/Documents"`
 
 > To download Qualcomm AI Runtime SDK from Qualcomm Package Manager, ensure that you have registered for a Qualcomm ID. If you don’t have a Qualcomm ID, you will be prompted to register. Then follow the instructions below to download and install the SDK.
 
-![alt text](assets/aisdk-ubuntu.png)
+![alt text](../../../assets/qairt-ubuntu.png)
 
-#### Setup on Windows 11 (x86_64) Host Machine
+---
+## Setup on Windows 11 (x86_64) Host Machine
 
-##### Step 1. Install Visual Studio & CMake
+#### Step 1. Install Visual Studio & CMake
 * Install Git: [Git for Windows/x64 Setup](https://git-scm.com/install/windows)
 * Install CMake: [CMake 3.30.4](https://cmake.org/files/v3.30/cmake-3.30.4-windows-x86_64.msi)
 * Install Visual Studio 2022(with `Desktop development with C++` workload)
     * Download [Visual Studio Enterprise 2022](https://my.visualstudio.com/Downloads?q=visual%20studio%202022&wt.mc_id=o~msft~vscom~older-downloads) and install.
-    ![](assets/vs2022-v1714.png)
+    ![](../../../assets/vs2022-v1714.png)
     *  Select `Desktop development with C++` workload and install.
     *  Go to `Individual components` and check:
 
-        ![ARM64 Selection](assets/arm64-compiler.png)
+        ![ARM64 Selection](../../../assets/arm64-compiler.png)
     *  Ensure your installation matches:
     
-        ![Full Configuration Reference](assets/vs_lib.png)
+        ![Full Configuration Reference](../../../assets/vs_lib.png)
 
-##### Step 2. Build Dependency Libraries
+#### Step 2. Build Dependency Libraries
 * Clone Repository:
     ```
     git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git
-    cd "EdgeAI_Workflow\ai_system\qualcomm\aom-dk2721\windows\script"
+    cd "EdgeAI_Workflow\ai_sdk\qualcomm\qairt\2.39.0.250926\windows\script"
     ```
+
 * Run Build Script:
-    This will install OpenCV 4.11, gflags, into `"C:\temp\aisdk"`.
+    This downloads and builds the required dependency libraries (OpenCV 4.11 and gflags) into `"C:\temp\aisdk"`.
     ```
     .\run.bat
     ```
 
-##### Step 3. Manual Library Setup
+#### Step 3. Manual Library Setup
 
 * Install ONNX Runtime DirectML 1.18.0:
     * Download [Microsoft.ML.OnnxRuntime.DirectML.1.18.0](https://github.com/microsoft/onnxruntime/releases/download/v1.18.0/Microsoft.ML.OnnxRuntime.DirectML.1.18.0.zip), unzip to `"C:\temp\aisdk"` and rename the folder to exactly `Microsoft.ML.OnnxRuntime.DirectML.1.18.0`.
     * Expected Result: 
 
-       ![vs](assets/lib.png)
+       ![vs](../../../assets/aisdk.png)
+
 * Qualcomm AI Runtime SDK:
     * Download: [Qualcomm AISDK 2.39.0.250926](https://qpm.qualcomm.com/#/main/tools/details/Qualcomm_AI_Runtime_Community) and Extract to `"C:\qairt\2.39.0.250926"`.
 
@@ -132,80 +138,70 @@ Refer to the following requirements to prepare the target and develop environmen
 
     * Expected Result: 
 
-      ![](assets/AISDK.png)
+      ![](../../../assets/2.39.0-qairt.png)
 
 ---
-
-
-
 # Development Flow
->Note: An active internet connection is required for the entire development flow.
 
-Follow these steps on the development platform (x86_64) to prepare a pre-trained AI model and use the Qualcomm SNPE toolchain to optimize and convert it for the AOM-DK2721 (QCS6490) device.
+> **Note:** An active internet connection is required for the entire development flow.
 
-The development workflow follows a cross-platform approach to leverage Qualcomm SNPE-based tools for model optimization and a Windows environment for application development. The process consists of three main stages:
+The workflow consists of two main stages:
 
-1. `Model Generation (Ubuntu Host)`: Use Qualcomm SNPE tools on Linux to convert and optimize the YOLOv11 model into ONNX (for CPU/iGPU) or DLC (for NPU) formats.
+1. `Model Generation (Ubuntu x86_64 Host)`: Generate the YOLOv11 ONNX model for CPU/iGPU inference and use Qualcomm SNPE tools to generate the DLC model for NPU inference.
 
-2. `Application Development (Windows Host)`: Compile the C++ inference application using Visual Studio and the Qualcomm AI Runtime SDK.
+2. `Application Development (Windows x86_64 Host)`: Compile the Windows ARM64 C++ inference applications using Visual Studio, CMake, and the Qualcomm AI Runtime SDK.
 
+## How to Generate Models on an Ubuntu 22.04 (x86_64) host machine
+### Generate the ONNX Model for CPU / iGPU
+#### Step 1. Export the YOLOv11n model to yolo11n.onnx
+* Activate snpe venv
+  ```
+  cd ~/EdgeAI_Workflow/ai_sdk/qualcomm/qairt/2.39.0.250926/windows/workspace
+  source snpe/bin/activate
+  ```
+* Get yolo11n.onnx
+  ```
+  yolo export model=yolo11n.pt format=onnx opset=13 
+  ```
 
-
-## How to use Qualcomm SNPE on an Ubuntu 22.04 (x86_64) host machine
-
-### Get the ONNX model for CPU/iGPU
-
-##### Step 1. Convert the YOLOv11n model to yolov11n.onnx
-
-```
-cd ~/snpe
-source snpe/bin/activate
-
-mkdir -p ~/yolov11n
-cd ~/yolov11n
-yolo export model=yolo11n.pt format=onnx opset=13 
-```
-##### Step 2. Transfer the Model to the Target Device
-
+#### Step 2. Transfer the Model to the Target Device
 Copy the ONNX AI model(`yolo11n.onnx`) to target device
 
-
 ---
 
-### Get the DLC model for NPU
+### Generate the DLC Model for NPU Using Qualcomm SNPE
 
-##### Step 1. Set Qualcomm AISDK
+#### Step 1. Set Up QAIRT
 
 ```
 cd ~/Documents/v2.39.0.250926/qairt/2.39.0.250926
 export SNPE_ROOT=`pwd`
 source ${SNPE_ROOT}/bin/envsetup.sh
-cd ~/snpe
+cd ~/EdgeAI_Workflow/ai_sdk/qualcomm/qairt/2.39.0.250926/windows/workspace
 source snpe/bin/activate
 ```
 
-##### Step 2. Convert the YOLOv11n model to yolo11n.onnx
+#### Step 2. Export the YOLOv11n model to yolo11n.onnx
 ```
 yolo export model=yolo11n.pt format=onnx opset=13 imgsz=320
 ```
 >Use [Netron](https://netron.app/) to check the model’s output node name (YOLOv11 uses **output0** by default; other models may use different names). 
 This name is required for the application to correctly parse the inference results.
 
-  ![alt text](assets/onnx.png)
+  ![alt text](../../../assets/yolov11n_onnx_arch.png)
 
-##### Step 3. Download calibration images and generate a random input list
+#### Step 3. Download calibration images and generate a random input list
 
-* Build `get_coco_val.py` and `generate_random_input.py`
-  * Clone repo
+* Prepare `get_coco_val.py` and `generate_random_input.py`
+  * Copy `get_coco_val.py` and `generate_random_input.py` to the workspace directory
     ```
-    git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git
-    cd EdgeAI_Workflow/ai_system/qualcomm/aom-dk2721/windows/code/npu/SNPE
-    ```
-  * Copy `get_coco_val.py` and `generate_random_input.py` to `"~/snpe"`
-    ```
-    mv get_coco_val.py ~/snpe/get_coco_val.py
-    mv generate_random_input.py ~/snpe/generate_random_input.py
-    cd ~/snpe
+    cd ~/EdgeAI_Workflow/ai_sdk/qualcomm/qairt/2.39.0.250926/windows/code/npu/snpe
+
+    cp get_coco_val.py ~/EdgeAI_Workflow/ai_sdk/qualcomm/qairt/2.39.0.250926/windows/workspace/
+
+    cp generate_random_input.py ~/EdgeAI_Workflow/ai_sdk/qualcomm/qairt/2.39.0.250926/windows/workspace/
+
+    cd ~/EdgeAI_Workflow/ai_sdk/qualcomm/qairt/2.39.0.250926/windows/workspace
     ```
 * Execute the following command to generate a dataset of 1,000 COCO images (320x320).
   ```
@@ -213,23 +209,18 @@ This name is required for the application to correctly parse the inference resul
   ```
 
 * Execute the following command to generate a random input list.
-  > If you are using YOLOv11, no changes are required. 
-  > For other models, update the output name in `line 10` of` generate_random_input.py` (replace the default `output0`).
   ```
   python generate_random_input.py 
   ```
 
-##### Step 4. Convert ONNX to dlc
-> If you are using YOLOv11, no changes are required. 
-> For other models, replace `output0` in the `--out_node` parameter with the correct output name.
+#### Step 4. Convert ONNX to dlc
 ```
 ${SNPE_ROOT}/bin/x86_64-linux-clang/snpe-onnx-to-dlc  -i yolo11n.onnx \
 --out_node output0 \
 -o yolov11n.dlc
 ```
 
-##### Step 7. Quantize DLC model
-
+#### Step 5. Quantize DLC model
 ```
 ${SNPE_ROOT}/bin/x86_64-linux-clang/snpe-dlc-quantize --input_dlc yolov11n.dlc \
  --input_list img_list.txt \
@@ -240,29 +231,26 @@ ${SNPE_ROOT}/bin/x86_64-linux-clang/snpe-dlc-quantize --input_dlc yolov11n.dlc \
  --act_bitwidth 16 --weights_bitwidth 8 --output_dlc yolov11n-quant.dlc
 ```
 
-##### Step 8. Check DLC model info
+#### Step 6. Check DLC model info
 
 ```
 ${SNPE_ROOT}/bin/x86_64-linux-clang/qairt-dlc-info -i yolov11n-quant.dlc
 ```
 
-![alt text](assets/dlc-info.png)
+![alt text](../../../assets/yolov11n-dlc-info.png)
 
 ---
 
-## How to Develop on a Windows 11 (x86_64) Host Machine
-
-### For CPU/iGPU
-
-##### Step 1. Clone repo
+## How to Build the Application on a Windows 11 (x86_64) host machine
+### For CPU / iGPU
+#### Step 1. Clone repo
 ```
 git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git
 
-cd "EdgeAI_Workflow\ai_system\qualcomm\aom-dk2721\windows\code\cpu_igpu\object-detect"
+cd "EdgeAI_Workflow\ai_sdk\qualcomm\qairt\2.39.0.250926\windows\code\cpu_igpu\object-detect"
 ```
 
-##### Step 2. Execute `build.bat` to generate the executable
-
+#### Step 2. Execute `build.bat` to generate the executable
 ```
 build.bat
 ```
@@ -276,23 +264,21 @@ build.bat
   set(ONNXRUNTIME_QNN_DIR_LIB     "C:\\Temp\\aisdk\\Microsoft.ML.OnnxRuntime.DirectML.1.18.0\\runtimes\\win-arm64\\native")
   ```
 
-##### Step 3. Transfer executable to Target Device
-
+#### Step 3. Transfer executable to Target Device
 Copy the executable (`yolov11-object-cpu-igpu.exe`) to the target device
 
 ---
 
 ### For NPU
-
-##### Step 1. Clone repo
+#### Step 1. Clone repo
 
 ```
 git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git
 
-cd "EdgeAI_Workflow\ai_system\qualcomm\aom-dk2721\windows\code\npu\SNPE\object-detect"
+cd "EdgeAI_Workflow\ai_sdk\qualcomm\qairt\2.39.0.250926\windows\code\npu\snpe\object-detect"
 ```
 
-##### Step 2.  Execute `build.bat` to generate the executable
+#### Step 2.  Execute `build.bat` to generate the executable
 
 ```
 build.bat
@@ -308,33 +294,26 @@ build.bat
   set(SNPE_INCLUDE_DIR   "${SNPE_SDK_DIR}\\include\\SNPE")
   ```
 
-##### Step 3. Transfer executable to Target Device
-
+#### Step 3. Transfer executable to Target Device
 Copy the executable (`yolov11-object-npu-snpe.exe`) to the target device
 
 ---
 
-# Deploy on Target Device(QCS6490)
-
-### Install Edge AI SDK 
-
-* Base on Target Environment
-* Please install the corresponding version of EdgeAISDK to obtain the following development environment.  
-* Install :  [Edge AI SDK(v3.5.0) install](https://docs.edge-ai-sdk.advantech.com/docs/Hardware/AI_System/Qualcomm/QCS6490/AOM-DK2721-Windows#Win11_snpe239)  
-
-### Run CPU/iGPU
+# Deploy
+## Run on CPU / iGPU
 
 > Note: Please execute the following commands in a `PowerShell` terminal.
 
-##### Step 1. Prepare required files
+#### Step 1. Prepare required files
 
 * Create a new folder
   ```
   mkdir "C:\temp\cpu-igpu"
   ```
-* Copy `yolo11n.onnx` (refer to [Get the ONNX model for CPU/iGPU](#get-the-onnx-model-for-cpuigpu)) and `yolov11-object-cpu-igpu.exe` (refer to [For CPU/iGPU](#for-cpuigpu)) to `"C:\temp\cpu-igpu"`
 
-* After installing `EdgeAISDK 3.5.0`, please copy the necessary files to `"C:\temp\cpu-igpu"`.
+* Copy `yolo11n.onnx` (refer to [Generate the ONNX Model for CPU / iGPU](#generate-the-onnx-model-for-cpu--igpu)) and `yolov11-object-cpu-igpu.exe` (refer to [For CPU / iGPU](#for-cpu--igpu)) to `"C:\temp\cpu-igpu"`.
+
+* Copy the necessary files to `"C:\temp\cpu-igpu"`.
   ```
   Copy-Item "C:\Program Files\Advantech\EdgeAI\System\Qualcomm_QCS6490\VisionAI\app\cpu_igpu\coco.txt" -Destination "C:\temp\cpu-igpu" -Force
   Copy-Item "C:\Program Files\Advantech\EdgeAI\System\Qualcomm_QCS6490\VisionAI\app\cpu_igpu\onnxruntime.dll" -Destination "C:\temp\cpu-igpu" -Force   
@@ -342,7 +321,7 @@ Copy the executable (`yolov11-object-npu-snpe.exe`) to the target device
   Copy-Item "C:\Program Files\Advantech\EdgeAI\Main\Data\video\ObjectDetection.mp4" -Destination "C:\temp\cpu-igpu" -Recurse -Force
   ```
 
-##### Step 2. Run
+#### Step 2. Run
 
 * Run on CPU
   ```
@@ -370,27 +349,27 @@ Copy the executable (`yolov11-object-npu-snpe.exe`) to the target device
     ```
 
   * Result on CPU
-
-    ![](assets/cpu_infer.png)
+  ![](../../../assets/2.39.0-cpu.png)
 
   * Result on iGPU
+  ![](../../../assets/2.39.0-igpu.png)
 
-    ![](assets/gpu_infer.png)
 
 ---
 
-### Run NPU
+## Run on NPU
 
-##### Step 1. Prepare required files
 
 > Note: Please execute the following commands in a `PowerShell` terminal.
+
+#### Step 1. Prepare required files
 * Create a new folder
   ```
   mkdir "C:\temp\npu-snpe"
   ```
-* Copy `yolov11n-quant.dlc` (refer to [Get the DLC model for NPU](#get-the-dlc-model-for-npu)) and `yolov11-object-npu-snpe.exe` (refer to [For NPU](#for-npu)) to `"C:\temp\npu-snpe"`
+* Copy `yolov11n-quant.dlc` (refer to [Generate the DLC Model for NPU Using Qualcomm SNPE](#generate-the-dlc-model-for-npu-using-qualcomm-snpe)) and `yolov11-object-npu-snpe.exe` (refer to [For NPU](#for-npu)) to `"C:\temp\npu-snpe"`
 
-* After installing `EdgeAISDK 3.5.0`, please copy the necessary files to `"C:\temp\npu-snpe"`.
+* Copy the necessary files to `"C:\temp\npu-snpe"`.
   ```
   Copy-Item "C:\Program Files\Advantech\EdgeAI\System\Qualcomm_QCS6490\VisionAI\app\cpu_igpu\coco.txt" -Destination "C:\temp\npu-snpe" -Force
   Copy-Item "C:\Program Files\Advantech\EdgeAI\System\Qualcomm_QCS6490\VisionAI\lib\*" -Destination "C:\temp\npu-snpe" -Recurse -Force
@@ -399,7 +378,7 @@ Copy the executable (`yolov11-object-npu-snpe.exe`) to the target device
 
 
 
-##### Step 2. Run 
+#### Step 2. Run 
 
 * Run on NPU 
   ```
@@ -429,6 +408,6 @@ Copy the executable (`yolov11-object-npu-snpe.exe`) to the target device
     ```
   * Result
 
-    ![](assets/npu_snpe_infer.png)
+    ![](../../../assets/2.39.0-npu-snpe.png)
 
 

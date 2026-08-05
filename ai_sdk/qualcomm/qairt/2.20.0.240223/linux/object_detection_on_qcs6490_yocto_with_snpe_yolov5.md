@@ -1,9 +1,10 @@
-# Create an Object Detection Demo on AOM-DK2721 ( Qualcomm/QCS6490 ) using Qualcomm SNPE
-This example will demonstrate how to develop an vision AI Object Detection on AOM-DK2721 ( Qualcomm QCS6490 ) platform.
-Developers can easily complete the Visual AI development by following these steps.
+# Developing an Object Detection Application on Qualcomm Dragonwing QCS6490 (Yocto) Using Qualcomm SNPE
 
-* Application: Objection Detection
-* Model: Yolo
+This example demonstrates how to develop and deploy a Vision AI application on the Qualcomm Dragonwing QCS6490 platform using Qualcomm SNPE.
+This guide walks developers through the complete workflow, from generating the model artifacts to deploying them on a Qualcomm Dragonwing QCS6490 device.
+
+* Application: Object Detection
+* Model: YOLO
 * Input: Video / USB Camera
 
 # Table of Contents
@@ -25,7 +26,6 @@ Refer to the following requirements to prepare the target and develop environmen
 ## Target
 | Item | Content | Note |
 | -------- | -------- | -------- |
-| Platform / RAM / Disk |  Arm64 Cortex-A55    |      |
 | SOC | Qualcomm QCS6490 | |
 | Accelerator | DSP | |
 | OS/Kernel | LE/QIRP1.1 Yocto-4.0 / 6.6.28 | |
@@ -53,7 +53,7 @@ AI Development SDK
 |   SNPE   |  Qualcomm Snapdragon software accelerated runtime for the execution of deep neural networks (for inference) with SNPE, users can:Convert Caffe, Caffe2, TensorFlow, PyTorch and TFLite models to a SNPE deep learning container (DLC) fileQuantize DLC files to 8bit/16bit fixed point for execution on the Qualcomm® Hexagon™ DSP/HVX HTA Integrate a network into applications and other code via C++ or Java Execute the network on the Snapdragon CPU, the Qualcomm® AdrenoTM GPU, or the Hexagon DSP with HVX* and HMX* support, Execute an arbitrarily deep neural network Debug the network model execution on x86 Ubuntu Linux Debug and analyze the performance of the network model with SNPE tools Benchmark a network model for different targets  |     
 
 
-How to intsll the SNPE on x86_x64 host machine
+How to install Qualcomm SNPE on x86_64 host machine
 1. Sign Up Qualcomm Account My Account (qualcomm.com): https://myaccount.qualcomm.com/signup
 
 2. Download and Install Qualcomm Package Manager 3: https://qpm.qualcomm.com/#/main/tools/details/QPM3
@@ -65,14 +65,14 @@ How to intsll the SNPE on x86_x64 host machine
 5. Install ML frameworks:
     - pip install onnx==1.11.0
     - pip install tensorflow==2.10.1
-    - pip install torch==1.13.1"
+    - pip install torch==1.13.1
 
 
 
 <a name="DevelopFlow"/>
 
 # Develop Flow
-Follow these steps on the development platform (x86_64) to obtain a pre-trained AI model from the Qualcomm AI Hub or an open AI model, then optimize and convert it for the AOM-DK2721 (QCS6490) device. <br>
+Follow these steps on the development platform (x86_64) to obtain a pre-trained AI model from an open AI model, then optimize and convert it for the Qualcomm Dragonwing QCS6490 device. <br>
  
 <a name="Open_AI_Model"/>
 
@@ -88,12 +88,13 @@ Follow these steps on the development platform (x86_64) to obtain a pre-trained 
      - step-4: python export.py --weights yolov5n.pt --include onnx --imgsz 320
 
 - 3. Convert & Optimize (onnx -> dlc), Refer to document below:<br>
-      - step-1: To download file: [Reference Document Link](https://docs.qualcomm.com/bundle/publicresource/KBA-240222225148_REV_1_Quick_Start_Demo_of_SNPE_Yolov5_in_6490.pdf)
+      - step-1: To download file: [Reference Document Link](Quick_Start_Demo_of_SNPE_Yolov5_in_6490.pdf)
       - step-2: To execute the step1 to step6 of the download file. 
 - 4.  To get label file:<br>
       - git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git
-      - EdgeAI_Workflow\ai_system\qualcomm\aom-dk2721\labels\yolov5.labels
- 
+      - EdgeAI_Workflow/ai_sdk/qualcomm/qairt/2.20.0.240223/linux/labels/yolov5.labels
+
+
 <a name="Deploy"/>
 
 # Deploy
@@ -108,4 +109,4 @@ Copy the optimized AI model to target device and  launch an AI application with 
 | AOM-DK2721 | export XDG_RUNTIME_DIR=/dev/socket/weston <br> export WAYLAND_DISPLAY=wayland-1 <br> source /opt/qcom/qirp-sdk/qirp-setup.sh <br> gst-launch-1.0 -e qtivcomposer name=mixer sink_1::dimensions="<1920,1080>" ! queue ! waylandsink sync=true fullscreen=false x=10 y=10 width=1280 height=720 filesrc  location="file.mp4" ! qtdemux ! queue ! h264parse ! v4l2h264dec capture-io-mode=5 output-io-mode=5 ! queue ! tee name=t ! queue ! mixer.  t. ! queue ! qtimlvconverter mean="<0.0, 0.0, 0.0>" sigma="<0.003921, 0.003921, 0.003921>" ! queue ! qtimlsnpe delegate=dsp model="yolov5n-quant.dlc" layers="</model.24/m.0/Conv,/model.24/m.1/Conv,/model.24/m.2/Conv>" ! queue !  qtimlvdetection threshold=51.0 results=10 module=yolov5 labels="yolov5.labels" ! video/x-raw,width=480,height=270 ! queue ! mixer. | Run on dsp (video file) |
 ## Result
 
-![eas_ai_workflow](assets/rom-2860_objectdetection_result.png)
+![eas_ai_workflow](../../../assets/2.20.0-npu-rom-2860.png)
