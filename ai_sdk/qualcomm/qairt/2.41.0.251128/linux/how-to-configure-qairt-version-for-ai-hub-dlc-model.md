@@ -45,7 +45,7 @@ https://qpm.qualcomm.com/#/main/tools/details/Qualcomm_AI_Runtime_Community
 > A Qualcomm account is required to download QAIRT. \
 > If you do not have a Qualcomm account, create one and sign in.
 
-![image (2)](./assets/qairt_download_page.png)
+![image (2)](../../../assets/qairt_download_page.png)
 Select and download the QAIRT version corresponding to the version shown in the model metadata.
 
 #### Step 4. Install QAIRT on the Device
