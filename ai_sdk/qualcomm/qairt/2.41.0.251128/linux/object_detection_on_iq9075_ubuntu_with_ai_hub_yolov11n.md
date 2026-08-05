@@ -1,22 +1,18 @@
-﻿Developing an Object Detection Model on AIR-055 (Qualcomm/IQ9075) Using Qualcomm AI-Hub
+﻿Developing an Object Detection Application on Qualcomm Dragonwing IQ-9075 (Ubuntu) Using Qualcomm AI Hub
 ===
 
-This example demonstrates how to develop a vision AI model using the Qualcomm AI-Hub on the AIR-055 (Qualcomm IQ9075) platform.
-This guide walks developers through the complete workflow for building a Vision AI application—from model generation to deployment on the AIR-055 device.
-
+This example demonstrates how to develop and deploy a Vision AI application on the Qualcomm Dragonwing IQ-9075 platform using Qualcomm AI Hub.
+This guide walks developers through the complete workflow, from generating the model artifact to deploying it on a Qualcomm Dragonwing IQ-9075 device.
 
 * Application: Object Detection
 * Model: YOLOv11-Quantized
 * Input: Video / USB Camera  
-
-![workflow_ai_hub](assets/workflow_ai_hub.png)
-
+  
 ## Table of Contents
 
 - [Environment](#environment)
   - [Target](#target)
-  - [System Setup on AIR-055](#system-setup-on-air-055)
-  - [Install Edge AI SDK](#install-edge-ai-sdk)
+  - [Development Environment Setup](#development-environment-setup)
 - [Development Flow](#development-flow)
   - [Generate Model via Qualcomm AI Hub](#generate-model-via-qualcomm-ai-hub)
   - [Build the Application](#build-the-application)
@@ -33,7 +29,7 @@ Refer to the following requirements to prepare both the target device and the de
 
 | Item | Content | Note |
 | -------- | -------- | -------- |
-| SOC | Qualcomm IQ9075 ||
+| SOC | Qualcomm Dragonwing IQ-9075 ||
 | Accelerator | NPU | |
 | OS/Build | Ubuntu 24.04.3 LTS| |
 | SDK |  Qualcomm AI Runtime SDK 2.41.0  | |
@@ -46,20 +42,21 @@ Refer to the following requirements to prepare both the target device and the de
 
 ---
 
-## System Setup on AIR-055
+## Development Environment Setup
 
-##### Step 1. System Setup & Virtual Environment
+#### Step 1. System Setup & Virtual Environment
 
 ```
 # Install System Dependencies
 sudo apt update
 sudo apt install git vim python3-pip python3.12-venv -y
 
-# Restore kernel upgrade limitation
+# Temporarily remove the kernel upgrade restriction
 sudo rm -f /etc/apt/preferences.d/adv_disable_kernel_upgrade
 sudo apt update
-
 sudo apt install  build-essential cmake -y 
+
+# Restore kernel upgrade limitation
 cat <<EOF | sudo tee /etc/apt/preferences.d/adv_disable_kernel_upgrade > /dev/null
 Package: linux-*
 Pin: release o=Ubuntu
@@ -73,14 +70,14 @@ EOF
 # Install opencv and gflags
 cd ~
 git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git
-cd ~/EdgeAI_Workflow/ai_system/qualcomm/air-055/script
+cd ~/EdgeAI_Workflow/ai_sdk/qualcomm/qairt/2.41.0.251128/linux/script
 chmod +x ./run.sh
 ./run.sh
 
 # Setup Workspace and Venv
-cd  ~/EdgeAI_Workflow/ai_system/qualcomm/air-055
-mkdir -p ai-hub
-cd ai-hub
+cd  ~/EdgeAI_Workflow/ai_sdk/qualcomm/qairt/2.41.0.251128/linux
+mkdir -p workspace
+cd workspace
 python3 -m venv ai-hub
 source ai-hub/bin/activate
 
@@ -89,37 +86,19 @@ pip install qai-hub
 pip install "qai-hub-models[yolov11-det]"
 ```
 
-##### Step 2. Configure Qualcomm AI Hub
+#### Step 2. Configure Qualcomm AI Hub
 
 * Get API Token:
   Log in to Qualcomm AI Hub and retrieve your API Token.
   `(Text in red is a sample; do not use the actual token shown.)`
 
-  ![Qualcomm AI Hub token settings](assets/ai-hub-setting.png)
+  ![Qualcomm AI Hub token settings](../../../assets/ai-hub-setting.png)
 
 * Configure Tool:
   ```
   qai-hub configure --api_token <YOUR_API_TOKEN>
   ```
 
-##### Step 3. Patch Quantization Code
-
-* Modify the quantization sampling logic in the installed library.
-
-  ```
-  vim ~/EdgeAI_Workflow/ai_system/qualcomm/air-055/ai-hub/ai-hub/lib/python3.12/site-packages/qai_hub_models/utils/quantization.py
-  ```
-
-* Modify line 177 of `quantization.py` to read:
-  ```
-  num_samples = int(num_samples or dataset.default_num_calibration_samples())
-  ```
-
-### Install Edge AI SDK
-
-* Base on Target Environment
-* Please install the corresponding version of EdgeAISDK to obtain the following development environment.  
-* Install :  [Edge AI SDK(v3.6.1) install](https://docs.edge-ai-sdk.advantech.com/docs/Hardware/AI_System/Qualcomm/IQ9/AIR-055#Ub2404_snpe241)  
 
 # Development Flow
 
@@ -132,44 +111,39 @@ The recommended workflow is:
 2. **Application Build**: Build the Linux sample application.
 
 ## Generate Model via Qualcomm AI Hub
-
-<!-- The Edge AI SDK on the target device already includes a pre-quantized DLC model. No manual generation is required. -->
-##### Step 1. Export the YOLOv11n model to a quantized DLC
+#### Step 1. Export the YOLOv11n model to a quantized DLC
 
 * Activate ai-hub venv
   ```
-  cd ~/EdgeAI_Workflow/ai_system/qualcomm/air-055/ai-hub
+  cd ~/EdgeAI_Workflow/ai_sdk/qualcomm/qairt/2.41.0.251128/linux/workspace
   source ai-hub/bin/activate
   ```
 
 * Export `yolov11_det.dlc`
   ```
-  python3 -m qai_hub_models.models.yolov11_det.export \
-    --quantize w8a16 \
+  qai-hub-models export yolov11_det \
+    --precision w8a16 \
     --target-runtime qnn_dlc \
     --chipset qualcomm-qcs9075 \
-    --output-dir ~/EdgeAI_Workflow/ai_system/qualcomm/air-055/ai-hub \
+    --output-dir ~/EdgeAI_Workflow/ai_sdk/qualcomm/qairt/2.41.0.251128/linux/workspace \
     --height 320 \
-    --width 320 \
-    --num-calibration-samples 1000
+    --width 320
   ```
 
-##### Step 2. Confirm the generated model location
+#### Step 2. Confirm the generated model location
 
-The exported model **yolov11_det.dlc** will be generated on the same `AIR-055` device, for example path:
+The exported model **yolov11_det.dlc** will be generated at:
 
-```
-~/EdgeAI_Workflow/ai_system/qualcomm/air-055/ai-hub/yolov11_det-qnn_dlc-w8a16/yolov11_det.dlc
-```
+`~/EdgeAI_Workflow/ai_sdk/qualcomm/qairt/2.41.0.251128/linux/workspace/yolov11_det-qnn_dlc-w8a16/yolov11_det.dlc`
 
 ---
 
 ## Build the Application
 
-##### Step 1. Execute `build.sh` to generate the executable
+#### Step 1. Execute `build.sh` to generate the executable
 
 ```
-cd ~/EdgeAI_Workflow/ai_system/qualcomm/air-055/code/AI-Hub/object-detect
+cd ~/EdgeAI_Workflow/ai_sdk/qualcomm/qairt/2.41.0.251128/linux/code/ai-hub/object-detect
 
 chmod +x build.sh
 ./build.sh
@@ -187,19 +161,17 @@ chmod +x build.sh
   set(SNPE_INCLUDE_DIR   "${SNPE_SDK_DIR}/include/SNPE")
   ```
 
-##### Step 2. Confirm the build output
+#### Step 2. Confirm the build output
 
 After a successful build, the executable will be generated at:
 
-```
-~/EdgeAI_Workflow/ai_system/qualcomm/air-055/code/AI-Hub/object-detect/build/yolov11-object
-```
+`~/EdgeAI_Workflow/ai_sdk/qualcomm/qairt/2.41.0.251128/linux/code/ai-hub/object-detect/build/yolov11-object`
 
 ---
 
 # Deploy
 
-### Step 1. Prepare required files
+## Step 1. Prepare required files
 
 * Create a new folder
   ```
@@ -208,14 +180,14 @@ After a successful build, the executable will be generated at:
 
 * Copy `yolov11_det.dlc`, `yolov11-object`, and the required files to `~/yolov11-object`
   ```
-  cp ~/EdgeAI_Workflow/ai_system/qualcomm/air-055/ai-hub/yolov11_det-qnn_dlc-w8a16/yolov11_det.dlc ~/yolov11-object
-  cp ~/EdgeAI_Workflow/ai_system/qualcomm/air-055/code/AI-Hub/object-detect/build/yolov11-object ~/yolov11-object
+  cp ~/EdgeAI_Workflow/ai_sdk/qualcomm/qairt/2.41.0.251128/linux/workspace/yolov11_det-qnn_dlc-w8a16/yolov11_det.dlc ~/yolov11-object
+  cp ~/EdgeAI_Workflow/ai_sdk/qualcomm/qairt/2.41.0.251128/linux/code/ai-hub/object-detect/build/yolov11-object ~/yolov11-object
   cp /opt/Advantech/EdgeAI/System/Qualcomm_IQ9/VisionAI/app/exe/coco.txt ~/yolov11-object
   cp -r /opt/Advantech/EdgeAI/System/Qualcomm_IQ9/VisionAI/lib ~/yolov11-object/lib
   cp /opt/Advantech/EdgeAI/Main/Data/video/ObjectDetection.mp4 ~/yolov11-object
   ```
 
-### Step 2. Run
+## Step 2. Run
 
 - Launch the container:
 
@@ -241,12 +213,14 @@ After a successful build, the executable will be generated at:
 - Set the environment variables inside the container:
 
   ```
-  export QAIRT_ROOT="/opt/qcom/aistack/qairt/2.41.0.251128/lib"
-  export ADSP_LIBRARY_PATH="${QAIRT_ROOT}/hexagon-v73/unsigned"
-  export LD_LIBRARY_PATH="${QAIRT_ROOT}/aarch64-oe-linux-gcc11.2:/yolov11-object/lib:${LD_LIBRARY_PATH}"
-  export PATH="${QAIRT_ROOT}/aarch64-oe-linux-gcc11.2:${PATH}"
+  export QAIRT_HOME="/opt/qcom/aistack/qairt/2.41.0.251128"
+  export PATH="${QAIRT_HOME}/bin/aarch64-oe-linux-gcc11.2:${PATH}"
+  export ADSP_LIBRARY_PATH="${QAIRT_HOME}/lib/hexagon-v73/unsigned"
+  export LD_LIBRARY_PATH="${QAIRT_HOME}/lib/aarch64-oe-linux-gcc11.2:/yolov11-object/lib:${LD_LIBRARY_PATH}"
   ```
-##### Run on CPU
+
+
+#### Run on CPU
 
 - Run with USB Camera:
   ```
@@ -270,9 +244,9 @@ After a successful build, the executable will be generated at:
     --device=CPU
   ```
 - Result
-  ![CPU Demo](assets/cpu.webp)
+  ![CPU Demo](../../../assets/2.41.0-cpu.webp)
 
-##### Run on iGPU
+#### Run on iGPU
 
 - Run with USB Camera:
   ```
@@ -296,9 +270,9 @@ After a successful build, the executable will be generated at:
     --device=GPU
   ```
 - Result
-  ![GPU Demo](assets/igpu.webp)
+  ![GPU Demo](../../../assets/2.41.0-igpu.webp)
 
-##### Run on NPU
+#### Run on NPU
 
 - Run with USB Camera:
   ```
@@ -322,4 +296,5 @@ After a successful build, the executable will be generated at:
     --device=DSP
   ```
 - Result
-  ![NPU Demo](assets/npu.webp)
+  ![NPU Demo](../../../assets/2.41.0-npu.webp)
+
