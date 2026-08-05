@@ -1,5 +1,5 @@
 # Overview
-This folder contains the process and instructions for AI development on the Qualcomm QAIRT 2.41.0.251128.
+This folder contains the process and instructions for AI development on the Qualcomm AI Runtime SDK (QAIRT) 2.41.0.251128.
 
 ## Computer Vision
 

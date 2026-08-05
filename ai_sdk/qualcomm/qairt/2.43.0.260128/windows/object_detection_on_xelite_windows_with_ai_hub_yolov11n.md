@@ -2,7 +2,7 @@ Developing an Object Detection Application on Qualcomm Snapdragon X Elite (Windo
 ===
 
 This example demonstrates how to develop and deploy a Vision AI application on the Snapdragon X Elite platform using Qualcomm AI Hub.
-This guide walks developers through the complete workflow, from generating the model artifacts to deploying it on a Snapdragon X Elite device.
+This guide walks developers through the complete workflow, from generating the model artifacts to deploying them on a Snapdragon X Elite device.
 
 
 * Application: Object Detection
@@ -17,7 +17,7 @@ This guide walks developers through the complete workflow, from generating the m
     - [Setup on the Qualcomm Snapdragon X Elite Target Device](#setup-on-the-qualcomm-snapdragon-x-elite-target-device)
 - [Development Flow](#development-flow) 
   - [How to Generate Models on an Ubuntu 22.04 (x86_64) Host Machine](#how-to-generate-models-on-an-ubuntu-2204-x86_64-host-machine) 
-    - [Generate the ONNX Model for CPU/iGPU](#generate-the-onnx-model-for-cpuigpu) 
+    - [Generate the ONNX Model for CPU / iGPU](#generate-the-onnx-model-for-cpu--igpu) 
     - [Generate the DLC Model for NPU Using Qualcomm AI Hub](#generate-the-dlc-model-for-npu-using-qualcomm-ai-hub) 
   - [How to Build the Application on the Qualcomm Snapdragon X Elite Target Device](#how-to-build-the-application-on-the-qualcomm-snapdragon-x-elite-target-device)
     - [For CPU / iGPU](#for-cpu--igpu) 
@@ -133,7 +133,7 @@ pip install "qai-hub-models[yolov11-det]"
 
 > **Note:** An active internet connection is required for the entire development flow.
 ## How to Generate Models on an Ubuntu 22.04 (x86_64) Host Machine
-### Generate the ONNX Model for CPU/iGPU
+### Generate the ONNX Model for CPU / iGPU
 #### Step 1. Export the YOLOv11n model to yolo11n.onnx
 * Activate ai-hub venv
   ```
@@ -159,8 +159,8 @@ Copy the ONNX AI model (`yolo11n.onnx`) to the target device
   ```
 * Get yolov11_det.dlc
   ```
-  python3 -m qai_hub_models.models.yolov11_det.export \
-    --quantize float \
+  qai-hub-models export yolov11_det \
+    --precision w8a16 \
     --target-runtime qnn_dlc \
     --chipset qualcomm-snapdragon-x-elite \
     --output-dir ~/EdgeAI_Workflow/ai_sdk/qualcomm/qairt/2.43.0.260128/windows/workspace \
@@ -246,7 +246,7 @@ After a successful build, the executable will be generated at:
   ```
   mkdir "C:\temp\cpu-igpu"
   ```
-* Copy `yolo11n.onnx` (refer to [Generate the ONNX Model for CPU/iGPU](#generate-the-onnx-model-for-cpuigpu)) and `yolov11-object-cpu-igpu.exe` (refer to [For CPU / iGPU](#for-cpu--igpu)) to `"C:\temp\cpu-igpu"`.
+* Copy `yolo11n.onnx` (refer to [Generate the ONNX Model for CPU / iGPU](#generate-the-onnx-model-for-cpu--igpu)) and `yolov11-object-cpu-igpu.exe` (refer to [For CPU / iGPU](#for-cpu--igpu)) to `"C:\temp\cpu-igpu"`.
 
 
 * Copy the necessary files to `"C:\temp\cpu-igpu"`.
