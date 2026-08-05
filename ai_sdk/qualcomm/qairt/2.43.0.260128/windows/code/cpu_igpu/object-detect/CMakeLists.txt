@@ -4,7 +4,7 @@ project(yolov11-object-cpu-igpu)
 
 # --- OpenCV ---
 set(OpenCV_DIR_INCLUDE "C:\\Temp\\aisdk\\opencv\\include")
-set(OpenCV_DIR_LIB     "C:\\Temp\\aisdk\\opencv\\ARM64/vc17\\lib")
+set(OpenCV_DIR_LIB     "C:\\Temp\\aisdk\\opencv\\ARM64\\vc17\\lib")
 
 # --- gflags ---
 set(gFLAG_DIR_INCLUDE "C:\\Temp\\aisdk\\gflags\\mybuild\\build\\include")
