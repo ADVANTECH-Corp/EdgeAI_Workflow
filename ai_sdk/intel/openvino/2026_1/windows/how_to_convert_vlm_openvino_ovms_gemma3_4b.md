@@ -383,11 +383,11 @@ script\genai\gemma3_4b\12_chat_npu.bat
 
 OVMS example:
 
-![result](assets/ovms.png)
+![result](/assets/intel/ovms.png)
 
 Chat client example:
 
-![result](assets/chatbot.png)
+![result](/assets/intel/chatbot.png)
 
 | Device | Model Path | OVMS Script | Chat Script | Expected Status |
 | --- | --- | --- | --- | --- |

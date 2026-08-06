@@ -385,11 +385,11 @@ script\genai\gemma4_series\10_chat.bat
 
 OVMS example:
 
-![result](assets/ovms.png)
+![result](/assets/intel/ovms.png)
 
 Chat client example:
 
-![result](assets/chatbot.png)
+![result](/assets/intel/chatbot.png)
 
 | Device | Model | OVMS Script | Chat Script | Expected Status |
 | --- | --- | --- | --- | --- |

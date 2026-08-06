@@ -338,7 +338,7 @@ The run scripts activate the runtime environment and add these runtime folders t
 
 # Result
 
-![result](assets/object_detection.png)
+![result](/assets/intel/object_detection.png)
 
 Expected:
 
