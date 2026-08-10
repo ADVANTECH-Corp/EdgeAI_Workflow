@@ -18,3 +18,4 @@ This folder contains version-specific workflows and documentation for AI develop
 | Name | Content | Note |
 | --- | --- | --- |
 | Configure the QAIRT Version for an AI Hub DLC Model | [Link](documents/how-to-configure-qairt-version-for-ai-hub-dlc-model.md) | Check the QAIRT version required by an AI Hub DLC model and configure the corresponding runtime environment. |
+| How to Run an LLM Model with GenieX | [Link](documents/how-to-run-an-llm-model-with-geniex.md) | Run a Qualcomm AI Hub LLM model with GenieX in a Docker container. | |
