@@ -29,4 +29,4 @@ Install Edge AI SDK(v3.6.1) : [Download](https://docs.edge-ai-sdk.advantech.com/
 ## Qualcomm AI Stack 
 | Name | Content | Note |
 | -------- | -------- | -------- |
-| Configure the QAIRT Version for an AI Hub DLC Model | [Link](documents/how-to-configure-qairt-version-for-ai-hub-dlc-model.md) | Check the QAIRT version required by an AI Hub DLC model and configure the corresponding runtime environment. |
+| Configure the QAIRT Version for an AI Hub DLC Model | [Link](/ai_sdk/qualcomm/qairt/documents/how-to-configure-qairt-version-for-ai-hub-dlc-model.md) | Check the QAIRT version required by an AI Hub DLC model and configure the corresponding runtime environment. |
