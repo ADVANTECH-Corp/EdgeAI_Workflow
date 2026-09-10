@@ -36,7 +36,7 @@ Refer to the following requirements to prepare the target and develop environmen
 ### Install Edge AI SDK 
 Base on **Target Environment**  
 Please install the corresponding version of EdgeAISDK to obtain the following development environment.  
-Install :  [Edge AI SDK(v3.4.0) install](https://ess-wiki.advantech.com.tw/view/Edge_AI_SDK/Download) 
+Install : [Edge AI SDK(v3.6.7) install](https://iedgeblob.blob.core.windows.net/installer/edgeaisdk/3.6.7/windows/Edge_AI_SDK-installer-3.6.7-win11-ryzenai_1.4-amd_ryzen8000.tar.gz) 
 
 # Develop  
 
