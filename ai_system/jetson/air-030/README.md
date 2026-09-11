@@ -8,5 +8,5 @@ This folder contains the process and instructions for AI development on the AIR-
 
 | Name | Content | Note |
 | -------- | -------- | -------- |
-| How To Create an Object Detection demo using Deepstream-7.0 | Refer to [Link](/ai_sdk/nvidia/deepstream/7.0/object_detection_demo-using-ds7.0.md) | AIR-030 (Jetson-Orin:AGX-Orin) |
+| How To Create an Object Detection demo using Deepstream-7.0 | Refer to [Link](/ai_sdk/nvidia/deepstream/7.0/object_detection_demo-using-ds7.0.md) | (Jetson-Orin:AGX-Orin) |
  
