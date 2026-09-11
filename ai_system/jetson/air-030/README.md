@@ -1,7 +1,7 @@
 # Overview
 This folder contains the process and instructions for AI development on the AIR-030 (Jetson-Orin:AGX-Orin).
 
-![eas_ai_workflow](assets/nvidia/EdgeAIWorkflow_AIR-030.pptx.png)
+![eas_ai_workflow](/assets/nvidia/EdgeAIWorkflow_AIR-030.pptx.png)
 
 
 # Computer Vision

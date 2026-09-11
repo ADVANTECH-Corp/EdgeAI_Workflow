@@ -1,7 +1,7 @@
 # Overview
 This folder contains the process and instructions for AI development on the AIR-020R (Jetson-Orin: Nano).
 
-![eas_ai_workflow](assets/nvidia/EdgeAIWorkflow_AIR020R.png)
+![eas_ai_workflow](/assets/nvidia/EdgeAIWorkflow_AIR020R.png)
 
 
 

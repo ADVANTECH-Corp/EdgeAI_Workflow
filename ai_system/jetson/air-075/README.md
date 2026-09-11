@@ -1,7 +1,7 @@
 # Overview
 This folder contains the process and instructions for AI development on the AIR-075 (Jetson Thor).
 
-![eas_ai_workflow](assets/nvidia/EdgeAIWorkflow_AIR-075-new.png)
+![eas_ai_workflow](/assets/nvidia/EdgeAIWorkflow_AIR-075-new.png)
 
 
 # Computer Vision

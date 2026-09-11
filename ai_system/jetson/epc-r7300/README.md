@@ -1,7 +1,7 @@
 # Overview
 This folder contains the process and instructions for AI development on the EPC-R7300 (Jetson-Orin: NX/Nano).
 
-![eas_ai_workflow](assets/nvidia/EdgeAIWorkflow_EPC-R7300.ppt.png)
+![eas_ai_workflow](/assets/nvidia/EdgeAIWorkflow_EPC-R7300.ppt.png)
 
 
 # Computer Vision

@@ -1,7 +1,7 @@
 # Overview
 This folder contains the process and instructions for AI development on the AIMB-294 (Jetson Thor).
 
-![eas_ai_workflow](assets/nvidia/EdgeAIWorkFlow_AIMB-294.png)
+![eas_ai_workflow](/assets/nvidia/EdgeAIWorkFlow_AIMB-294.png)
 
 
 # Computer Vision
