@@ -1,17 +1,9 @@
-# Create an Object Detection on Jetson-Orin (AIR-020R)
-
----
-
 # Overview
-This example will demonstrate how to develop an vision AI Object Detection on Jetosn-Orin ( AIR-020R ) platform.  
 Developers can easily complete the Visual AI development by following these steps.  
 
 * Application: Objection Detection  
 * Model: YoloV11  
 * Input: Video / USB Camera  
-
-![eas_ai_workflow](assets/EdgeAIWorkflow_AIR020R.png)
-
 
 - [Pre-Requirements](#pre-requirements) <!-- prerequisite -->
   - [Target](#target) <!-- prerequisite -->
@@ -36,8 +28,7 @@ Refer to the following requirements to prepare the target and develop environmen
 
 ## Target
 | Item | Content | Note |
-| -------- | -------- | -------- |
-| Platform |   AIR-020R  | Jetson-Orin   |
+| -------- | -------- | -------- | 
 | SOC  |   Jetson-Orin  | Nano |
 | OS/Kernel |  Ubuntu 22.04   | kernel:5.15.148-tegra |
 | SDK| JetPack 6.2 / Deepstream 7.1|   |
@@ -53,7 +44,7 @@ It's the same to [Target](#Target)
 ### Install Edge AI SDK 
 Base on **Target Environment**  
 Please install the corresponding version of EdgeAISDK to obtain the following development environment.  
-Install :  [Edge AI SDK(v3.5.0) install](https://happy-coast-0a2494f00.2.azurestaticapps.net/docs/Version/3.5.0)  
+Install :  [Edge AI SDK(v3.5.0) install](https://iedgeblob.blob.core.windows.net/installer/edgeaisdk/3.5.0/linux/Edge_AI_SDK-installer-linux-3.5.0.tar.gz)  
 
 
 
@@ -135,11 +126,11 @@ $make -C nvdsinfer_custom_impl_Yolo clean && make -C nvdsinfer_custom_impl_Yolo
  2. $git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git  
  
  3. copy files below to directory "object-detect-deepstream"  
-    /EdgeAI_Workflow/ai_system/jetson/air-020r/script/labels.txt  
-    /EdgeAI_Workflow/ai_system/jetson/air-020r/script/deepstream_app_config_yoloV11_video.txt (input:video file)  
-    /EdgeAI_Workflow/ai_system/jetson/air-020r/script/deepstream_app_config_yoloV11_usb-camera.txt (input:usb-camera)  
-    /EdgeAI_Workflow/ai_system/jetson/air-020r/script/config_infer_primary_yolo11.txt  
-    /EdgeAI_Workflow/ai_system/jetson/air-020r/script/run_yolo11.sh  
+   /EdgeAI_Workflow/ai_sdk/nvidia/deepstream/7.1/script/labels.txt  
+   /EdgeAI_Workflow/ai_sdk/nvidia/deepstream/7.1/script/deepstream_app_config_yoloV11_video.txt (input:video file)  
+   /EdgeAI_Workflow/ai_sdk/nvidia/deepstream/7.1/script/deepstream_app_config_yoloV11_usb-camera.txt (input:usb-camera)  
+   /EdgeAI_Workflow/ai_sdk/nvidia/deepstream/7.1/script/config_infer_primary_yolo11.txt  
+   /EdgeAI_Workflow/ai_sdk/nvidia/deepstream/7.1/script/run_yolo11.sh  
                       
  4. copy yolo11m.onnx (pre-build) and directory "DeepStream-Yolo/nvdsinfer_custom_impl_Yolo" (libnvdsinfer_custom_impl_Yolo.so has existed) to directory "object-detect-deepstream"  
  
