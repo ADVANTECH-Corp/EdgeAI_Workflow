@@ -1,5 +1,5 @@
 # Overview
-This folder contains the process and instructions for AI development on the  AOM-6731 (Qualcomm X Elite)
+This folder contains the process and instructions for AI development on the  AOM-6731 (Qualcomm IQ-X)
 
 
 ![eas_ai_workflow](/assets/qualcomm/eas_startkit_aom-6731.png)
@@ -9,7 +9,7 @@ This folder contains the process and instructions for AI development on the  AOM
 
 Use the workflow need to base on Edge AI SDK.
 
-Install Edge AI SDK(v3.6.3) : [Download](https://docs.edge-ai-sdk.advantech.com/docs/Hardware/AI_System/Qualcomm/X-Elite/AOM-6731#Win11_snpe243)
+Install Edge AI SDK(v3.6.3) : [Download](https://docs.edge-ai-sdk.advantech.com/docs/Hardware/AI_System/Qualcomm/IQ-X/AOM-6731#Win11_snpe243)
 
 
 

@@ -1,8 +1,8 @@
-Developing an Object Detection Application on Qualcomm Snapdragon X Elite (Windows) Using Qualcomm AI Hub
+Developing an Object Detection Application on Qualcomm IQ-X (Windows) Using Qualcomm AI Hub
 ===
 
-This example demonstrates how to develop and deploy a Vision AI application on the Snapdragon X Elite platform using Qualcomm AI Hub.
-This guide walks developers through the complete workflow, from generating the model artifacts to deploying them on a Snapdragon X Elite device.
+This example demonstrates how to develop and deploy a Vision AI application on the IQ-X platform using Qualcomm AI Hub.
+This guide walks developers through the complete workflow, from generating the model artifacts to deploying them on a IQ-X device.
 
 
 * Application: Object Detection
@@ -14,12 +14,12 @@ This guide walks developers through the complete workflow, from generating the m
   - [Target](#target) 
   - [Development Environment Setup](#development-environment-setup)
     - [Setup on Ubuntu 22.04 (x86_64) host machine](#setup-on-ubuntu-2204-x86_64-host-machine)
-    - [Setup on the Qualcomm Snapdragon X Elite Target Device](#setup-on-the-qualcomm-snapdragon-x-elite-target-device)
+    - [Setup on the Qualcomm IQ-X Target Device](#setup-on-the-qualcomm-iq-x-target-device)
 - [Development Flow](#development-flow) 
   - [How to Generate Models on an Ubuntu 22.04 (x86_64) Host Machine](#how-to-generate-models-on-an-ubuntu-2204-x86_64-host-machine) 
     - [Generate the ONNX Model for CPU / iGPU](#generate-the-onnx-model-for-cpu--igpu) 
     - [Generate the DLC Model for NPU Using Qualcomm AI Hub](#generate-the-dlc-model-for-npu-using-qualcomm-ai-hub) 
-  - [How to Build the Application on the Qualcomm Snapdragon X Elite Target Device](#how-to-build-the-application-on-the-qualcomm-snapdragon-x-elite-target-device)
+  - [How to Build the Application on the Qualcomm IQ-X Target Device](#how-to-build-the-application-on-the-qualcomm-iq-x-target-device)
     - [For CPU / iGPU](#for-cpu--igpu) 
     - [For NPU](#for-npu) 
 - [Deploy](#deploy)
@@ -33,7 +33,7 @@ Refer to the following requirements to prepare both the target device and the de
 ## Target
 | Item | Content | Note |
 | -------- | -------- | -------- |
-| SoC | Qualcomm Snapdragon X Elite ||
+| SoC | Qualcomm IQ-X ||
 | Accelerator | NPU | |
 | OS/Build | Windows 11 IoT Enterprise (ARM64) | |
 | SDK |  Qualcomm AI Runtime SDK 2.43.0  | |
@@ -91,7 +91,7 @@ pip install "qai-hub-models[yolov11-det]"
    ```
 
 ---
-## Setup on the Qualcomm Snapdragon X Elite Target Device
+## Setup on the Qualcomm IQ-X Target Device
 
 #### Step 1. Install Visual Studio & CMake
 * Install Git: [Git for Windows/x64 Setup](https://git-scm.com/install/windows)
@@ -173,7 +173,7 @@ Copy the optimized AI model (`yolov11_det.dlc`) to the target device
 
 ---
 
-## How to Build the Application on the Qualcomm Snapdragon X Elite Target Device
+## How to Build the Application on the Qualcomm IQ-X Target Device
 
 ### For CPU / iGPU
 
