@@ -18,7 +18,9 @@ The Edge AI Workflow is designed to help developers kickstart AI application dev
 | NVIDIA | AIR-020R   | Jetson Orin Nano   | [How-To](ai_system/jetson/air-020r/README.md)  | [Convert & Optimize](ai_sdk/nvidia/deepstream/7.1/object_detection_demo-using-ds7.1.md#convert-ai-model) | [App Guide](ai_sdk/nvidia/deepstream/7.1/object_detection_demo-using-ds7.1.md#application) |
 | NVIDIA | AIR-075   | Jetson Thor   | [How-To](ai_system/jetson/air-075/README.md)  | [Convert & Optimize](ai_sdk/nvidia/deepstream/8.0/object_detection_demo-using-ds8.0.md#convert-ai-model) | [App Guide](ai_sdk/nvidia/deepstream/8.0/object_detection_demo-using-ds8.0.md#application) |
 | NVIDIA | AIMB-294   | Jetson Thor   | [How-To](ai_system/jetson/aimb-294/README.md)  | [Convert & Optimize](ai_sdk/nvidia/deepstream/8.0/object_detection_demo-using-ds8.0.md#convert-ai-model) | [App Guide](ai_sdk/nvidia/deepstream/8.0/object_detection_demo-using-ds8.0.md#application) |
-| AMD | AIMB-2210   | Ryzen 8000 Series | [How-To](ai_system/amd/aimb-2210/README.md)  | [Convert & Optimize](ai_system/amd/aimb-2210/object_detection_demo-using-amd_ryzenaisdk.md#download-ai-files) | [App Guide](ai_system/amd/aimb-2210/object_detection_demo-using-amd_ryzenaisdk.md#application) |
+| AMD | AIMB-2210   | Ryzen 8000 Series | [How-To](ai_system/amd/aimb-2210/README.md)  | [Convert & Optimize](ai_sdk/amd/ryzenai/1.4/object_detection_demo-using-amd_ryzenaisdk.md#download-ai-files) | [App Guide](ai_sdk/amd/ryzenai/1.4/object_detection_demo-using-amd_ryzenaisdk.md#application) |
+| AMD | ARK-3535   | Ryzen 8000 Series | [How-To](ai_system/amd/ark-3535/README.md)  | [Convert & Optimize](ai_sdk/amd/ryzenai/1.4/object_detection_demo-using-amd_ryzenaisdk.md#download-ai-files) | [App Guide](ai_sdk/amd/ryzenai/1.4/object_detection_demo-using-amd_ryzenaisdk.md#application) |
+| AMD | DS-054   | Ryzen 8000 Series | [How-To](ai_system/amd/ds-054/README.md)  | [Convert & Optimize](ai_sdk/amd/ryzenai/1.4/object_detection_demo-using-amd_ryzenaisdk.md#download-ai-files) | [App Guide](ai_sdk/amd/ryzenai/1.4/object_detection_demo-using-amd_ryzenaisdk.md#application) |
 
 
 # AI Accelerator
