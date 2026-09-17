@@ -1,7 +1,6 @@
-# Create a MCP Server on AIMB-2210 ( AMD / Ryzen 8000 series )
-
+ 
 # Overview
-This example will demonstrate how to develop an MCP Server on AIMB-2210 ( AMD / Ryzen 8000 series ) platform.
+This example will demonstrate how to develop an MCP Server  ( AMD / Ryzen 8000 series ) platform.
 
 - [Pre-Requirements](#pre-requirements) 
   - [Target](#target)
@@ -20,7 +19,6 @@ Refer to the following requirements to prepare the target and develop environmen
 ## Target
 | Item | Content | Note |
 | -------- | -------- | -------- |
-| Platform |   AIMB-2210  |  Ryzen 8000   |
 | SOC  |    Ryzen 7 PRO 8845HS  |   |
 | OS/Kernel |  Windows 11 ToT  | Build 26100  |
 
@@ -92,7 +90,7 @@ Install : [Edge AI SDK(v3.6.7) install](https://iedgeblob.blob.core.windows.net/
    npx @modelcontextprotocol/inspector
    ```
 - On the MCP Inspector interface, you can interact with your running MCP server and test its functionality.
-  <img src="../aimb-2210/assets/mcp_inspector-mcp_file_utils.png" alt="MCP Inspector Screenshot 1" height="80%" width="80%">
+  <img src="assets/mcp_inspector-mcp_file_utils.png" alt="MCP Inspector Screenshot 1" height="80%" width="80%">
 
 ## Add the MCP server on the GenAI-Chatbot
 
@@ -103,10 +101,10 @@ Install : [Edge AI SDK(v3.6.7) install](https://iedgeblob.blob.core.windows.net/
   mcpo --host localhost --port 8000 -- python mcp_file_utils_demo.py
   ```
 - Checking the OpenAPI documentation: http://localhost:8000/docs
-  <img src="../aimb-2210/assets/mcpo-mcp_file_utils.png" alt="MCP OpenAPI Documentation" height="80%" width="80%">
+  <img src="assets/mcpo-mcp_file_utils.png" alt="MCP OpenAPI Documentation" height="80%" width="80%">
 
 - Add the MCP server to the GenAI-Chatbot.
-  <img src="../aimb-2210/assets/add-mcp-server.png" alt="Add MCP Server" height="80%" width="80%">
+  <img src="assets/add-mcp-server.png" alt="Add MCP Server" height="80%" width="80%">
   1. Click Tools on Setting.
   2. Select "+" to add a new tool.
   3. Input URL: http://localhost:8000/
@@ -115,7 +113,7 @@ Install : [Edge AI SDK(v3.6.7) install](https://iedgeblob.blob.core.windows.net/
   6. Click "Save".
 
 - Using the MCP server in GenAI-Chatbot.
-   <img src="../aimb-2210/assets/using-mcp-server.png" alt="Using MCP Server" height="80%" width="80%">
+   <img src="assets/using-mcp-server.png" alt="Using MCP Server" height="80%" width="80%">
    1. Add new chat.
    2. Click "+" button.
    3. Select tool: "Local File Agent Helper".

@@ -1,8 +1,7 @@
 # Overview
-This folder contains the process and instructions for AI development on the  AIMB-2210 ( Ryzen 8000 ).
+This folder contains the process and instructions for AI development on the  ARK-3535 ( Ryzen 8000 ).
 
-
-![eas_ai_workflow](/assets/amd/EdgeAIWorkFlow_AIMB-2210.png)
+![eas_ai_workflow](/assets/amd/EdgeAIWorkFlow_ARK-3535.png)
 
 
 # Computer Vision

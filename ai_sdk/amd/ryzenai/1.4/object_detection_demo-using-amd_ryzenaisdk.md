@@ -1,17 +1,12 @@
-# Create an Object Detection on AIMB-2210 (AMD / Ryzen 8000 series)
-
----
-
 # Overview
-This example will demonstrate how to develop an vision AI Object Detection on AIMB-2210 ( AMD / Ryzen 8000 series ) platform.
+This example will demonstrate how to develop an vision AI Object Detection on ( AMD / Ryzen 8000 series ) platform.
 Developers can easily complete the Visual AI development by following these steps.
  
 * Application: Object Detection     
 * Model: YoloV8 / YoloVX    
 * Input: Video File / USB Camera    
 
-![eas_ai_workflow](assets/EdgeAISDK-AIMB-2210.pptx.png)    
-
+ 
 
 - [Pre-Requirements](#pre-requirements) <!-- prerequisite -->
   - [Target](#target) <!-- prerequisite -->
@@ -36,7 +31,6 @@ Refer to the following requirements to prepare the target and develop environmen
 ## Target
 | Item | Content | Note |
 | -------- | -------- | -------- |
-| Platform |   AIMB-2210  |  Ryzen 8000   |
 | SOC  |    Ryzen 7 PRO 8845HS  |   |
 | OS/Kernel |  Windows 11 IoT  | Build 26100  |
 | SDK| RyzenAI SDK 1.4 |   |
@@ -131,7 +125,7 @@ cd ../..
 #### For CPU / iGPU   
 1. git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git   
 
-2. cd "EdgeAI_Workflow\ai_system\amd\aimb-2210\code\cpu_igpu\Yolov8-Object"   
+2. cd "EdgeAI_Workflow\ai_sdk\amd\ryzenai\1.4\code\cpu_igpu\Yolov8-Object"   
  
 3. To execute : "build.bat"     
 
@@ -148,7 +142,7 @@ cd ../..
 #### For NPU  
 1. git clone https://github.com/ADVANTECH-Corp/EdgeAI_Workflow.git       
 
-2. cd "EdgeAI_Workflow\ai_system\amd\aimb-2210\code\npu\multi-model-source-code"       
+2. cd "EdgeAI_Workflow\ai_sdk\amd\ryzenai\1.4\code\npu\multi-model-source-code"       
 
 3. Refer to : [Build Package](#build-package)         
    If failed , to check the directory path of "build.bat" existed ?                  
@@ -165,7 +159,7 @@ cd ../..
 
    1. mkdir "C:\temp\test1"            
 
-   2. "EdgeAI_Workflow\ai_system\amd\aimb-2210\code"  => coco.txt       
+   2. "EdgeAI_Workflow\ai_sdk\ryzenai\1.4\code"  => coco.txt       
 
    3. "yolov8n.onnx" (refer to [Download AI Files](#download-ai-files))         
 
