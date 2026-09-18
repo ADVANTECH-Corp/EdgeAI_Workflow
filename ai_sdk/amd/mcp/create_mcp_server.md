@@ -10,6 +10,7 @@ This example will demonstrate how to develop an MCP Server  ( AMD / Ryzen 8000 s
 - [Develop](#develop)
   - [Create a MCP server](#create-a-mcp-server)
   - [Add the MCP server on the GenAI-Chatbot](#add-the-mcp-server-on-the-genai-chatbot)
+- [Troubleshooting](#troubleshooting)
 - [Reference](#reference)
 
 # Pre-Requirements
@@ -28,6 +29,8 @@ Refer to the following requirements to prepare the target and develop environmen
 1. Miniconda (*The Edge AI SDK installation includes Miniconda*)
 2. Python v3.11 ↑
 3. Python Package: [requirements.txt](code/mcp/requirements.txt)
+   > **Note:** `mcp` must be pinned to `<2`. This example uses the mcp v1 API
+   > (`mcp.server.fastmcp.FastMCP`), which was removed in mcp 2.x.
 4. Node.js v22.14.0 ↑
 5. npm v10.9.2 ↑
 
@@ -41,6 +44,18 @@ Install : [Edge AI SDK(v3.6.7) install](https://iedgeblob.blob.core.windows.net/
 ## Create a MCP server
 
 **Example: [mcp_file_utils_demo.py](code/mcp/mcp_file_utils_demo.py)**
+
+- Prepare the Python environment and install the dependencies.
+   ```shell
+   conda create -n mcp python=3.11 -y
+   conda activate mcp
+   pip install -r requirements.txt
+   ```
+- Verify that you are using the environment you just created (**not** the system Python).
+   ```shell
+   python -c "import sys, mcp; print(sys.executable, mcp.__version__)"
+   ```
+   The printed path must be inside the `mcp` conda environment, and the version must start with `1.`.
 
 - Create mcp_file_utils_demo.py
    ```python
@@ -120,6 +135,27 @@ Install : [Edge AI SDK(v3.6.7) install](https://iedgeblob.blob.core.windows.net/
    4. Check show tool icon.
 
 - Start chatting with the MCP server.
+
+# Troubleshooting
+
+**`ModuleNotFoundError: No module named 'mcp.server.fastmcp'`**
+
+```
+This is mcp 2.x, where FastMCP was renamed to MCPServer (from mcp.server import MCPServer)
+and other APIs changed; see the migration guide ... or pin 'mcp<2' to keep running v1 code.
+```
+
+mcp 2.x is installed. This example targets the v1 API. Reinstall the pinned version inside the
+`mcp` environment:
+
+```shell
+conda activate mcp
+pip install "mcp[cli]>=1.12.2,<2"
+```
+
+If the traceback shows a path such as `AppData\Roaming\Python\Python314\site-packages`, the
+script is running against the system Python instead of the `mcp` conda environment. Run
+`conda activate mcp` first, and re-check with the verification command above.
 
 # Reference
 - Documentation for Creating a MCP Server: https://modelcontextprotocol.io/quickstart/server
