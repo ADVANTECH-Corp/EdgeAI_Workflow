@@ -141,8 +141,10 @@ Install : [Edge AI SDK(v3.6.7) install](https://iedgeblob.blob.core.windows.net/
 **`ModuleNotFoundError: No module named 'mcp.server.fastmcp'`**
 
 ```
-This is mcp 2.x, where FastMCP was renamed to MCPServer (from mcp.server import MCPServer)
-and other APIs changed; see the migration guide ... or pin 'mcp<2' to keep running v1 code.
+ModuleNotFoundError: No module named 'mcp.server.fastmcp'. This is mcp 2.x, where FastMCP was
+renamed to MCPServer (from mcp.server.mcpserver import MCPServer) and other APIs changed; see
+the migration guide at https://py.sdk.modelcontextprotocol.io/v2/migration/#fastmcp-renamed-to-mcpserver
+or pin 'mcp<2' to keep running v1 code.
 ```
 
 mcp 2.x is installed. This example targets the v1 API. Reinstall the pinned version inside the
