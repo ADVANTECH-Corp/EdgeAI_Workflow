@@ -53,7 +53,8 @@ Install : [Edge AI SDK(v3.6.7) install](https://iedgeblob.blob.core.windows.net/
    ```
 - Verify that you are using the environment you just created (**not** the system Python).
    ```shell
-   python -c "import sys, mcp; print(sys.executable, mcp.__version__)"
+   conda activate mcp
+   python -c "import sys, importlib.metadata; print(sys.executable, importlib.metadata.version('mcp'))"
    ```
    The printed path must be inside the `mcp` conda environment, and the version must start with `1.`.
 
@@ -102,7 +103,7 @@ Install : [Edge AI SDK(v3.6.7) install](https://iedgeblob.blob.core.windows.net/
 - Run the *MCP inspector* under the .py file path.
    ```
    conda activate mcp
-   npx @modelcontextprotocol/inspector
+   npx @modelcontextprotocol/inspector@0.16.7
    ```
 - On the MCP Inspector interface, you can interact with your running MCP server and test its functionality.
   <img src="assets/mcp_inspector-mcp_file_utils.png" alt="MCP Inspector Screenshot 1" height="80%" width="80%">
