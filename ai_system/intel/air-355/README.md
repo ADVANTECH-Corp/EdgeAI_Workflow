@@ -17,13 +17,29 @@ Install Edge AI SDK : [Download](https://docs.edge-ai-sdk.advantech.com/docs/Har
 
 ## Computer Vision
 
+### Windows
+
 | Name | Content | Note |
 | -------- | -------- | -------- |
 | How To Create an Object Detection demo | [Link](/ai_sdk/intel/openvino/2026_1/windows/object_detection_with_intel_openvino_2026_1_yolov4_tf.md) |  OS : Windows 11 IoT Enterprise LTSC<br/>SDK : OpenVino 2026.1<br/>Model : yolov4-tf |
 
+### Linux
+
+| Name | Content | Note |
+| -------- | -------- | -------- |
+| How To Create an Object Detection demo | [Link](/ai_sdk/intel/openvino/2026_3/linux/object_detection_with_intel_openvino_2026_3_yolov4_tf.md) |  OS : Ubuntu 26.04 x86_64<br/>SDK : OpenVINO 2026.3.0<br/>Model : yolov4-tf |
+
 ## Generative AI / VLM
+
+### Windows
 
 | Name | Content | Note |
 | -------- | -------- | -------- |
 | How to convert VLM & inference with OVMS | [Link](/ai_sdk/intel/openvino/2026_1/windows/how_to_convert_vlm_openvino_ovms_gemma3_4b.md) |  OS : Windows 11 IoT Enterprise LTSC<br/>SDK : OpenVino 2026.1<br/>Model : gemma-3-4b-it-int4 |
 | How to convert Gemma 4 series VLM & inference with OVMS | [Link](/ai_sdk/intel/openvino/2026_1/windows/how_to_convert_vlm_openvino_ovms_gemma4_series.md) |  OS : Windows 11 IoT Enterprise LTSC<br/>SDK : OpenVino 2026.1<br/>Model : gemma-4-e2b-it-int4 |
+
+### Linux
+
+| Name | Content | Note |
+| -------- | -------- | -------- |
+| How to convert VLM & inference with OVMS | [Link](/ai_sdk/intel/openvino/2026_3/linux/how_to_convert_vlm_openvino_ovms_gemma3_4b.md) |  OS : Ubuntu 26.04 x86_64<br/>SDK : OpenVINO 2026.3.0<br/>Model : gemma-3-4b-it-int4 |
